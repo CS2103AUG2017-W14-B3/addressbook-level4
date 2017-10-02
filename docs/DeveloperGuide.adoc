@@ -880,6 +880,9 @@ Use case ends.
 
 *MSS*
 
+1.  User requests to list persons with same name or number
+2.  User selects the person that he wants to keep
+3.  Addressbook deletes the rest of the persons that were not selected
 
 +
 Use case ends.
