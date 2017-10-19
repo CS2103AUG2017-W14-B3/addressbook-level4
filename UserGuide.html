@@ -38,9 +38,10 @@
 <li><a href="#undoing-previous-command-code-undo-code">2.9. Undoing previous command : <code>undo</code></a></li>
 <li><a href="#redoing-the-previously-undone-command-code-redo-code">2.10. Redoing the previously undone command : <code>redo</code></a></li>
 <li><a href="#adding-an-alias-for-a-command-code-alias-code">2.11. Adding an alias for a command : <code>alias</code></a></li>
-<li><a href="#clearing-all-entries-code-clear-code">2.12. Clearing all entries : <code>clear</code></a></li>
-<li><a href="#exiting-the-program-code-exit-code">2.13. Exiting the program : <code>exit</code></a></li>
-<li><a href="#saving-the-data">2.14. Saving the data</a></li>
+<li><a href="#importing-contacts-code-import-code">2.12. Importing contacts : <code>import</code></a></li>
+<li><a href="#clearing-all-entries-code-clear-code">2.13. Clearing all entries : <code>clear</code></a></li>
+<li><a href="#exiting-the-program-code-exit-code">2.14. Exiting the program : <code>exit</code></a></li>
+<li><a href="#saving-the-data">2.15. Saving the data</a></li>
 </ul>
 </li>
 <li><a href="#faq">3. FAQ</a></li>
@@ -548,21 +549,67 @@ it is no longer assigned to delete.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="clearing-all-entries-code-clear-code"><a class="link" href="#clearing-all-entries-code-clear-code">2.12. Clearing all entries : <code>clear</code></a></h3>
+<h3 id="importing-contacts-code-import-code"><a class="link" href="#importing-contacts-code-import-code">2.12. Importing contacts : <code>import</code></a></h3>
+<div class="paragraph">
+<p>Allows you to import contacts from either Google Contacts or Apple iCloud.</p>
+</div>
+<div class="paragraph">
+<p>Format: <code>import SERVICE_NAME</code></p>
+</div>
+<div class="sidebarblock">
+<div class="content">
+<div class="ulist">
+<ul>
+<li>
+<p>The service name can only be "Google" or "Apple"</p>
+</li>
+<li>
+<p>The service name is case-insensitive.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>Examples:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>import google</code><br></p>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Opens the Google authentication page in your default web browser to allow access to your contacts</p>
+</li>
+<li>
+<p>Once access has been granted, a progress window will pop up indicating the progress of import.</p>
+</li>
+<li>
+<p>After import has completed, the application will show the number of contacts successfully imported and the number of failures.</p>
+</li>
+</ol>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="clearing-all-entries-code-clear-code"><a class="link" href="#clearing-all-entries-code-clear-code">2.13. Clearing all entries : <code>clear</code></a></h3>
 <div class="paragraph">
 <p>Clears all entries from the address book.<br>
 Format: <code>clear</code></p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="exiting-the-program-code-exit-code"><a class="link" href="#exiting-the-program-code-exit-code">2.13. Exiting the program : <code>exit</code></a></h3>
+<h3 id="exiting-the-program-code-exit-code"><a class="link" href="#exiting-the-program-code-exit-code">2.14. Exiting the program : <code>exit</code></a></h3>
 <div class="paragraph">
 <p>Exits the program.<br>
 Format: <code>exit</code></p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="saving-the-data"><a class="link" href="#saving-the-data">2.14. Saving the data</a></h3>
+<h3 id="saving-the-data"><a class="link" href="#saving-the-data">2.15. Saving the data</a></h3>
 <div class="paragraph">
 <p>Address book data are saved in the hard disk automatically after any command that changes the data.<br>
 There is no need to save manually.</p>
@@ -633,7 +680,7 @@ e.g. <code>alias a add</code></p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-10-15 09:06:56 +00:00
+Last updated 2017-10-19 18:10:32 +00:00
 </div>
 </div>
 </body>
