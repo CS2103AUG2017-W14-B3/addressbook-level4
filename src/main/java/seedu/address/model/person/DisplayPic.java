@@ -2,10 +2,6 @@ package seedu.address.model.person;
 
 import static java.util.Objects.requireNonNull;
 
-import java.io.File;
-
-import seedu.address.commons.exceptions.IllegalValueException;
-
 /**
  * Represents a Person's display picture path in a addressbook
  */
@@ -15,23 +11,10 @@ public class DisplayPic {
 
     public final String displayPicPath;
 
-    public DisplayPic(String displayPicPath) throws IllegalValueException {
+    public DisplayPic(String displayPicPath) {
         requireNonNull(displayPicPath);
         String trimmedDisplayPicPath = displayPicPath.trim();
-        if (!validFilePath(displayPicPath)) {
-            throw new IllegalValueException(MESSAGE_DISPLAYPIC_CONSTRAINTS);
-        }
         this.displayPicPath = trimmedDisplayPicPath;
-    }
-
-    /**
-     * Check if the path is correct by checking if the file exists
-     * @param path is the path to the file
-     * @return
-     */
-    public boolean validFilePath(String path) {
-        File displayPic = new File(path);
-        return displayPic.exists();
     }
 
     @Override
@@ -45,7 +28,6 @@ public class DisplayPic {
                 || (other instanceof DisplayPic // instanceof handles nulls
                 && this.displayPicPath.equals(((DisplayPic) other).displayPicPath)); // state check
     }
-
 
     @Override
     public int hashCode() {
