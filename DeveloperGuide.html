@@ -45,7 +45,7 @@
 <li><a href="#implementation">3. Implementation</a>
 <ul class="sectlevel2">
 <li><a href="#undo-redo-mechanism">3.1. Undo/Redo mechanism</a></li>
-<li><a href="#sending-emails-to-contacts">3.2. Sending Emails To Contacts</a></li>
+<li><a href="#email-mechanism">3.2. Email mechanism</a></li>
 <li><a href="#import-mechanism">3.3. Import mechanism</a></li>
 <li><a href="#tag-edit">3.4. Tag Edit</a></li>
 <li><a href="#logging">3.5. Logging</a></li>
@@ -770,14 +770,10 @@ If the <code>redoStack</code> is empty, then there are no other commands left to
 </div>
 </div>
 <div class="sect2">
-<h3 id="sending-emails-to-contacts"><a class="link" href="#sending-emails-to-contacts">3.2. Sending Emails To Contacts</a></h3>
+<h3 id="email-mechanism"><a class="link" href="#email-mechanism">3.2. Email mechanism</a></h3>
 <div class="paragraph">
-<p>This feature is implemented to provide users the ability to email their contacts using the users' default mail client
-to launch an email application which will contain the email addresses of contacts specified by users. Users can compose or edit the email using their own default email application before sending it.<br></p>
-</div>
-<div class="paragraph">
-<p>The java <code>Desktop</code> class allows java application to launch default email applications registered on the users' native desktop to handle a Uniform Resource Indentifier <code>URI</code>.
-In this case, <code>URI</code> is created as a reference to the mail command scheme and email addresses to mail to.</p>
+<p>The email mechanism is facilitated by java <code>Desktop</code> class which allows java application to launch default mail client registered on the users' native desktop to handle a Uniform Resource Indentifier <code>URI</code>.
+In this case, the <a href="#uri">URI</a> created is a reference to the mail command scheme and email addresses to mail to.</p>
 </div>
 <div class="sect3">
 <h4 id="email-command-implementation"><a class="link" href="#email-command-implementation">3.2.1. Email command implementation</a></h4>
@@ -788,7 +784,7 @@ In this case, <code>URI</code> is created as a reference to the mail command sch
 <p><div align="center"><b>Figure 3.2.1 Email Command Implementation</b></div></p>
 </div>
 <div class="paragraph">
-<p>From the diagram above, when users enter the command <code>email 1</code> to email one or more person in their address book.
+<p>From the diagram above, when users enter the command <code>email 1</code> to email a person in their address book.
 <code>EmailCommandParser</code> will parse the arguments, which are either a single index or multiple indices, provided by the users and store them
 in an array called <code>targetIndices</code> and return a <code>EmailCommand</code>. Next, <code>EmailCommand</code> will call its method <code>execute()</code>
 and ensure that <code>Index</code> specified is valid and construct a String <code>allEmaillAddress</code> which contains all the email addresses. Refer to code example below:<br></p>
@@ -799,19 +795,20 @@ and ensure that <code>Index</code> specified is valid and construct a String <co
 <p>Code listing:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> CommandResult execute() <span class="directive">throws</span> CommandException {
-        <span class="comment">//StringBuilder helps to append the email addresses of each person</span>
+<pre class="CodeRay highlight"><code data-lang="java">        <span class="comment">// Do others in EmailCommand.execute()</span>
+        <span class="comment">// StringBuilder helps to append the email addresses of each person</span>
         <span class="predefined-type">StringBuilder</span> addresses = <span class="keyword">new</span> <span class="predefined-type">StringBuilder</span>();
-        <span class="keyword">for</span> (Index targetIndex : targetIndexes) {
-            <span class="keyword">if</span> (targetIndex.getZeroBased() &gt;= lastShownList.size()) {
-                <span class="comment">//Throw exception due to invalid index after checking</span>
-            }
-            <span class="comment">//Append the address of the person to addresses and do others</span>
-            address.append(<span class="string"><span class="delimiter">&quot;</span><span class="content"> </span><span class="delimiter">&quot;</span></span>);
-            addresses.append(personToEmail.getEmail.toString());
+        <span class="keyword">for</span> (Index targetIndex : targetIndices) {
+            <span class="comment">// Throws exception if target index is out of bounds</span>
         }
-        <span class="comment">//Add a comma between email addresses</span>
-        <span class="predefined-type">String</span> allEmailAddresses = addresses.toString().trim().replaceAll(<span class="string"><span class="delimiter">&quot;</span><span class="content"> </span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">,</span><span class="delimiter">&quot;</span></span>);</code></pre>
+            addresses.append(<span class="string"><span class="delimiter">&quot;</span><span class="content"> </span><span class="delimiter">&quot;</span></span>);
+            addresses.append(personToEmail.getEmail().toString());
+        }
+<span class="comment">// Add a comma between all email addresses</span>
+<span class="predefined-type">String</span> allEmailAddresses = addresses.toString().trim().replaceAll(<span class="string"><span class="delimiter">&quot;</span><span class="content"> </span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">,</span><span class="delimiter">&quot;</span></span>);
+<span class="comment">// Return a CommandResult</span>
+EventsCenter.getInstance().post(<span class="keyword">new</span> EmailRequestEvent(allEmailAddresses));
+<span class="keyword">return</span> <span class="keyword">new</span> CommandResult(<span class="predefined-type">String</span>.format(MESSAGE_EMAIL_PERSON_SUCCESS, allPersons));</code></pre>
 </div>
 </div>
 <div class="admonitionblock note">
@@ -852,15 +849,15 @@ Refer to the code example below:<br></p>
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="java"><span class="directive">private</span> staic <span class="directive">final</span> <span class="predefined-type">String</span> EMAIL_URI_PREFIX = <span class="string"><span class="delimiter">&quot;</span><span class="content">mailTo:</span><span class="delimiter">&quot;</span></span>;
 
-<span class="comment">//rest of methods in MainWindow</span>
+<span class="comment">// Do others in MainWindow</span>
 
 <span class="predefined-type">URI</span> mailTo = <span class="keyword">new</span> <span class="predefined-type">URI</span>(EMAIL_URI_PREFIX + allEmailAddresses);
-    <span class="comment">//Checks if user native Desktop applications are supported</span>
+    <span class="comment">// Checks if Desktop class is supported</span>
     <span class="keyword">if</span> (Desktop.isDesktopSupported()) {
         Desktop userDesktop = Desktop.getDesktop();
         userDesktop.mail(mailTo);
     } <span class="keyword">else</span> {
-        <span class="comment">//throw Execepton</span>
+        <span class="comment">// Throws Execepton</span>
     }</code></pre>
 </div>
 </div>
@@ -882,7 +879,7 @@ followed by the String <code>allEmailAddresses</code>.
 </div>
 <div class="paragraph">
 <p>Lastly, users' desktop will launch a default mail client where they can compose the subject and message body of the email.
-In addition, users can also edit their recipients field to include carbon copy or blind carbon copy before sending out
+Moreover, users can also edit their recipients field to include carbon copy or blind carbon copy before sending out
 the email to their recipients.</p>
 </div>
 </div>
@@ -2700,7 +2697,7 @@ to the repository.</pre>
 happens.</pre>
 </div>
 </div>
-<div class="paragraph">
+<div id="uri" class="paragraph">
 <p>Uniform Resource Identifier(URI)</p>
 </div>
 <div class="literalblock">
@@ -2761,7 +2758,7 @@ name and address information for use in AddressBook.</pre>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-10-21 06:00:35 +00:00
+Last updated 2017-10-22 13:48:52 +00:00
 </div>
 </div>
 </body>
