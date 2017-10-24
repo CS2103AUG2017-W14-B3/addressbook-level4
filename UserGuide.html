@@ -41,9 +41,11 @@
 <li><a href="#adding-an-alias-for-a-command-code-alias-code">2.12. Adding an alias for a command : <code>alias</code></a></li>
 <li><a href="#importing-contacts-code-import-code">2.13. Importing contacts : <code>import</code></a></li>
 <li><a href="#deleting-a-tag-code-tagdelete-code">2.14. Deleting a tag : <code>tagdelete</code></a></li>
-<li><a href="#clearing-all-entries-code-clear-code">2.15. Clearing all entries : <code>clear</code></a></li>
-<li><a href="#exiting-the-program-code-exit-code">2.16. Exiting the program : <code>exit</code></a></li>
-<li><a href="#saving-the-data">2.17. Saving the data</a></li>
+<li><a href="#editing-a-tag-code-tagedit-code">2.15. Editing a tag : <code>tagedit</code></a></li>
+<li><a href="#search-for-persons-code-search-code">2.16. Search for persons : <code>search</code></a></li>
+<li><a href="#clearing-all-entries-code-clear-code">2.17. Clearing all entries : <code>clear</code></a></li>
+<li><a href="#exiting-the-program-code-exit-code">2.18. Exiting the program : <code>exit</code></a></li>
+<li><a href="#saving-the-data">2.19. Saving the data</a></li>
 </ul>
 </li>
 <li><a href="#faq">3. FAQ</a></li>
@@ -726,8 +728,9 @@ Deletes the tag 'friends' from all persons with the 'friends' tag in the address
 </li>
 </ul>
 </div>
-<div class="sect3">
-<h4 id="editing-a-tag-code-tagedit-code"><a class="link" href="#editing-a-tag-code-tagedit-code">2.14.1. Editing a tag : <code>tagedit</code></a></h4>
+</div>
+<div class="sect2">
+<h3 id="editing-a-tag-code-tagedit-code"><a class="link" href="#editing-a-tag-code-tagedit-code">2.15. Editing a tag : <code>tagedit</code></a></h3>
 <div class="paragraph">
 <p>Allows you to change the name of a tag belonging to all persons in the address book.</p>
 </div>
@@ -760,23 +763,74 @@ Changes the tag 'friends' into 'losers' for all persons with that tag.</p>
 </ul>
 </div>
 </div>
+<div class="sect2">
+<h3 id="search-for-persons-code-search-code"><a class="link" href="#search-for-persons-code-search-code">2.16. Search for persons : <code>search</code></a></h3>
+<div class="paragraph">
+<p>Searches for persons whose names or tags contain any of the given keywords.<br>
+Format: <code>find KEYWORD [MORE_KEYWORDS]</code><br></p>
+</div>
+<div class="sidebarblock">
+<div class="content">
+<div class="ulist">
+<ul>
+<li>
+<p>The search for names is case insensitive. e.g. <code>hans</code> will match <code>Hans</code>. However, the search for tags is
+case sensitive.</p>
+</li>
+<li>
+<p>The order of the keywords does not matter. e.g. <code>Alex colleagues</code> and <code>colleagues Alex</code> will give you the same result.</p>
+</li>
+<li>
+<p>Both names and tags are searched.</p>
+</li>
+<li>
+<p>Only full words will be matched with names and tags. e.g. <code>Han</code> will not match <code>Hans</code> and <code>colleague</code> will not match
+`colleagues</p>
+</li>
+<li>
+<p>When searching for one keyword, persons matching at least one keyword will be returned like in <code>find</code></p>
+</li>
+<li>
+<p>When searching for more than one keyword, only persons matching ALL keywords will be returned. eg. <code>search Alex</code> will
+return all persons with the name <code>Alex</code>, but <code>search Alex colleagues</code> will only return persons with both the word <code>Alex</code>
+in their names and the tag <code>colleagues</code>.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>Examples:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>search alex</code><br>
+returns <code>alex</code> and <code>Alex</code></p>
+</li>
+<li>
+<p><code>search alex colleagues</code><br>
+returns all persons with the name <code>Alex</code> or <code>alex</code> AND with the tag <code>colleagues</code></p>
+</li>
+</ul>
+</div>
 </div>
 <div class="sect2">
-<h3 id="clearing-all-entries-code-clear-code"><a class="link" href="#clearing-all-entries-code-clear-code">2.15. Clearing all entries : <code>clear</code></a></h3>
+<h3 id="clearing-all-entries-code-clear-code"><a class="link" href="#clearing-all-entries-code-clear-code">2.17. Clearing all entries : <code>clear</code></a></h3>
 <div class="paragraph">
 <p>Clears all entries from the address book.<br>
 Format: <code>clear</code></p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="exiting-the-program-code-exit-code"><a class="link" href="#exiting-the-program-code-exit-code">2.16. Exiting the program : <code>exit</code></a></h3>
+<h3 id="exiting-the-program-code-exit-code"><a class="link" href="#exiting-the-program-code-exit-code">2.18. Exiting the program : <code>exit</code></a></h3>
 <div class="paragraph">
 <p>Exits the program.<br>
 Format: <code>exit</code></p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="saving-the-data"><a class="link" href="#saving-the-data">2.17. Saving the data</a></h3>
+<h3 id="saving-the-data"><a class="link" href="#saving-the-data">2.19. Saving the data</a></h3>
 <div class="paragraph">
 <p>Address book data are saved in the hard disk automatically after any command that changes the data.<br>
 There is no need to save manually.</p>
@@ -859,7 +913,7 @@ e.g. <code>email 1 2</code></p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-10-24 15:50:01 +00:00
+Last updated 2017-10-24 18:26:29 +00:00
 </div>
 </div>
 </body>

@@ -48,8 +48,9 @@
 <li><a href="#email-mechanism">3.2. Email mechanism</a></li>
 <li><a href="#import-mechanism">3.3. Import mechanism</a></li>
 <li><a href="#tag-edit">3.4. Tag Edit</a></li>
-<li><a href="#logging">3.5. Logging</a></li>
-<li><a href="#configuration">3.6. Configuration</a></li>
+<li><a href="#search">3.5. Search</a></li>
+<li><a href="#logging">3.6. Logging</a></li>
+<li><a href="#configuration">3.7. Configuration</a></li>
 </ul>
 </li>
 <li><a href="#documentation">4. Documentation</a>
@@ -992,7 +993,7 @@ Threading has to be used to allow the progress bar to update as the <code>import
 <p>This feature is implemented to provide users the ability to edit tags without having to update each person one at a time.</p>
 </div>
 <div class="paragraph">
-<p>The follow sequence diagram shows how the tag edit operation works:</p>
+<p>The following sequence diagram shows how the tag edit operation works:</p>
 </div>
 <div class="imageblock">
 <div class="content">
@@ -1002,8 +1003,8 @@ Threading has to be used to allow the progress bar to update as the <code>import
 <div class="paragraph">
 <p>The user will have to provide the command <code>tagedit friends losers</code> to change all persons with the tag <code>friends</code> to the
 tag <code>losers</code> in the address book. <code>TagEditCommandParser</code> will parse the 2 arguments given after <code>tagedit</code> (in this case,
-it is <code>friends</code> and <code>losers</code>) provided by the user and it will return <code>TagEditCommand</code>. Next, <code>TagEditCommand</code>
-will call its method <code>executeUndoableCommand()</code> and ensure that the tag <code>friends</code> specified is valid</p>
+they are <code>friends</code> and <code>losers</code>) provided by the user and it will return <code>TagEditCommand</code>. Next, <code>TagEditCommand</code>
+will call its method <code>executeUndoableCommand()</code> and ensure that the tag <code>friends</code> specified is valid.</p>
 </div>
 <div class="sect3">
 <h4 id="design-considerations-3"><a class="link" href="#design-considerations-3">3.4.1. Design Considerations</a></h4>
@@ -1019,7 +1020,43 @@ will call its method <code>executeUndoableCommand()</code> and ensure that the t
 </div>
 </div>
 <div class="sect2">
-<h3 id="logging"><a class="link" href="#logging">3.5. Logging</a></h3>
+<h3 id="search"><a class="link" href="#search">3.5. Search</a></h3>
+<div class="paragraph">
+<p>This feature is implemented as an improvement to the default <code>find</code> feature. Currently, the user is able to find
+contacts based on a word in the name, tag, or both, without the need for prefixes as seen in the <code>add</code> or <code>edit</code>
+features.</p>
+</div>
+<div class="paragraph">
+<p>When using the search feature, there are 2 possible cases:<br></p>
+</div>
+<div class="paragraph">
+<p><strong>Case 1: User input contains only 1 argument</strong><br>
+The user is searching either a keyword in the name OR a tag. Contacts with the matching name OR tag will be listed.</p>
+</div>
+<div class="paragraph">
+<p><strong>Case 2: User input contains more than 1 argument</strong><br>
+The user is searching for contacts with a keyword in the name AND a tag. Contacts with the matching name AND tag will
+be listed.</p>
+</div>
+<div class="paragraph">
+<p>The sequence diagram for the command <code>search Alex friends</code> is shown below:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/SearchLogicDiagram.png" alt="SearchLogicDiagram" width="800">
+</div>
+</div>
+<div class="paragraph">
+<p>The user will have to provide the command <code>search Alex friends</code> to search for persons with the word <code>Alex</code> in their
+names and the tag <code>friends</code> under their tags. <code>SearchCommandParser</code> will parse the 2 arguments given after <code>search</code>
+(in this case, they are <code>Alex</code> and <code>friends</code>) provided by the user and it will return <code>SearchCommand</code>. In
+<code>SearchCommand</code>, the method <code>PersonContainsKeywordsPredicate</code> will check the arguments provided against the existing
+list of names and tags and return all persons with the matching keyword <code>Alex</code> in their names and tag <code>friends</code>.
+Finally, <code>execute()</code> will run <code>updateFilteredPersonList</code> to show the list of persons returned.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="logging"><a class="link" href="#logging">3.6. Logging</a></h3>
 <div class="paragraph">
 <p>We are using <code>java.util.logging</code> package for logging. The <code>LogsCenter</code> class is used to manage the logging levels and logging destinations.</p>
 </div>
@@ -1057,7 +1094,7 @@ will call its method <code>executeUndoableCommand()</code> and ensure that the t
 </div>
 </div>
 <div class="sect2">
-<h3 id="configuration"><a class="link" href="#configuration">3.6. Configuration</a></h3>
+<h3 id="configuration"><a class="link" href="#configuration">3.7. Configuration</a></h3>
 <div class="paragraph">
 <p>Certain properties of the application can be controlled (e.g App name, logging level) through the configuration file (default: <code>config.json</code>).</p>
 </div>
@@ -2074,7 +2111,7 @@ name and address information for use in AddressBook.</pre>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-10-24 15:50:01 +00:00
+Last updated 2017-10-24 18:26:29 +00:00
 </div>
 </div>
 </body>
