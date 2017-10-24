@@ -47,10 +47,11 @@
 <li><a href="#undo-redo-mechanism">3.1. Undo/Redo mechanism</a></li>
 <li><a href="#email-mechanism">3.2. Email mechanism</a></li>
 <li><a href="#import-mechanism">3.3. Import mechanism</a></li>
-<li><a href="#tag-edit">3.4. Tag Edit</a></li>
-<li><a href="#search">3.5. Search</a></li>
-<li><a href="#logging">3.6. Logging</a></li>
-<li><a href="#configuration">3.7. Configuration</a></li>
+<li><a href="#export-mechanism">3.4. Export mechanism</a></li>
+<li><a href="#tag-edit">3.5. Tag Edit</a></li>
+<li><a href="#search">3.6. Search</a></li>
+<li><a href="#logging">3.7. Logging</a></li>
+<li><a href="#configuration">3.8. Configuration</a></li>
 </ul>
 </li>
 <li><a href="#documentation">4. Documentation</a>
@@ -881,7 +882,7 @@ the email to their recipients.</p>
 <strong>Alternative 2:</strong> Use web browser to access user email services online.<br>
 <strong>Pros:</strong> Able to support more users to use this email feature as there are more options for different users.<br>
 <strong>Cons:</strong> Not all users use the same email services such as Gmail or Outlook. Moreover,
-it is difficult to authorize the web pages or API access for them since it is often dependent
+it is difficult to authorize every email services for all users since it is often dependent
 on the type of email services they need.<br></p>
 </div>
 </div>
@@ -988,7 +989,71 @@ Threading has to be used to allow the progress bar to update as the <code>import
 </div>
 </div>
 <div class="sect2">
-<h3 id="tag-edit"><a class="link" href="#tag-edit">3.4. Tag Edit</a></h3>
+<h3 id="export-mechanism"><a class="link" href="#export-mechanism">3.4. Export mechanism</a></h3>
+<div class="paragraph">
+<p>The export mechanism is facilitated by java <code>File</code> and <code>FileOutputStream</code> class. It supports writing contact information into a vCard format file.
+This file will be saved in the application data folder where user can import it into other applications such as Google Contacts.</p>
+</div>
+<div class="paragraph">
+<p>Firstly, a <code>Vcard</code> object has be to created for every person that user wants to export. <code>Vcard</code> of each person contains a unique
+String <code>cardDetails</code> that stores information about the person. The current version of vCard used is 3.0 as shown in the code example below:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>vCard format:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> Vcard(ReadOnlyPerson person) {
+    requireNonNull(person);
+    <span class="comment">//get all information from the person</span>
+    cardDetails = <span class="string"><span class="delimiter">&quot;</span><span class="content">BEGIN:VCARD</span><span class="char">\n</span><span class="delimiter">&quot;</span></span>
+            + <span class="string"><span class="delimiter">&quot;</span><span class="content">VERSION:3.0</span><span class="char">\n</span><span class="delimiter">&quot;</span></span>
+            + <span class="string"><span class="delimiter">&quot;</span><span class="content">FN:</span><span class="delimiter">&quot;</span></span> + name + <span class="string"><span class="delimiter">&quot;</span><span class="char">\n</span><span class="delimiter">&quot;</span></span>
+            + <span class="string"><span class="delimiter">&quot;</span><span class="content">TEL;TYPE=MOBILE:</span><span class="delimiter">&quot;</span></span> + phone + <span class="string"><span class="delimiter">&quot;</span><span class="char">\n</span><span class="delimiter">&quot;</span></span>
+            + <span class="string"><span class="delimiter">&quot;</span><span class="content">EMAIL;TYPE=WORK:</span><span class="delimiter">&quot;</span></span> + email + <span class="string"><span class="delimiter">&quot;</span><span class="char">\n</span><span class="delimiter">&quot;</span></span>
+            + <span class="string"><span class="delimiter">&quot;</span><span class="content">BDAY:</span><span class="delimiter">&quot;</span></span> + birthday + <span class="string"><span class="delimiter">&quot;</span><span class="char">\n</span><span class="delimiter">&quot;</span></span>
+            + <span class="string"><span class="delimiter">&quot;</span><span class="content">ADR;TYPE=HOME:;;</span><span class="delimiter">&quot;</span></span> + address + <span class="string"><span class="delimiter">&quot;</span><span class="char">\n</span><span class="delimiter">&quot;</span></span>
+            + <span class="string"><span class="delimiter">&quot;</span><span class="content">END:VCARD</span><span class="delimiter">&quot;</span></span> + <span class="string"><span class="delimiter">&quot;</span><span class="char">\n</span><span class="delimiter">&quot;</span></span>;
+}</code></pre>
+</div>
+</div>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Next, a <code>File</code> will be created. In order to store all the <code>cardDetails</code> created earlier, <code>FileOutputStream</code> will call its
+method write to write and saved all information in the <code>File</code> named as "contacts.vcf". An example of how write method is execute is shown below:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>FileOutputStream write method:<br>
+<code>cardDetails</code> are first encoded into a sequence of bytes and stored in a byte array, b.
+<code>FileOutputStream</code> calls write(byte[] b) in order to write the encoded string into the file.</p>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="comment">// Creating an instance of FileOutputStream</span>
+fos = <span class="keyword">new</span> <span class="predefined-type">FileOutputStream</span>(file);
+<span class="comment">// For each Vcard created earlier</span>
+    <span class="keyword">try</span> {
+        <span class="comment">// FileOutputStream will write the string encoded as byte array into the file.</span>
+        fos.write(vCard.getCardDetails().getBytes());
+    } <span class="keyword">catch</span> (<span class="exception">IOException</span> e) {
+        <span class="comment">// Print exception</span>
+    }
+}</code></pre>
+</div>
+</div>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Finally, the directory for the "contacts.vcf" will be shown to the user and the file can be imported to other applications.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="tag-edit"><a class="link" href="#tag-edit">3.5. Tag Edit</a></h3>
 <div class="paragraph">
 <p>This feature is implemented to provide users the ability to edit tags without having to update each person one at a time.</p>
 </div>
@@ -1007,7 +1072,7 @@ they are <code>friends</code> and <code>losers</code>) provided by the user and 
 will call its method <code>executeUndoableCommand()</code> and ensure that the tag <code>friends</code> specified is valid.</p>
 </div>
 <div class="sect3">
-<h4 id="design-considerations-3"><a class="link" href="#design-considerations-3">3.4.1. Design Considerations</a></h4>
+<h4 id="design-considerations-3"><a class="link" href="#design-considerations-3">3.5.1. Design Considerations</a></h4>
 <div class="paragraph">
 <p><strong>Aspect:</strong> Implementation of <code>TagEditCommand</code><br>
 <strong>Alternative 1 (current choice):</strong> implement it by extending <code>UndoableCommand</code><br>
@@ -1020,7 +1085,7 @@ will call its method <code>executeUndoableCommand()</code> and ensure that the t
 </div>
 </div>
 <div class="sect2">
-<h3 id="search"><a class="link" href="#search">3.5. Search</a></h3>
+<h3 id="search"><a class="link" href="#search">3.6. Search</a></h3>
 <div class="paragraph">
 <p>This feature is implemented as an improvement to the default <code>find</code> feature. Currently, the user is able to find
 contacts based on a word in the name, tag, or both, without the need for prefixes as seen in the <code>add</code> or <code>edit</code>
@@ -1056,7 +1121,7 @@ Finally, <code>execute()</code> will run <code>updateFilteredPersonList</code> t
 </div>
 </div>
 <div class="sect2">
-<h3 id="logging"><a class="link" href="#logging">3.6. Logging</a></h3>
+<h3 id="logging"><a class="link" href="#logging">3.7. Logging</a></h3>
 <div class="paragraph">
 <p>We are using <code>java.util.logging</code> package for logging. The <code>LogsCenter</code> class is used to manage the logging levels and logging destinations.</p>
 </div>
@@ -1094,7 +1159,7 @@ Finally, <code>execute()</code> will run <code>updateFilteredPersonList</code> t
 </div>
 </div>
 <div class="sect2">
-<h3 id="configuration"><a class="link" href="#configuration">3.7. Configuration</a></h3>
+<h3 id="configuration"><a class="link" href="#configuration">3.8. Configuration</a></h3>
 <div class="paragraph">
 <p>Certain properties of the application can be controlled (e.g App name, logging level) through the configuration file (default: <code>config.json</code>).</p>
 </div>
@@ -1595,25 +1660,18 @@ b. Require developers to download those libraries manually (this creates extra w
 <div class="paragraph">
 <p><strong>Extensions</strong></p>
 </div>
-<div class="ulist none">
-<ul class="none">
+<div class="ulist">
+<ul>
 <li>
-<p>2a. The list is empty.</p>
+<p>The list is empty.</p>
 <div class="paragraph">
 <p>Use case ends.</p>
 </div>
 </li>
 <li>
-<p>3a. The given index is invalid.</p>
-<div class="ulist none">
-<ul class="none">
-<li>
-<p>3a1. System shows an error message.</p>
+<p>The given index is invalid.</p>
 <div class="paragraph">
-<p>Use case resumes at step 2.</p>
-</div>
-</li>
-</ul>
+<p>System shows an error message. Use case resumes at step 2.</p>
 </div>
 </li>
 </ul>
@@ -1634,12 +1692,37 @@ b. Require developers to download those libraries manually (this creates extra w
 <p>User selects persons to email, then requests to email selected persons</p>
 </li>
 <li>
-<p>System opens user&#8217;s default mail application with persons' emails put into the "To:" field</p>
+<p>System opens user&#8217;s default mail application with with the "To:" field occupied by email addresses of selected persons.</p>
 <div class="paragraph">
 <p>Use case ends.</p>
 </div>
 </li>
 </ol>
+</div>
+<div class="paragraph">
+<p><strong>Extensions</strong></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>The list is empty.</p>
+<div class="paragraph">
+<p>Use case ends.</p>
+</div>
+</li>
+<li>
+<p>The given index is invalid.</p>
+<div class="paragraph">
+<p>System shows an error message. Use case resumes at step 2.</p>
+</div>
+</li>
+<li>
+<p>The person selected does not have any email address.</p>
+<div class="paragraph">
+<p>System shows an error messsage. Use case resume at step 2.</p>
+</div>
+</li>
+</ul>
 </div>
 <h3 id="use-case-access-social-media-profile-of-a-person" class="discrete">Use case: Access social media profile of a person</h3>
 <div class="paragraph">
@@ -1717,10 +1800,10 @@ b. Require developers to download those libraries manually (this creates extra w
 <p>System shows a list of persons</p>
 </li>
 <li>
-<p>User requests to export contact</p>
+<p>User requests to export contacts</p>
 </li>
 <li>
-<p>System creates a vCard file in the application directory</p>
+<p>System creates a vCard file in the application directory data folder.</p>
 <div class="paragraph">
 <p>Use case ends.</p>
 </div>
@@ -1787,13 +1870,13 @@ b. Require developers to download those libraries manually (this creates extra w
 <div class="paragraph">
 <p><strong>Extensions</strong></p>
 </div>
-<div class="ulist none">
-<ul class="none">
+<div class="ulist">
+<ul>
 <li>
-<p>2a.   Key already aliased to other command</p>
+<p>Key already aliased to other command</p>
 </li>
 <li>
-<p>2b.   Key&#8217;s old mapping is overwritten to new command</p>
+<p>Key&#8217;s old mapping is overwritten to new command</p>
 <div class="paragraph">
 <p>Use case ends</p>
 </div>
@@ -2111,7 +2194,7 @@ name and address information for use in AddressBook.</pre>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-10-24 18:26:29 +00:00
+Last updated 2017-10-24 18:31:49 +00:00
 </div>
 </div>
 </body>
