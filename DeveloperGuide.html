@@ -48,10 +48,11 @@
 <li><a href="#email-mechanism">3.2. Email mechanism</a></li>
 <li><a href="#import-mechanism">3.3. Import mechanism</a></li>
 <li><a href="#export-mechanism">3.4. Export mechanism</a></li>
-<li><a href="#tag-edit">3.5. Tag Edit</a></li>
-<li><a href="#search">3.6. Search</a></li>
-<li><a href="#logging">3.7. Logging</a></li>
-<li><a href="#configuration">3.8. Configuration</a></li>
+<li><a href="#display-picture-mechanism">3.5. Display Picture Mechanism</a></li>
+<li><a href="#tag-edit">3.6. Tag Edit</a></li>
+<li><a href="#search">3.7. Search</a></li>
+<li><a href="#logging">3.8. Logging</a></li>
+<li><a href="#configuration">3.9. Configuration</a></li>
 </ul>
 </li>
 <li><a href="#documentation">4. Documentation</a>
@@ -1053,7 +1054,89 @@ fos = <span class="keyword">new</span> <span class="predefined-type">FileOutputS
 </div>
 </div>
 <div class="sect2">
-<h3 id="tag-edit"><a class="link" href="#tag-edit">3.5. Tag Edit</a></h3>
+<h3 id="display-picture-mechanism"><a class="link" href="#display-picture-mechanism">3.5. Display Picture Mechanism</a></h3>
+<div class="paragraph">
+<p>This feature was implemented to facilitate users to remember their friends with ease. It allows user to select display picture for each of their contacts if they have a picture ready. Otherwise, they can simple assign a default display picture for them.</p>
+</div>
+<div class="paragraph">
+<p>JavaFX <code>FileChooser</code> class allows user to choose the display picture that they want to use for a contact and returns the path to that picture. The path to the picture is then stored as a field in <code>Persons</code>.</p>
+</div>
+<div class="paragraph">
+<p>When an event is raised from Storage to UI, the path will be used to make an image using JavaFX <code>Image</code> class and displayed using JavaFX <code>ImageView</code>.</p>
+</div>
+<div class="paragraph">
+<p>This feature is an add-on to the current <code>Add</code> and <code>Edit</code> command. The prefix for display picture is <code>dp/[CHOICE]</code>. The <code>[CHOICE]</code> is to indicate <code>y/n</code>.</p>
+</div>
+<div class="paragraph">
+<p>An example for an Add command:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>add n/John Doe p/98142142 e/johndoe@gmail.com a/Clementi road b/28.01.1995 dp/Y t/friends</pre>
+</div>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+If you do not have a display picture for your contact, indicate dp/N to give him/her a default display picture.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>A static class ImagePathUtil is used to detect <code>dp/[CHOICE]</code> when the user enters a command.
+The following function check for the users <code>[CHOICE]</code> and append the command input accordingly.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Code listing:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="directive">static</span> <span class="predefined-type">String</span> setPath(<span class="predefined-type">String</span> arguments, CommandBox commandBox) <span class="directive">throws</span> <span class="exception">ParseException</span> {
+    <span class="keyword">try</span> {
+        <span class="type">int</span> prefixIndex = findPrefixPosition(arguments, PREFIX_DP.getPrefix(), <span class="integer">0</span>);
+        <span class="predefined-type">StringBuilder</span> sb = <span class="keyword">new</span> <span class="predefined-type">StringBuilder</span>(arguments);
+        <span class="predefined-type">String</span> choice = sb.substring(prefixIndex + PREFIX_LENGTH, prefixIndex + PREFIX_LENGTH + <span class="integer">1</span>);
+        <span class="keyword">if</span> (requireFileChooser(choice)) {
+            <span class="predefined-type">String</span> selectedPath = commandBox.getDisplayPicPath();
+            sb.replace(prefixIndex, prefixIndex + PREFIX_LENGTH + <span class="integer">1</span>, PREFIX_DP.getPrefix() + selectedPath + <span class="string"><span class="delimiter">&quot;</span><span class="content"> </span><span class="delimiter">&quot;</span></span>);
+            arguments = sb.toString();
+        } <span class="keyword">else</span> {
+            sb.replace(prefixIndex, prefixIndex + PREFIX_LENGTH + <span class="integer">1</span>, PREFIX_DP.getPrefix()
+                    + DEFAULT_DISPLAY_PIC + <span class="string"><span class="delimiter">&quot;</span><span class="content"> </span><span class="delimiter">&quot;</span></span>);
+            arguments = sb.toString();
+        }
+        <span class="keyword">return</span> arguments;
+    } <span class="keyword">catch</span> (<span class="exception">StringIndexOutOfBoundsException</span> sioe) {
+        <span class="keyword">throw</span> <span class="keyword">new</span> <span class="exception">ParseException</span>(ERROR_MESSAGE, sioe);
+    }
+}</code></pre>
+</div>
+</div>
+</li>
+</ul>
+</div>
+<div class="sect3">
+<h4 id="design-considerations-3"><a class="link" href="#design-considerations-3">3.5.1. Design Considerations</a></h4>
+<div class="paragraph">
+<p><strong>Aspect:</strong> How to select Display Picture<br>
+<strong>Alternative 1 (current choice):</strong> Use a FileChooser and allow Users to select the file<br>
+<strong>Pros:</strong> User only have to click to select the file.<br>
+<strong>Cons:</strong> No longer a CLI interface<br>
+<strong>Alternative 2:</strong> Users find the path of the file themselves and add it into the command<br>
+<strong>Pros:</strong> CLI interface<br>
+<strong>Cons:</strong> It is hard for users who are not tech-savvy to find know the path to the file</p>
+</div>
+<hr>
+</div>
+</div>
+<div class="sect2">
+<h3 id="tag-edit"><a class="link" href="#tag-edit">3.6. Tag Edit</a></h3>
 <div class="paragraph">
 <p>This feature is implemented to provide users the ability to edit tags without having to update each person one at a time.</p>
 </div>
@@ -1072,7 +1155,7 @@ they are <code>friends</code> and <code>losers</code>) provided by the user and 
 will call its method <code>executeUndoableCommand()</code> and ensure that the tag <code>friends</code> specified is valid.</p>
 </div>
 <div class="sect3">
-<h4 id="design-considerations-3"><a class="link" href="#design-considerations-3">3.5.1. Design Considerations</a></h4>
+<h4 id="design-considerations-4"><a class="link" href="#design-considerations-4">3.6.1. Design Considerations</a></h4>
 <div class="paragraph">
 <p><strong>Aspect:</strong> Implementation of <code>TagEditCommand</code><br>
 <strong>Alternative 1 (current choice):</strong> implement it by extending <code>UndoableCommand</code><br>
@@ -1085,7 +1168,7 @@ will call its method <code>executeUndoableCommand()</code> and ensure that the t
 </div>
 </div>
 <div class="sect2">
-<h3 id="search"><a class="link" href="#search">3.6. Search</a></h3>
+<h3 id="search"><a class="link" href="#search">3.7. Search</a></h3>
 <div class="paragraph">
 <p>This feature is implemented as an improvement to the default <code>find</code> feature. Currently, the user is able to find
 contacts based on a word in the name, tag, or both, without the need for prefixes as seen in the <code>add</code> or <code>edit</code>
@@ -1121,7 +1204,7 @@ Finally, <code>execute()</code> will run <code>updateFilteredPersonList</code> t
 </div>
 </div>
 <div class="sect2">
-<h3 id="logging"><a class="link" href="#logging">3.7. Logging</a></h3>
+<h3 id="logging"><a class="link" href="#logging">3.8. Logging</a></h3>
 <div class="paragraph">
 <p>We are using <code>java.util.logging</code> package for logging. The <code>LogsCenter</code> class is used to manage the logging levels and logging destinations.</p>
 </div>
@@ -1159,7 +1242,7 @@ Finally, <code>execute()</code> will run <code>updateFilteredPersonList</code> t
 </div>
 </div>
 <div class="sect2">
-<h3 id="configuration"><a class="link" href="#configuration">3.8. Configuration</a></h3>
+<h3 id="configuration"><a class="link" href="#configuration">3.9. Configuration</a></h3>
 <div class="paragraph">
 <p>Certain properties of the application can be controlled (e.g App name, logging level) through the configuration file (default: <code>config.json</code>).</p>
 </div>
@@ -2194,7 +2277,7 @@ name and address information for use in AddressBook.</pre>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-10-25 05:02:40 +00:00
+Last updated 2017-10-25 05:42:36 +00:00
 </div>
 </div>
 </body>
