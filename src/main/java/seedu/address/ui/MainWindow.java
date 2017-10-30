@@ -29,9 +29,11 @@ import seedu.address.commons.events.ui.ExitAppRequestEvent;
 import seedu.address.commons.events.ui.ExportRequestEvent;
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
 import seedu.address.commons.events.ui.ShowProgressEvent;
+import seedu.address.commons.events.ui.SocialRequestEvent;
 import seedu.address.commons.util.FxViewUtil;
 import seedu.address.logic.Logic;
 import seedu.address.model.UserPrefs;
+import seedu.address.model.person.UserName;
 
 /**
  * The Main Window. Provides the basic application layout containing
@@ -45,6 +47,7 @@ public class MainWindow extends UiPart<Region> {
     private static final int MIN_WIDTH = 450;
     private static final String EMAIL_URI_PREFIX = "mailTo:";
     private static final String EXPORT_FILE_PATH = "./data/";
+
 
     private final Logger logger = LogsCenter.getLogger(this.getClass());
 
@@ -246,6 +249,16 @@ public class MainWindow extends UiPart<Region> {
     }
 
     /**
+     * This method will use the built-in browser to open the selected index's social media profile (either Twitter
+     * or Instagram).
+     * @param userName is a UserName of the person
+     */
+    public void handleSocial(UserName userName, String socialMediaLink) {
+        browserPanel.loadPage(socialMediaLink + userName);
+    }
+
+
+    /**
      * Opens the progress window.
      */
     @FXML
@@ -311,6 +324,12 @@ public class MainWindow extends UiPart<Region> {
     private void handleEmailRequestEvent(EmailRequestEvent event) throws Exception {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         handleEmail(event.getAllEmailAddresses());
+    }
+
+    @Subscribe
+    private void handleSocialEvent(SocialRequestEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        handleSocial(event.getUserName(), event.getSocialMediaLink());
     }
 
     @Subscribe
