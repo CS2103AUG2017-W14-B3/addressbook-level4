@@ -51,8 +51,9 @@
 <li><a href="#display-picture-mechanism">3.5. Display Picture Mechanism</a></li>
 <li><a href="#tag-edit">3.6. Tag Edit</a></li>
 <li><a href="#search">3.7. Search</a></li>
-<li><a href="#logging">3.8. Logging</a></li>
-<li><a href="#configuration">3.9. Configuration</a></li>
+<li><a href="#social">3.8. Social</a></li>
+<li><a href="#logging">3.9. Logging</a></li>
+<li><a href="#configuration">3.10. Configuration</a></li>
 </ul>
 </li>
 <li><a href="#documentation">4. Documentation</a>
@@ -1204,7 +1205,48 @@ Finally, <code>execute()</code> will run <code>updateFilteredPersonList</code> t
 </div>
 </div>
 <div class="sect2">
-<h3 id="logging"><a class="link" href="#logging">3.8. Logging</a></h3>
+<h3 id="social"><a class="link" href="#social">3.8. Social</a></h3>
+<div class="paragraph">
+<p>This feature is a way for users to quickly access their contacts' social media profiles via the built in browser,
+provided that they have their usernames stored. Currently, HitMeUp supports Twitter and Instagram.</p>
+</div>
+<div class="paragraph">
+<p>The diagram below shows the sequence diagram of a typical social command:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/SocialSequenceDiagram.png" alt="SocialSequenceDiagram" width=""800">
+</div>
+</div>
+<div class="paragraph">
+<p><div align="center"><b>Figure 3.8.1 Social Command Implementation</b></div></p>
+</div>
+<div class="paragraph">
+<p>As shown above, when the user enters the command <code>social 1 ig</code>, <code>SocialCommandParser</code> will parse the arguments which
+are an index and the chosen social media platform and return a <code>SocialCommand</code>. <code>SocialCommand</code> will then check the type
+of social media platform in the 2nd argument of the user input. In this case, the user input is <code>ig</code> for Instagram.
+<code>SocialCommand</code> will call its method <code>execute()</code> and ensure that the <code>Index</code> and the chosen social media is valid before
+posting a new <code>SocialRequestEvent</code> to the UI. In the UI, the <code>MainWindow</code> calls an instance of the <code>BrowserPanel</code> to
+load the Instagram page of the person at index 1.</p>
+</div>
+<div class="sect3">
+<h4 id="design-consideration-2"><a class="link" href="#design-consideration-2">3.8.1. Design consideration</a></h4>
+<div class="paragraph">
+<p><strong>Aspect:</strong> What the user input for social media field should be<br>
+<strong>Alternative 1 (current choice):</strong> Use the same prefixes when adding person<br>
+<strong>Pros:</strong> Feels intuitive since you add people with the prefixes <code>ig</code> and <code>tw</code> and therefore should be able to invoke
+this command the same way<br>
+<strong>Cons:</strong> New users might instinctively type in the full name Instagram and Twitter instead of using the aliases<br>
+<strong>Alternative 2:</strong> Use the full name of the social media platform<br>
+<strong>Pros:</strong> Might be natural for some people to type in the full name<br>
+<strong>Cons:</strong> Might not make sense since you add people&#8217;s social media into their details based on shortcuts and yet in this
+command the full name of the chosen social media is required. Moreover, it might be more user-friendly to allow them to
+type less into the CLI<br></p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="logging"><a class="link" href="#logging">3.9. Logging</a></h3>
 <div class="paragraph">
 <p>We are using <code>java.util.logging</code> package for logging. The <code>LogsCenter</code> class is used to manage the logging levels and logging destinations.</p>
 </div>
@@ -1242,7 +1284,7 @@ Finally, <code>execute()</code> will run <code>updateFilteredPersonList</code> t
 </div>
 </div>
 <div class="sect2">
-<h3 id="configuration"><a class="link" href="#configuration">3.9. Configuration</a></h3>
+<h3 id="configuration"><a class="link" href="#configuration">3.10. Configuration</a></h3>
 <div class="paragraph">
 <p>Certain properties of the application can be controlled (e.g App name, logging level) through the configuration file (default: <code>config.json</code>).</p>
 </div>
@@ -2277,7 +2319,7 @@ name and address information for use in AddressBook.</pre>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-10-31 14:55:39 +00:00
+Last updated 2017-11-01 02:46:13 +00:00
 </div>
 </div>
 </body>
