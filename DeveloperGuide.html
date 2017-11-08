@@ -50,7 +50,7 @@
 <li><a href="#export-mechanism">3.4. Export mechanism</a></li>
 <li><a href="#display-picture-mechanism">3.5. Display Picture Mechanism</a></li>
 <li><a href="#tag-edit">3.6. Tag Edit</a></li>
-<li><a href="#search">3.7. Search</a></li>
+<li><a href="#find">3.7. Find</a></li>
 <li><a href="#social">3.8. Social</a></li>
 <li><a href="#logging">3.9. Logging</a></li>
 <li><a href="#configuration">3.10. Configuration</a></li>
@@ -1169,18 +1169,23 @@ will call its method <code>executeUndoableCommand()</code> and ensure that the t
 </div>
 </div>
 <div class="sect2">
-<h3 id="search"><a class="link" href="#search">3.7. Search</a></h3>
+<h3 id="find"><a class="link" href="#find">3.7. Find</a></h3>
 <div class="paragraph">
-<p>This feature is implemented as an improvement to the default <code>find</code> feature. Currently, the user is able to find
-contacts based on a word in the name, tag, or both, without the need for prefixes as seen in the <code>add</code> or <code>edit</code>
+<p>This feature is implemented as an improvement to the default <code>find</code> feature. Previously, the user was only able to find
+names. Currently, the user is able to find contacts based on the name, tags or both, without the need for prefixes as
+seen in the <code>add</code> or <code>edit</code>. The user is also able to find contacts based on an initial.
 features.</p>
 </div>
 <div class="paragraph">
-<p>When using the search feature, there are 2 possible cases:<br></p>
+<p>When using the find feature, there are 2 possible cases:<br></p>
 </div>
 <div class="paragraph">
 <p><strong>Case 1: User input contains only 1 argument</strong><br>
-The user is searching either a keyword in the name OR a tag. Contacts with the matching name OR tag will be listed.</p>
+In this case there would be 3 possibilities:<br>
+1) The user is searching for the keyword in the name,<br>
+2) The user is searching for the keyword in the tags,<br>
+3) OR the user is searching for an initial in the names.<br>
+Contacts with the matching name, tag or initial will be listed.</p>
 </div>
 <div class="paragraph">
 <p><strong>Case 2: User input contains more than 1 argument</strong><br>
@@ -1188,20 +1193,74 @@ The user is searching for contacts with a keyword in the name AND a tag. Contact
 be listed.</p>
 </div>
 <div class="paragraph">
-<p>The sequence diagram for the command <code>search Alex friends</code> is shown below:</p>
+<p>Note that <code>find</code> only supports searching with 1 name keyword.</p>
+</div>
+<div class="paragraph">
+<p>In this case, the user is either searching for a name with multiple tags, or simply multiple tags.</p>
+</div>
+<div class="paragraph">
+<p>The sequence diagram for the command <code>find Alex</code> is shown below:</p>
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="images/SearchLogicDiagram.png" alt="SearchLogicDiagram" width="800">
+<img src="images/FindCommandLogicDiagram.png" alt="FindCommandLogicDiagram" width="800">
 </div>
 </div>
 <div class="paragraph">
-<p>The user will have to provide the command <code>search Alex friends</code> to search for persons with the word <code>Alex</code> in their
-names and the tag <code>friends</code> under their tags. <code>SearchCommandParser</code> will parse the 2 arguments given after <code>search</code>
-(in this case, they are <code>Alex</code> and <code>friends</code>) provided by the user and it will return <code>SearchCommand</code>. In
-<code>SearchCommand</code>, the method <code>PersonContainsKeywordsPredicate</code> will check the arguments provided against the existing
-list of names and tags and return all persons with the matching keyword <code>Alex</code> in their names and tag <code>friends</code>.
+<p>The user will have to provide the command <code>find Alex</code> to search for persons with the word <code>Alex</code> in their
+names. <code>SearchCommandParser</code> will parse the argument given after <code>find</code> provided and it will return <code>FindCommand</code>. In
+<code>FindCommand</code>, the method <code>PersonContainsKeywordsPredicate</code> will check the arguments provided against the existing
+list of names and tags and return all persons with the matching keyword <code>Alex</code> in their names.
 Finally, <code>execute()</code> will run <code>updateFilteredPersonList</code> to show the list of persons returned.</p>
+</div>
+<div class="paragraph">
+<p>Take another find command, <code>find Alex colleagues</code> for example. The code listing for checking if a person returns true
+for the find command stated is as shown:<br></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Code listing:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java">    <span class="directive">public</span> <span class="type">boolean</span> test(ReadOnlyPerson person) {
+        clearMasterAndTagLists();
+        <span class="comment">//sets up the name and tags of the person for comparison</span>
+        setUpMasterList(person);
+        <span class="keyword">if</span> (keywords.size() == <span class="integer">1</span>) {
+            <span class="comment">//To handle find when input is a single argument</span>
+            <span class="comment">//...logic...</span>
+        }
+        <span class="comment">/* Case 3: more than 1 keyword
+         * Only supports 1 name, but multiple tags
+         * a) name + tag
+         * b) tag + tag + tag...
+         */</span>
+        <span class="keyword">return</span> masterList.containsAll(keywordsLower);
+    }</code></pre>
+</div>
+</div>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>The user will have to provide the command <code>find Alex colleagues</code> to search for persons with the word <code>Alex</code> and the tag
+<code>colleagues</code> in their names. <code>SearchCommandParser</code> will parse the argument given after <code>find</code> provided and it will
+return <code>FindCommand</code>. In <code>FindCommand</code>, the method <code>PersonContainsKeywordsPredicate</code> will check the arguments provided
+against the existing list of names and tags and return all persons with the matching keyword <code>Alex</code> in their names and
+tag <code>friends</code>. Finally, <code>execute()</code> will run <code>updateFilteredPersonList</code> to show the list of persons returned.</p>
+</div>
+<div class="sect3">
+<h4 id="design-consideration-2"><a class="link" href="#design-consideration-2">3.7.1. Design consideration</a></h4>
+<div class="paragraph">
+<p><strong>Aspect:</strong> How to input arguments for the command<br>
+<strong>Alternative 1 (current choice):</strong> flexible input, no prefixes needed<br>
+<strong>Pros:</strong> easy and simple to use for the users<br>
+<strong>Cons:</strong> harder to implement and edit in future<br>
+<strong>Alternative 2:</strong> require users to enter prefixes to use find<br>
+<strong>Pros:</strong> easy and simple to implement<br>
+<strong>Cons:</strong> inconvenient and inflexible for the users</p>
+</div>
 </div>
 </div>
 <div class="sect2">
@@ -1230,7 +1289,7 @@ posting a new <code>SocialRequestEvent</code> to the UI. In the UI, the <code>Ma
 load the Instagram page of the person at index 1.</p>
 </div>
 <div class="sect3">
-<h4 id="design-consideration-2"><a class="link" href="#design-consideration-2">3.8.1. Design consideration</a></h4>
+<h4 id="design-consideration-3"><a class="link" href="#design-consideration-3">3.8.1. Design consideration</a></h4>
 <div class="paragraph">
 <p><strong>Aspect:</strong> What the user input for social media field should be<br>
 <strong>Alternative 1 (current choice):</strong> Use the same prefixes when adding person<br>
@@ -2319,7 +2378,7 @@ name and address information for use in AddressBook.</pre>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-11-07 10:08:09 +00:00
+Last updated 2017-11-08 00:07:01 +00:00
 </div>
 </div>
 </body>

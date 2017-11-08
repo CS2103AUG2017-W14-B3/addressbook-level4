@@ -25,23 +25,419 @@
 <p><strong>Code contributed</strong>: to be updated</p>
 </div>
 <div class="sect2">
-<h3 id="enhancement-added-to-be-updated"><a class="link" href="#enhancement-added-to-be-updated">Enhancement Added: to be updated</a></h3>
-
+<h3 id="enhancement-added-tag-delete"><a class="link" href="#enhancement-added-tag-delete">Enhancement Added: Tag Delete</a></h3>
+<hr>
+<div class="paragraph">
+<p><mark>Start of Extract [from: User Guide]</mark></p>
+</div>
 </div>
 <div class="sect2">
-<h3 id="enhancement-proposed-to-be-updated"><a class="link" href="#enhancement-proposed-to-be-updated">Enhancement Proposed: to be updated</a></h3>
-
+<h3 id="deleting-a-tag-code-tagdelete-code"><a class="link" href="#deleting-a-tag-code-tagdelete-code">Deleting a tag : <code>tagdelete</code></a></h3>
+<div class="paragraph">
+<p>Allows you to delete a tag from all persons in the address book.</p>
+</div>
+<div class="paragraph">
+<p>Format: <code>tagdelete TAG_NAME</code></p>
+</div>
+<div class="sidebarblock">
+<div class="content">
+<div class="ulist">
+<ul>
+<li>
+<p>The tag must be a valid tag (eg. already existing)</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>Examples:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>tagdelete friends</code><br>
+Deletes the tag 'friends' from all persons with the 'friends' tag in the address book.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p><mark>End of Extract</mark></p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="enhancement-added-tag-edit"><a class="link" href="#enhancement-added-tag-edit">Enhancement Added: Tag Edit</a></h3>
+<hr>
+<div class="paragraph">
+<p><mark>Start of Extract [from: User Guide]</mark></p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="editing-a-tag-code-tagedit-code"><a class="link" href="#editing-a-tag-code-tagedit-code">Editing a tag : <code>tagedit</code></a></h3>
+<div class="paragraph">
+<p>Allows you to change the name of a tag belonging to all persons in the address book.</p>
+</div>
+<div class="paragraph">
+<p>Format: <code>tagedit OLD_TAG_NAME NEW_TAG_NAME</code></p>
+</div>
+<div class="sidebarblock">
+<div class="content">
+<div class="ulist">
+<ul>
+<li>
+<p>Old tag must be an existing, valid tag</p>
+</li>
+<li>
+<p>New tag must be a valid tag (eg. alphanumerical only)</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>Examples:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>tagedit friends losers</code><br>
+Changes the tag 'friends' into 'losers' for all persons with that tag.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p><mark>End of Extract</mark></p>
+</div>
+<div class="paragraph">
+<p><mark>Start of Extract [from: Developer Guide]</mark></p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="tag-edit"><a class="link" href="#tag-edit">Tag Edit</a></h3>
+<div class="paragraph">
+<p>This feature is implemented to provide users the ability to edit tags without having to update each person one at a time.</p>
+</div>
+<div class="paragraph">
+<p>The following sequence diagram shows how the tag edit operation works:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../images/TagEditLogicDiagramv2.png" alt="TagEditLogicDiagramv2" width="800">
+</div>
+</div>
+<div class="paragraph">
+<p>The user will have to provide the command <code>tagedit friends losers</code> to change all persons with the tag <code>friends</code> to the
+tag <code>losers</code> in the address book. <code>TagEditCommandParser</code> will parse the 2 arguments given after <code>tagedit</code> (in this case,
+they are <code>friends</code> and <code>losers</code>) provided by the user and it will return <code>TagEditCommand</code>. Next, <code>TagEditCommand</code>
+will call its method <code>executeUndoableCommand()</code> and ensure that the tag <code>friends</code> specified is valid.</p>
+</div>
+<div class="sect3">
+<h4 id="design-considerations"><a class="link" href="#design-considerations">Design Considerations</a></h4>
+<div class="paragraph">
+<p><strong>Aspect:</strong> Implementation of <code>TagEditCommand</code><br>
+<strong>Alternative 1 (current choice):</strong> implement it by extending <code>UndoableCommand</code><br>
+<strong>Pros:</strong> Editing tags is undoable/redoable<br>
+<strong>Cons:</strong> May be difficult for new developers to understand the flow<br>
+<strong>Alternative 2:</strong> just override <code>execute()</code><br>
+<strong>Pros:</strong> Does not involve template pattern, easier to understand<br>
+<strong>Cons:</strong> Cannot undo/redo unless <code>super.execute()</code> is called</p>
+</div>
+<div class="paragraph">
+<p><mark>End of Extract</mark></p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="enhancement-added-improved-find"><a class="link" href="#enhancement-added-improved-find">Enhancement Added: Improved Find</a></h3>
+<hr>
+<div class="paragraph">
+<p><mark>Start of Extract [from: User Guide]</mark></p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="find-persons-improved-code-find-code"><a class="link" href="#find-persons-improved-code-find-code">Find persons (improved) : <code>find</code></a></h3>
+<div class="paragraph">
+<p>Searches for persons whose name or tags contain any of the given keywords.<br>
+Format: <code>find KEYWORD [MORE_KEYWORDS]</code><br></p>
+</div>
+<div class="sidebarblock">
+<div class="content">
+<div class="ulist">
+<ul>
+<li>
+<p>The search is case insensitive. e.g. <code>hans</code> will match <code>Hans</code> (example below)</p>
+</li>
+<li>
+<p>The order of keywords does not matter. (example below)</p>
+</li>
+<li>
+<p>Name, tags and initial can be searched.</p>
+</li>
+<li>
+<p>For names, only full words will be matched. e.g. <code>Han</code> will not match <code>Hans</code></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>Examples with explanation:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>find</code> only supports searching for 1 name.<br>
+e.g.:  <code>find Alex</code><br>
+<code>find Alex</code> will successfully find any persons with the name <code>Alex</code>, but find <code>Alex Bob</code> will not find all persons
+with the name <code>Alex</code> and <code>Bob</code>. It would instead find persons with both <code>Alex</code> and <code>Bob</code> in their names.<br></p>
+</li>
+<li>
+<p><code>find</code> supports searching for multiple tags.<br>
+e.g.:  <code>find colleagues friends</code><br>
+<code>find colleagues</code> will successfully find any persons with the tag <code>colleagues</code> in their description. <code>find
+colleagues friends</code> will find any persons with BOTH the tags <code>colleagues</code> and <code>friends</code>.<br></p>
+</li>
+<li>
+<p><code>find</code> also supports searching for a name with tags.<br>
+e.g.:  <code>find Alex colleagues</code>
+<code>find Alex colleagues</code> returns all persons with the word <code>Alex</code> in their names (either first name or last name) and
+are <code>colleagues</code>.</p>
+</li>
+<li>
+<p><code>find</code> supports searching for an initial.<br>
+e.g.:  <code>find a</code><br>
+<code>find a</code> will return all persons whose last names or first names begin with the letter <code>a</code>.</p>
+</li>
+<li>
+<p>The order of keywords does not matter.<br>
+e.g.: <code>find Alex colleagues</code> is the same as <code>find colleagues Alex</code>.<br></p>
+</li>
+<li>
+<p><code>find</code> is case insensitive for all inputs.<br>
+e.g.: <code>find BeRnICe FrIEnDs</code> is the same as <code>find Bernice friends</code>.<br></p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p><mark>End of Extract</mark></p>
+</div>
+<div class="paragraph">
+<p><mark>Start of Extract [from: Developer Guide]</mark></p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="find"><a class="link" href="#find">Find</a></h3>
+<div class="paragraph">
+<p>This feature is implemented as an improvement to the default <code>find</code> feature. Previously, the user was only able to find
+names. Currently, the user is able to find contacts based on the name, tags or both, without the need for prefixes as
+seen in the <code>add</code> or <code>edit</code>. The user is also able to find contacts based on an initial.
+features.</p>
+</div>
+<div class="paragraph">
+<p>When using the find feature, there are 2 possible cases:<br></p>
+</div>
+<div class="paragraph">
+<p><strong>Case 1: User input contains only 1 argument</strong><br>
+In this case there would be 3 possibilities:<br>
+1) The user is searching for the keyword in the name,<br>
+2) The user is searching for the keyword in the tags,<br>
+3) OR the user is searching for an initial in the names.<br>
+Contacts with the matching name, tag or initial will be listed.</p>
+</div>
+<div class="paragraph">
+<p><strong>Case 2: User input contains more than 1 argument</strong><br>
+The user is searching for contacts with a keyword in the name AND a tag. Contacts with the matching name AND tag will
+be listed.</p>
+</div>
+<div class="paragraph">
+<p>Note that <code>find</code> only supports searching with 1 name keyword.</p>
+</div>
+<div class="paragraph">
+<p>In this case, the user is either searching for a name with multiple tags, or simply multiple tags.</p>
+</div>
+<div class="paragraph">
+<p>The sequence diagram for the command <code>find Alex</code> is shown below:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../images/FindCommandLogicDiagram.png" alt="FindCommandLogicDiagram" width="800">
+</div>
+</div>
+<div class="paragraph">
+<p>The user will have to provide the command <code>find Alex</code> to search for persons with the word <code>Alex</code> in their
+names. <code>SearchCommandParser</code> will parse the argument given after <code>find</code> provided and it will return <code>FindCommand</code>. In
+<code>FindCommand</code>, the method <code>PersonContainsKeywordsPredicate</code> will check the arguments provided against the existing
+list of names and tags and return all persons with the matching keyword <code>Alex</code> in their names.
+Finally, <code>execute()</code> will run <code>updateFilteredPersonList</code> to show the list of persons returned.</p>
+</div>
+<div class="paragraph">
+<p>Take another find command, <code>find Alex colleagues</code> for example. The code listing for checking if a person returns true
+for the find command stated is as shown:<br></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Code listing:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java">    <span class="directive">public</span> <span class="type">boolean</span> test(ReadOnlyPerson person) {
+        clearMasterAndTagLists();
+        <span class="comment">//sets up the name and tags of the person for comparison</span>
+        setUpMasterList(person);
+        <span class="keyword">if</span> (keywords.size() == <span class="integer">1</span>) {
+            <span class="comment">//To handle find when input is a single argument</span>
+            <span class="comment">//...logic...</span>
+        }
+        <span class="comment">/* Case 3: more than 1 keyword
+         * Only supports 1 name, but multiple tags
+         * a) name + tag
+         * b) tag + tag + tag...
+         */</span>
+        <span class="keyword">return</span> masterList.containsAll(keywordsLower);
+    }</code></pre>
+</div>
+</div>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>The user will have to provide the command <code>find Alex colleagues</code> to search for persons with the word <code>Alex</code> and the tag
+<code>colleagues</code> in their names. <code>SearchCommandParser</code> will parse the argument given after <code>find</code> provided and it will
+return <code>FindCommand</code>. In <code>FindCommand</code>, the method <code>PersonContainsKeywordsPredicate</code> will check the arguments provided
+against the existing list of names and tags and return all persons with the matching keyword <code>Alex</code> in their names and
+tag <code>friends</code>. Finally, <code>execute()</code> will run <code>updateFilteredPersonList</code> to show the list of persons returned.</p>
+</div>
+<div class="sect3">
+<h4 id="design-consideration"><a class="link" href="#design-consideration">Design consideration</a></h4>
+<div class="paragraph">
+<p><strong>Aspect:</strong> How to input arguments for the command<br>
+<strong>Alternative 1 (current choice):</strong> flexible input, no prefixes needed<br>
+<strong>Pros:</strong> easy and simple to use for the users<br>
+<strong>Cons:</strong> harder to implement and edit in future<br>
+<strong>Alternative 2:</strong> require users to enter prefixes to use find<br>
+<strong>Pros:</strong> easy and simple to implement<br>
+<strong>Cons:</strong> inconvenient and inflexible for the users</p>
+</div>
+<div class="paragraph">
+<p><mark>End of Extract</mark></p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="enhancement-added-social"><a class="link" href="#enhancement-added-social">Enhancement Added: Social</a></h3>
+<hr>
+<div class="paragraph">
+<p><mark>Start of Extract [from: User Guide]</mark></p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="viewing-a-contact-s-twitter-instagram-profile-code-social-code"><a class="link" href="#viewing-a-contact-s-twitter-instagram-profile-code-social-code">Viewing a contact&#8217;s Twitter/Instagram profile : <code>social</code></a></h3>
+<div class="paragraph">
+<p>Opens up a person&#8217;s Twitter or Instagram profile in browser panel.<br>
+Format: <code>social INDEX SOCIAL_MEDIA</code><br></p>
+</div>
+<div class="sidebarblock">
+<div class="content">
+<div class="ulist">
+<ul>
+<li>
+<p>Uses the built-in browser panel to open up the chosen <code>SOCIAL_MEDIA</code> profile of person at the specified <code>INDEX</code>.</p>
+</li>
+<li>
+<p>The chosen <code>SOCIAL_MEDIA</code> must either be <code>ig</code> (Instagram) or <code>tw</code> (Twitter).</p>
+</li>
+<li>
+<p>The index refers to the index number shown in the most recent listing.</p>
+</li>
+<li>
+<p>The index <strong>must be a positive integer</strong> 1, 2, 3, &#8230;&#8203;</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>Examples:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>social 1 ig</code><br>
+Opens up the Instagram profile of the person at index 1.<br></p>
+</li>
+<li>
+<p><code>social 2 tw</code><br>
+Opens up the Twitter profile of the person at index 2.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p><mark>End of Extract</mark></p>
+</div>
+<div class="paragraph">
+<p><mark>Start of Extract [from: Developer Guide]</mark></p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="social"><a class="link" href="#social">Social</a></h3>
+<div class="paragraph">
+<p>This feature is a way for users to quickly access their contacts' social media profiles via the built in browser,
+provided that they have their usernames stored. Currently, HitMeUp supports Twitter and Instagram.</p>
+</div>
+<div class="paragraph">
+<p>The diagram below shows the sequence diagram of a typical social command:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../images/SocialSequenceDiagram.png" alt="SocialSequenceDiagram" width=""800">
+</div>
+</div>
+<div class="paragraph">
+<p><div align="center"><b>Figure 3.8.1 Social Command Implementation</b></div></p>
+</div>
+<div class="paragraph">
+<p>As shown above, when the user enters the command <code>social 1 ig</code>, <code>SocialCommandParser</code> will parse the arguments which
+are an index and the chosen social media platform and return a <code>SocialCommand</code>. <code>SocialCommand</code> will then check the type
+of social media platform in the 2nd argument of the user input. In this case, the user input is <code>ig</code> for Instagram.
+<code>SocialCommand</code> will call its method <code>execute()</code> and ensure that the <code>Index</code> and the chosen social media is valid before
+posting a new <code>SocialRequestEvent</code> to the UI. In the UI, the <code>MainWindow</code> calls an instance of the <code>BrowserPanel</code> to
+load the Instagram page of the person at index 1.</p>
+</div>
+<div class="sect3">
+<h4 id="design-consideration-2"><a class="link" href="#design-consideration-2">Design consideration</a></h4>
+<div class="paragraph">
+<p><strong>Aspect:</strong> What the user input for social media field should be<br>
+<strong>Alternative 1 (current choice):</strong> Use the same prefixes when adding person<br>
+<strong>Pros:</strong> Feels intuitive since you add people with the prefixes <code>ig</code> and <code>tw</code> and therefore should be able to invoke
+this command the same way<br>
+<strong>Cons:</strong> New users might instinctively type in the full name Instagram and Twitter instead of using the aliases<br>
+<strong>Alternative 2:</strong> Use the full name of the social media platform<br>
+<strong>Pros:</strong> Might be natural for some people to type in the full name<br>
+<strong>Cons:</strong> Might not make sense since you add people&#8217;s social media into their details based on shortcuts and yet in this
+command the full name of the chosen social media is required. Moreover, it might be more user-friendly to allow them to
+type less into the CLI<br></p>
+</div>
+<div class="paragraph">
+<p><mark>End of Extract</mark></p>
+</div>
+</div>
 </div>
 <div class="sect2">
 <h3 id="other-contributions"><a class="link" href="#other-contributions">Other contributions</a></h3>
-
+<div class="ulist">
+<ul>
+<li>
+<p>Implemented sorting feature that is case insensitive</p>
+</li>
+</ul>
+</div>
 </div>
 </div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-11-07 10:08:09 +00:00
+Last updated 2017-11-08 00:07:01 +00:00
 </div>
 </div>
 </body>

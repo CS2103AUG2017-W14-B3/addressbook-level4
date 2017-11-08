@@ -31,24 +31,23 @@
 <li><a href="#adding-a-person-code-add-code">2.2. Adding a person: <code>add</code></a></li>
 <li><a href="#listing-all-persons-code-list-code">2.3. Listing all persons : <code>list</code></a></li>
 <li><a href="#editing-a-person-code-edit-code">2.4. Editing a person : <code>edit</code></a></li>
-<li><a href="#locating-persons-by-name-code-find-code">2.5. Locating persons by name: <code>find</code></a></li>
-<li><a href="#deleting-a-person-code-delete-code">2.6. Deleting a person : <code>delete</code></a></li>
-<li><a href="#selecting-a-person-code-select-code">2.7. Selecting a person : <code>select</code></a></li>
-<li><a href="#sending-an-email-to-one-or-more-person-code-email-code">2.8. Sending an email to one or more person: <code>email</code></a></li>
-<li><a href="#listing-entered-commands-code-history-code">2.9. Listing entered commands : <code>history</code></a></li>
-<li><a href="#undoing-previous-command-code-undo-code">2.10. Undoing previous command : <code>undo</code></a></li>
-<li><a href="#redoing-the-previously-undone-command-code-redo-code">2.11. Redoing the previously undone command : <code>redo</code></a></li>
-<li><a href="#adding-an-alias-for-a-command-code-alias-code">2.12. Adding an alias for a command : <code>alias</code></a></li>
-<li><a href="#importing-contacts-code-import-code">2.13. Importing contacts : <code>import</code></a></li>
-<li><a href="#exporting-contacts-code-export-code">2.14. Exporting contacts : <code>export</code></a></li>
-<li><a href="#deleting-a-tag-code-tagdelete-code">2.15. Deleting a tag : <code>tagdelete</code></a></li>
-<li><a href="#editing-a-tag-code-tagedit-code">2.16. Editing a tag : <code>tagedit</code></a></li>
-<li><a href="#search-for-persons-code-search-code">2.17. Search for persons : <code>search</code></a></li>
-<li><a href="#viewing-a-contact-s-twitter-instagram-profile-code-social-code">2.18. Viewing a contact&#8217;s Twitter/Instagram profile : <code>social</code></a></li>
-<li><a href="#viewing-a-contact-s-address-code-location-code">2.19. Viewing a contact&#8217;s address : <code>location</code></a></li>
-<li><a href="#clearing-all-entries-code-clear-code">2.20. Clearing all entries : <code>clear</code></a></li>
-<li><a href="#exiting-the-program-code-exit-code">2.21. Exiting the program : <code>exit</code></a></li>
-<li><a href="#saving-the-data">2.22. Saving the data</a></li>
+<li><a href="#deleting-a-person-code-delete-code">2.5. Deleting a person : <code>delete</code></a></li>
+<li><a href="#selecting-a-person-code-select-code">2.6. Selecting a person : <code>select</code></a></li>
+<li><a href="#sending-an-email-to-one-or-more-person-code-email-code">2.7. Sending an email to one or more person: <code>email</code></a></li>
+<li><a href="#listing-entered-commands-code-history-code">2.8. Listing entered commands : <code>history</code></a></li>
+<li><a href="#undoing-previous-command-code-undo-code">2.9. Undoing previous command : <code>undo</code></a></li>
+<li><a href="#redoing-the-previously-undone-command-code-redo-code">2.10. Redoing the previously undone command : <code>redo</code></a></li>
+<li><a href="#adding-an-alias-for-a-command-code-alias-code">2.11. Adding an alias for a command : <code>alias</code></a></li>
+<li><a href="#importing-contacts-code-import-code">2.12. Importing contacts : <code>import</code></a></li>
+<li><a href="#exporting-contacts-code-export-code">2.13. Exporting contacts : <code>export</code></a></li>
+<li><a href="#deleting-a-tag-code-tagdelete-code">2.14. Deleting a tag : <code>tagdelete</code></a></li>
+<li><a href="#editing-a-tag-code-tagedit-code">2.15. Editing a tag : <code>tagedit</code></a></li>
+<li><a href="#find-persons-improved-code-find-code">2.16. Find persons (improved) : <code>find</code></a></li>
+<li><a href="#viewing-a-contact-s-twitter-instagram-profile-code-social-code">2.17. Viewing a contact&#8217;s Twitter/Instagram profile : <code>social</code></a></li>
+<li><a href="#viewing-a-contact-s-address-code-location-code">2.18. Viewing a contact&#8217;s address : <code>location</code></a></li>
+<li><a href="#clearing-all-entries-code-clear-code">2.19. Clearing all entries : <code>clear</code></a></li>
+<li><a href="#exiting-the-program-code-exit-code">2.20. Exiting the program : <code>exit</code></a></li>
+<li><a href="#saving-the-data">2.21. Saving the data</a></li>
 </ul>
 </li>
 <li><a href="#faq">3. FAQ</a></li>
@@ -371,52 +370,7 @@ Edits the name of the 2nd person to be <code>Betsy Crower</code> and clears all 
 </div>
 </div>
 <div class="sect2">
-<h3 id="locating-persons-by-name-code-find-code"><a class="link" href="#locating-persons-by-name-code-find-code">2.5. Locating persons by name: <code>find</code></a></h3>
-<div class="paragraph">
-<p>Finds persons whose names contain any of the given keywords.<br>
-Format: <code>find KEYWORD [MORE_KEYWORDS]</code></p>
-</div>
-<div class="sidebarblock">
-<div class="content">
-<div class="ulist">
-<ul>
-<li>
-<p>The search is case insensitive. e.g <code>hans</code> will match <code>Hans</code></p>
-</li>
-<li>
-<p>The order of the keywords does not matter. e.g. <code>Hans Bo</code> will match <code>Bo Hans</code></p>
-</li>
-<li>
-<p>Only the name is searched.</p>
-</li>
-<li>
-<p>Only full words will be matched e.g. <code>Han</code> will not match <code>Hans</code></p>
-</li>
-<li>
-<p>Persons matching at least one keyword will be returned (i.e. <code>OR</code> search). e.g. <code>Hans Bo</code> will return <code>Hans Gruber</code>, <code>Bo Yang</code></p>
-</li>
-</ul>
-</div>
-</div>
-</div>
-<div class="paragraph">
-<p>Examples:</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p><code>find John</code><br>
-Returns <code>john</code> and <code>John Doe</code></p>
-</li>
-<li>
-<p><code>find Betsy Tim John</code><br>
-Returns any person having names <code>Betsy</code>, <code>Tim</code>, or <code>John</code></p>
-</li>
-</ul>
-</div>
-</div>
-<div class="sect2">
-<h3 id="deleting-a-person-code-delete-code"><a class="link" href="#deleting-a-person-code-delete-code">2.6. Deleting a person : <code>delete</code></a></h3>
+<h3 id="deleting-a-person-code-delete-code"><a class="link" href="#deleting-a-person-code-delete-code">2.5. Deleting a person : <code>delete</code></a></h3>
 <div class="paragraph">
 <p>Deletes the specified person from the address book.<br>
 Format: <code>delete INDEX</code></p>
@@ -457,7 +411,7 @@ Deletes the 1st person in the results of the <code>find</code> command.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="selecting-a-person-code-select-code"><a class="link" href="#selecting-a-person-code-select-code">2.7. Selecting a person : <code>select</code></a></h3>
+<h3 id="selecting-a-person-code-select-code"><a class="link" href="#selecting-a-person-code-select-code">2.6. Selecting a person : <code>select</code></a></h3>
 <div class="paragraph">
 <p>Selects the person identified by the index number used in the last person listing.<br>
 Format: <code>select INDEX</code></p>
@@ -498,7 +452,7 @@ Selects the 1st person in the results of the <code>find</code> command.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="sending-an-email-to-one-or-more-person-code-email-code"><a class="link" href="#sending-an-email-to-one-or-more-person-code-email-code">2.8. Sending an email to one or more person: <code>email</code></a></h3>
+<h3 id="sending-an-email-to-one-or-more-person-code-email-code"><a class="link" href="#sending-an-email-to-one-or-more-person-code-email-code">2.7. Sending an email to one or more person: <code>email</code></a></h3>
 <div class="paragraph">
 <p>Emails one or more person identified by the index number used in the last person listing.<br>
 Format: <code>email INDEX [INDEX]&#8230;&#8203;</code></p>
@@ -540,7 +494,7 @@ Send an email to the 1st person in the results of the <code>find</code> command.
 </div>
 </div>
 <div class="sect2">
-<h3 id="listing-entered-commands-code-history-code"><a class="link" href="#listing-entered-commands-code-history-code">2.9. Listing entered commands : <code>history</code></a></h3>
+<h3 id="listing-entered-commands-code-history-code"><a class="link" href="#listing-entered-commands-code-history-code">2.8. Listing entered commands : <code>history</code></a></h3>
 <div class="paragraph">
 <p>Lists all the commands that you have entered in reverse chronological order.<br>
 Format: <code>history</code></p>
@@ -561,7 +515,7 @@ Format: <code>history</code></p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="undoing-previous-command-code-undo-code"><a class="link" href="#undoing-previous-command-code-undo-code">2.10. Undoing previous command : <code>undo</code></a></h3>
+<h3 id="undoing-previous-command-code-undo-code"><a class="link" href="#undoing-previous-command-code-undo-code">2.9. Undoing previous command : <code>undo</code></a></h3>
 <div class="paragraph">
 <p>Restores the address book to the state before the previous <em>undoable</em> command was executed.<br>
 Format: <code>undo</code></p>
@@ -606,7 +560,7 @@ The <code>undo</code> command fails as there are no undoable commands executed p
 </div>
 </div>
 <div class="sect2">
-<h3 id="redoing-the-previously-undone-command-code-redo-code"><a class="link" href="#redoing-the-previously-undone-command-code-redo-code">2.11. Redoing the previously undone command : <code>redo</code></a></h3>
+<h3 id="redoing-the-previously-undone-command-code-redo-code"><a class="link" href="#redoing-the-previously-undone-command-code-redo-code">2.10. Redoing the previously undone command : <code>redo</code></a></h3>
 <div class="paragraph">
 <p>Reverses the most recent <code>undo</code> command.<br>
 Format: <code>redo</code></p>
@@ -638,7 +592,7 @@ The <code>redo</code> command fails as there are no <code>undo</code> commands e
 </div>
 </div>
 <div class="sect2">
-<h3 id="adding-an-alias-for-a-command-code-alias-code"><a class="link" href="#adding-an-alias-for-a-command-code-alias-code">2.12. Adding an alias for a command : <code>alias</code></a></h3>
+<h3 id="adding-an-alias-for-a-command-code-alias-code"><a class="link" href="#adding-an-alias-for-a-command-code-alias-code">2.11. Adding an alias for a command : <code>alias</code></a></h3>
 <div class="paragraph">
 <p>Allows you to add an alias for any command used in the address book.</p>
 </div>
@@ -684,7 +638,7 @@ it is no longer assigned to delete.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="importing-contacts-code-import-code"><a class="link" href="#importing-contacts-code-import-code">2.13. Importing contacts : <code>import</code></a></h3>
+<h3 id="importing-contacts-code-import-code"><a class="link" href="#importing-contacts-code-import-code">2.12. Importing contacts : <code>import</code></a></h3>
 <div class="paragraph">
 <p>Allows you to import contacts from either Google Contacts.</p>
 </div>
@@ -733,7 +687,7 @@ will pop up to indicate progress of import.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="exporting-contacts-code-export-code"><a class="link" href="#exporting-contacts-code-export-code">2.14. Exporting contacts : <code>export</code></a></h3>
+<h3 id="exporting-contacts-code-export-code"><a class="link" href="#exporting-contacts-code-export-code">2.13. Exporting contacts : <code>export</code></a></h3>
 <div class="paragraph">
 <p>Allows you to export contacts from the application.</p>
 </div>
@@ -778,7 +732,7 @@ Exports the 1st and 2nd person from the list of contacts listed.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="deleting-a-tag-code-tagdelete-code"><a class="link" href="#deleting-a-tag-code-tagdelete-code">2.15. Deleting a tag : <code>tagdelete</code></a></h3>
+<h3 id="deleting-a-tag-code-tagdelete-code"><a class="link" href="#deleting-a-tag-code-tagdelete-code">2.14. Deleting a tag : <code>tagdelete</code></a></h3>
 <div class="paragraph">
 <p>Allows you to delete a tag from all persons in the address book.</p>
 </div>
@@ -809,12 +763,12 @@ Deletes the tag 'friends' from all persons with the 'friends' tag in the address
 </div>
 </div>
 <div class="sect2">
-<h3 id="editing-a-tag-code-tagedit-code"><a class="link" href="#editing-a-tag-code-tagedit-code">2.16. Editing a tag : <code>tagedit</code></a></h3>
+<h3 id="editing-a-tag-code-tagedit-code"><a class="link" href="#editing-a-tag-code-tagedit-code">2.15. Editing a tag : <code>tagedit</code></a></h3>
 <div class="paragraph">
 <p>Allows you to change the name of a tag belonging to all persons in the address book.</p>
 </div>
 <div class="paragraph">
-<p>Format: <code>tagedit OLD TAG NAME OLD_TAG_NAME NEW_TAG_NAME</code></p>
+<p>Format: <code>tagedit OLD_TAG_NAME NEW_TAG_NAME</code></p>
 </div>
 <div class="sidebarblock">
 <div class="content">
@@ -843,9 +797,9 @@ Changes the tag 'friends' into 'losers' for all persons with that tag.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="search-for-persons-code-search-code"><a class="link" href="#search-for-persons-code-search-code">2.17. Search for persons : <code>search</code></a></h3>
+<h3 id="find-persons-improved-code-find-code"><a class="link" href="#find-persons-improved-code-find-code">2.16. Find persons (improved) : <code>find</code></a></h3>
 <div class="paragraph">
-<p>Searches for persons whose names or tags contain any of the given keywords.<br>
+<p>Searches for persons whose name or tags contain any of the given keywords.<br>
 Format: <code>find KEYWORD [MORE_KEYWORDS]</code><br></p>
 </div>
 <div class="sidebarblock">
@@ -853,49 +807,62 @@ Format: <code>find KEYWORD [MORE_KEYWORDS]</code><br></p>
 <div class="ulist">
 <ul>
 <li>
-<p>The search for names is case insensitive. e.g. <code>hans</code> will match <code>Hans</code>. However, the search for tags is
-case sensitive.</p>
+<p>The search is case insensitive. e.g. <code>hans</code> will match <code>Hans</code> (example below)</p>
 </li>
 <li>
-<p>The order of the keywords does not matter. e.g. <code>Alex colleagues</code> and <code>colleagues Alex</code> will give you the same result.</p>
+<p>The order of keywords does not matter. (example below)</p>
 </li>
 <li>
-<p>Both names and tags are searched.</p>
+<p>Name, tags and initial can be searched.</p>
 </li>
 <li>
-<p>Only full words will be matched with names and tags. e.g. <code>Han</code> will not match <code>Hans</code> and <code>colleague</code> will not match
-<code>colleagues</code></p>
-</li>
-<li>
-<p>When searching for one keyword, persons matching at least one keyword will be returned like in <code>find</code></p>
-</li>
-<li>
-<p>When searching for more than one keyword, only persons matching ALL keywords will be returned. eg. <code>search Alex</code> will
-return all persons with the name <code>Alex</code>, but <code>search Alex colleagues</code> will only return persons with both the word <code>Alex</code>
-in their names and the tag <code>colleagues</code>.</p>
+<p>For names, only full words will be matched. e.g. <code>Han</code> will not match <code>Hans</code></p>
 </li>
 </ul>
 </div>
 </div>
 </div>
 <div class="paragraph">
-<p>Examples:</p>
+<p>Examples with explanation:</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p><code>search alex</code><br>
-returns <code>alex</code> and <code>Alex</code></p>
+<p><code>find</code> only supports searching for 1 name.<br>
+e.g.:  <code>find Alex</code><br>
+<code>find Alex</code> will successfully find any persons with the name <code>Alex</code>, but find <code>Alex Bob</code> will not find all persons
+with the name <code>Alex</code> and <code>Bob</code>. It would instead find persons with both <code>Alex</code> and <code>Bob</code> in their names.<br></p>
 </li>
 <li>
-<p><code>search alex colleagues</code><br>
-returns all persons with the name <code>Alex</code> or <code>alex</code> AND with the tag <code>colleagues</code></p>
+<p><code>find</code> supports searching for multiple tags.<br>
+e.g.:  <code>find colleagues friends</code><br>
+<code>find colleagues</code> will successfully find any persons with the tag <code>colleagues</code> in their description. <code>find
+colleagues friends</code> will find any persons with BOTH the tags <code>colleagues</code> and <code>friends</code>.<br></p>
+</li>
+<li>
+<p><code>find</code> also supports searching for a name with tags.<br>
+e.g.:  <code>find Alex colleagues</code>
+<code>find Alex colleagues</code> returns all persons with the word <code>Alex</code> in their names (either first name or last name) and
+are <code>colleagues</code>.</p>
+</li>
+<li>
+<p><code>find</code> supports searching for an initial.<br>
+e.g.:  <code>find a</code><br>
+<code>find a</code> will return all persons whose last names or first names begin with the letter <code>a</code>.</p>
+</li>
+<li>
+<p>The order of keywords does not matter.<br>
+e.g.: <code>find Alex colleagues</code> is the same as <code>find colleagues Alex</code>.<br></p>
+</li>
+<li>
+<p><code>find</code> is case insensitive for all inputs.<br>
+e.g.: <code>find BeRnICe FrIEnDs</code> is the same as <code>find Bernice friends</code>.<br></p>
 </li>
 </ul>
 </div>
 </div>
 <div class="sect2">
-<h3 id="viewing-a-contact-s-twitter-instagram-profile-code-social-code"><a class="link" href="#viewing-a-contact-s-twitter-instagram-profile-code-social-code">2.18. Viewing a contact&#8217;s Twitter/Instagram profile : <code>social</code></a></h3>
+<h3 id="viewing-a-contact-s-twitter-instagram-profile-code-social-code"><a class="link" href="#viewing-a-contact-s-twitter-instagram-profile-code-social-code">2.17. Viewing a contact&#8217;s Twitter/Instagram profile : <code>social</code></a></h3>
 <div class="paragraph">
 <p>Opens up a person&#8217;s Twitter or Instagram profile in browser panel.<br>
 Format: <code>social INDEX SOCIAL_MEDIA</code><br></p>
@@ -937,7 +904,7 @@ Opens up the Twitter profile of the person at index 2.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="viewing-a-contact-s-address-code-location-code"><a class="link" href="#viewing-a-contact-s-address-code-location-code">2.19. Viewing a contact&#8217;s address : <code>location</code></a></h3>
+<h3 id="viewing-a-contact-s-address-code-location-code"><a class="link" href="#viewing-a-contact-s-address-code-location-code">2.18. Viewing a contact&#8217;s address : <code>location</code></a></h3>
 <div class="paragraph">
 <p>View a person&#8217;s address using Google Maps in the browser panel.<br>
 Format: <code>location INDEX</code></p>
@@ -961,21 +928,21 @@ Format: <code>location INDEX</code></p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="clearing-all-entries-code-clear-code"><a class="link" href="#clearing-all-entries-code-clear-code">2.20. Clearing all entries : <code>clear</code></a></h3>
+<h3 id="clearing-all-entries-code-clear-code"><a class="link" href="#clearing-all-entries-code-clear-code">2.19. Clearing all entries : <code>clear</code></a></h3>
 <div class="paragraph">
 <p>Clears all entries from the address book.<br>
 Format: <code>clear</code></p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="exiting-the-program-code-exit-code"><a class="link" href="#exiting-the-program-code-exit-code">2.21. Exiting the program : <code>exit</code></a></h3>
+<h3 id="exiting-the-program-code-exit-code"><a class="link" href="#exiting-the-program-code-exit-code">2.20. Exiting the program : <code>exit</code></a></h3>
 <div class="paragraph">
 <p>Exits the program.<br>
 Format: <code>exit</code></p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="saving-the-data"><a class="link" href="#saving-the-data">2.22. Saving the data</a></h3>
+<h3 id="saving-the-data"><a class="link" href="#saving-the-data">2.21. Saving the data</a></h3>
 <div class="paragraph">
 <p>Address book data are saved in the hard disk automatically after any command that changes the data.<br>
 There is no need to save manually.</p>
@@ -1062,7 +1029,7 @@ e.g. <code>social 1 ig</code></p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-11-07 10:08:09 +00:00
+Last updated 2017-11-08 00:07:01 +00:00
 </div>
 </div>
 </body>
