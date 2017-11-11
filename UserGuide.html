@@ -33,7 +33,7 @@
 <li><a href="#editing-a-person-code-edit-code">2.4. Editing a person : <code>edit</code></a></li>
 <li><a href="#deleting-a-person-code-delete-code">2.5. Deleting a person : <code>delete</code></a></li>
 <li><a href="#selecting-a-person-code-select-code">2.6. Selecting a person : <code>select</code></a></li>
-<li><a href="#sending-an-email-to-one-or-more-person-code-email-code">2.7. Sending an email to one or more person: <code>email</code></a></li>
+<li><a href="#sending-an-email-to-one-or-more-persons-code-email-code">2.7. Sending an email to one or more persons: <code>email</code></a></li>
 <li><a href="#listing-entered-commands-code-history-code">2.8. Listing entered commands : <code>history</code></a></li>
 <li><a href="#undoing-previous-command-code-undo-code">2.9. Undoing previous command : <code>undo</code></a></li>
 <li><a href="#redoing-the-previously-undone-command-code-redo-code">2.10. Redoing the previously undone command : <code>redo</code></a></li>
@@ -42,7 +42,7 @@
 <li><a href="#exporting-contacts-code-export-code">2.13. Exporting contacts : <code>export</code></a></li>
 <li><a href="#deleting-a-tag-code-tagdelete-code">2.14. Deleting a tag : <code>tagdelete</code></a></li>
 <li><a href="#editing-a-tag-code-tagedit-code">2.15. Editing a tag : <code>tagedit</code></a></li>
-<li><a href="#find-persons-improved-code-find-code">2.16. Find persons (improved) : <code>find</code></a></li>
+<li><a href="#find-persons-code-find-code">2.16. Find persons : <code>find</code></a></li>
 <li><a href="#viewing-a-contact-s-twitter-instagram-profile-code-social-code">2.17. Viewing a contact&#8217;s Twitter/Instagram profile : <code>social</code></a></li>
 <li><a href="#viewing-a-contact-s-address-code-location-code">2.18. Viewing a contact&#8217;s address : <code>location</code></a></li>
 <li><a href="#clearing-all-entries-code-clear-code">2.19. Clearing all entries : <code>clear</code></a></li>
@@ -58,6 +58,9 @@
 <div class="sect1">
 <h2 id="quick-start"><a class="link" href="#quick-start">1. Quick Start</a></h2>
 <div class="sectionbody">
+<div class="paragraph">
+<p>The following instructions will help you get started with HitMeUp quickly:</p>
+</div>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
@@ -77,16 +80,13 @@ This app will not work with earlier versions of Java 8.
 </div>
 </li>
 <li>
-<p>Download the latest <code>addressbook.jar</code> <a href="https://github.com/CS2103AUG2017-W14-B3/main/releases">here</a>.</p>
+<p>Download the latest <code>HitMeUp.jar</code> <a href="https://github.com/CS2103AUG2017-W14-B3/main/releases">here</a>.</p>
 </li>
 <li>
 <p>Copy the file to the folder you want to use as the home folder for your Address Book.</p>
 </li>
 <li>
-<p>Download <code>defaultperson.png</code> <a href="https://github.com/CS2103AUG2017-W14-B3/main/images">here</a> and save it in <code>data/image/</code> folder.</p>
-</li>
-<li>
-<p>Double-click the file to start the app. The GUI should appear in a few seconds.</p>
+<p>Double-click the file to start the app. The user interfac shown below should appear in a few seconds.</p>
 <div class="imageblock">
 <div class="content">
 <img src="images/Ui.png" alt="Ui" width="790">
@@ -94,11 +94,11 @@ This app will not work with earlier versions of Java 8.
 </div>
 </li>
 <li>
-<p>Type the command in the command box and press <kbd>Enter</kbd> to execute it.<br>
+<p>Type a command (we recommend trying the <code>import</code> command first) into the command box and press <kbd>Enter</kbd> to execute it.<br>
 e.g. typing <strong><code>help</code></strong> and pressing <kbd>Enter</kbd> will open the help window.</p>
 </li>
 <li>
-<p>Some example commands you can try:</p>
+<p>Try some of these example commands to get started:</p>
 <div class="ulist">
 <ul>
 <li>
@@ -116,9 +116,6 @@ e.g. typing <strong><code>help</code></strong> and pressing <kbd>Enter</kbd> wil
 </ul>
 </div>
 </li>
-<li>
-<p>Refer to the <a href="#features">Features</a> section below for details of each command.</p>
-</li>
 </ol>
 </div>
 </div>
@@ -126,102 +123,6 @@ e.g. typing <strong><code>help</code></strong> and pressing <kbd>Enter</kbd> wil
 <div class="sect1">
 <h2 id="features"><a class="link" href="#features">2. Features</a></h2>
 <div class="sectionbody">
-<div class="exampleblock">
-<div class="content">
-<div class="paragraph">
-<p><strong>Since v1.5rc</strong></p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>View your contacts' addresses quickly in Google Maps</p>
-</li>
-<li>
-<p>Search by first letter of name</p>
-</li>
-<li>
-<p>Search by birthday month</p>
-</li>
-<li>
-<p>Automatically moves your contact&#8217;s display pictures</p>
-</li>
-<li>
-<p>Easily access your groups by clicking on the tags in the <code>Groups</code> panel</p>
-</li>
-</ul>
-</div>
-</div>
-</div>
-<div class="exampleblock">
-<div class="content">
-<div class="paragraph">
-<p><strong>Key Features</strong></p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Add a person with just their name and number</p>
-</li>
-<li>
-<p>Export individual contacts to easily share with others</p>
-</li>
-<li>
-<p>Search by groups and names</p>
-</li>
-<li>
-<p>A more compact view for the list of contacts, showing only the name/display picture/phone number</p>
-</li>
-<li>
-<p>Never forget a birthday again! Add birthdays to every contact</p>
-</li>
-<li>
-<p>Email contacts quickly without copying and pasting</p>
-</li>
-<li>
-<p>Import your contacts from Google Contacts</p>
-</li>
-<li>
-<p>Automatic list sorting</p>
-</li>
-<li>
-<p>Add pictures to every contact</p>
-</li>
-<li>
-<p>Add your contacts' Instagram/Twitter accounts</p>
-</li>
-<li>
-<p>View your groups at a glance with new groups tab</p>
-</li>
-<li>
-<p>New Material Design inspired UI, and an improved PersonCard</p>
-</li>
-<li>
-<p>Directly access your contacts' Instagram/Twitter accounts with the new <strong>social</strong> command</p>
-</li>
-</ul>
-</div>
-</div>
-</div>
-<div class="exampleblock">
-<div class="content">
-<div class="paragraph">
-<p><strong>Coming in v2.0</strong></p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>Multiple themes to suit your needs</p>
-</li>
-<li>
-<p>Secure your application with a PIN</p>
-</li>
-<li>
-<p>Import your contacts from Apple iCloud</p>
-</li>
-</ul>
-</div>
-</div>
-</div>
 <div class="exampleblock">
 <div class="content">
 <div class="paragraph">
@@ -245,8 +146,47 @@ e.g. typing <strong><code>help</code></strong> and pressing <kbd>Enter</kbd> wil
 </div>
 </div>
 </div>
+<div class="exampleblock">
+<div class="content">
+<div class="paragraph">
+<p><strong>Key Features</strong></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Add a contact using only their name and number, or with any of the following supported fields:
+Email, Address, Birthday, Twitter, Instagram, Display Picture, Group</p>
+</li>
+<li>
+<p>Import your existing contacts from Google Contacts</p>
+</li>
+<li>
+<p>Export individual contacts to easily share with others</p>
+</li>
+<li>
+<p>Search by a contact&#8217;s name, starting alphabet, birthday month or groups</p>
+</li>
+<li>
+<p>Email contacts quickly without having to copy their email addresses</p>
+</li>
+<li>
+<p>View your groups at a glance with the groups tab</p>
+</li>
+<li>
+<p>Keep up with your contacts through the social command</p>
+</li>
+<li>
+<p>View your contacts' addresses quickly in Google Maps</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
 <div class="sect2">
 <h3 id="viewing-help-code-help-code"><a class="link" href="#viewing-help-code-help-code">2.1. Viewing help : <code>help</code></a></h3>
+<div class="paragraph">
+<p>Opens up the User Guide.<br></p>
+</div>
 <div class="paragraph">
 <p>Format: <code>help</code></p>
 </div>
@@ -254,10 +194,10 @@ e.g. typing <strong><code>help</code></strong> and pressing <kbd>Enter</kbd> wil
 <div class="sect2">
 <h3 id="adding-a-person-code-add-code"><a class="link" href="#adding-a-person-code-add-code">2.2. Adding a person: <code>add</code></a></h3>
 <div class="paragraph">
-<p>Adds a person to the address book<br></p>
+<p>Adds a person to the application.<br></p>
 </div>
 <div class="paragraph">
-<p>Format: <code>add n/NAME p/PHONE_NUMBER [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [tw/TWITTER] [ig/INSTAGRAM] [dp/CHOICE] [t/TAG]&#8230;&#8203;</code></p>
+<p>Format: <code>add n/NAME p/PHONE_NUMBER [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [tw/TWITTER] [ig/INSTAGRAM] [dp/DISPLAY_PIC_CHOICE] [t/TAG]&#8230;&#8203;</code></p>
 </div>
 <div class="exampleblock">
 <div class="content">
@@ -291,32 +231,21 @@ If you do not have a display picture to add, leave out the dp/ prefix.
 </div>
 </div>
 </div>
-<div class="exampleblock">
-<div class="content">
-<div class="admonitionblock tip">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-tip" title="Tip"></i>
-</td>
-<td class="content">
-The address book is sorted alphabetically after the person is added.
-</td>
-</tr>
-</table>
-</div>
-</div>
-</div>
 <div class="paragraph">
 <p>Examples:</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p><code>add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 b/19/09/1999 tw/john_doe dp/Y</code></p>
+<p><code>add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 b/19/09/1999 tw/john_doe dp/Y</code><br>
+Adds a person called <code>John Doe</code> with a phone number of <code>98765432</code>, an email address of <code>johnd@example.com</code>, an address of
+<code>John street, block 123, #01-01</code>, a Twitter username of <code>john_doe</code>. In addition, as the <code>DISPLAY_PIC_CHOICE</code> is set to <code>Y</code>,
+a file picker will open to allow you to choose a custom display picture for <code>John Doe</code>.</p>
 </li>
 <li>
-<p><code>add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 b/25/06/1994 ig/crowe_94 t/criminal</code></p>
+<p><code>add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 b/25/06/1994 ig/crowe_94 t/criminal</code><br>
+Adds a person called <code>Betsy Crowe</code> with tags of <code>friend</code> and <code>criminal</code>, an email address of <code>betsycrowe@example.com</code>, an address of <code>Newgate Prison</code>,
+a phone number of <code>1234567</code>, a birthday of <code>5/06/1994</code> and an Instagram username of <code>crowe_94</code>.</p>
 </li>
 </ul>
 </div>
@@ -324,16 +253,20 @@ The address book is sorted alphabetically after the person is added.
 <div class="sect2">
 <h3 id="listing-all-persons-code-list-code"><a class="link" href="#listing-all-persons-code-list-code">2.3. Listing all persons : <code>list</code></a></h3>
 <div class="paragraph">
-<p>Shows a list of all persons in the address book.<br>
-Format: <code>list</code></p>
+<p>Shows a list of all persons in the application.<br></p>
+</div>
+<div class="paragraph">
+<p>Format: <code>list</code></p>
 </div>
 </div>
 <div class="sect2">
 <h3 id="editing-a-person-code-edit-code"><a class="link" href="#editing-a-person-code-edit-code">2.4. Editing a person : <code>edit</code></a></h3>
 <div class="paragraph">
-<p>Edits an existing person in the address book.<br>
-Format: <code>edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [tw/TWITTER]
-[ig/INSTAGRAM] [dp/CHOICE] [t/TAG]&#8230;&#8203;</code></p>
+<p>Edits an existing person in the application.<br></p>
+</div>
+<div class="paragraph">
+<p>Format: <code>edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [tw/TWITTER]
+[ig/INSTAGRAM] [dp/DISPLAY_PIC_CHOICE] [t/TAG]&#8230;&#8203;</code></p>
 </div>
 <div class="sidebarblock">
 <div class="content">
@@ -343,7 +276,7 @@ Format: <code>edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [
 <p>Edits the person at the specified <code>INDEX</code>. The index refers to the index number shown in the last person listing. The index <strong>must be a positive integer</strong> 1, 2, 3, &#8230;&#8203;</p>
 </li>
 <li>
-<p>The address book will be re-sorted if the edited person&#8217;s name is changed and it ends up affecting the alphabetically ordering.</p>
+<p>If the edited person&#8217;s name is changed and it ends up affecting the alphabetical ordering, the list of people will be re-sorted to maintain the ordering.</p>
 </li>
 <li>
 <p>At least one of the optional fields must be provided.</p>
@@ -380,8 +313,10 @@ Edits the name of the 2nd person to be <code>Betsy Crower</code> and clears all 
 <div class="sect2">
 <h3 id="deleting-a-person-code-delete-code"><a class="link" href="#deleting-a-person-code-delete-code">2.5. Deleting a person : <code>delete</code></a></h3>
 <div class="paragraph">
-<p>Deletes the specified person from the address book.<br>
-Format: <code>delete INDEX</code></p>
+<p>Deletes the specified person from the address book.<br></p>
+</div>
+<div class="paragraph">
+<p>Format: <code>delete INDEX</code></p>
 </div>
 <div class="sidebarblock">
 <div class="content">
@@ -421,15 +356,20 @@ Deletes the 1st person in the results of the <code>find</code> command.</p>
 <div class="sect2">
 <h3 id="selecting-a-person-code-select-code"><a class="link" href="#selecting-a-person-code-select-code">2.6. Selecting a person : <code>select</code></a></h3>
 <div class="paragraph">
-<p>Selects the person identified by the index number used in the last person listing.<br>
-Format: <code>select INDEX</code></p>
+<p>Selects the person identified by the index number used in the last person listing.<br></p>
+</div>
+<div class="paragraph">
+<p>Format: <code>select INDEX</code></p>
 </div>
 <div class="sidebarblock">
 <div class="content">
 <div class="ulist">
 <ul>
 <li>
-<p>Selects the person and loads the Google search page the person at the specified <code>INDEX</code>.</p>
+<p>Selects the person in the list and loads either the Instagram or Twitter (if available, and in that order) of the person at the specified <code>INDEX</code>.</p>
+</li>
+<li>
+<p>If the person does not have any social fields, no page wil be loaded.</p>
 </li>
 <li>
 <p>The index refers to the index number shown in the most recent listing.</p>
@@ -460,18 +400,20 @@ Selects the 1st person in the results of the <code>find</code> command.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="sending-an-email-to-one-or-more-person-code-email-code"><a class="link" href="#sending-an-email-to-one-or-more-person-code-email-code">2.7. Sending an email to one or more person: <code>email</code></a></h3>
+<h3 id="sending-an-email-to-one-or-more-persons-code-email-code"><a class="link" href="#sending-an-email-to-one-or-more-persons-code-email-code">2.7. Sending an email to one or more persons: <code>email</code></a></h3>
 <div class="paragraph">
-<p>Emails one or more person identified by the index number used in the last person listing.<br>
-Format: <code>email INDEX [INDEX]&#8230;&#8203;</code></p>
+<p>Emails one or more persons identified by the index number used in the last person listing.<br></p>
+</div>
+<div class="paragraph">
+<p>Format: <code>email INDEX [INDEX]&#8230;&#8203;</code></p>
 </div>
 <div class="sidebarblock">
 <div class="content">
 <div class="ulist">
 <ul>
 <li>
-<p>Opens a default email application and compose a new email with the email address(es)
-of all the person at the specified <code>INDEX</code>.</p>
+<p>Opens your default email application and composes a new email with the email addresses
+of persons at the specified indices.</p>
 </li>
 <li>
 <p>The index refers to the index number shown in the most recent listing</p>
@@ -491,12 +433,12 @@ of all the person at the specified <code>INDEX</code>.</p>
 <li>
 <p><code>list</code><br>
 <code>email 2 3</code><br>
-Send an email to the 2nd person and 3rd person from the list of contacts listed.</p>
+Composes an email addressed to the 2nd person and 3rd person from the list of contacts listed.</p>
 </li>
 <li>
 <p><code>find Betsy</code><br>
 <code>email 1</code><br>
-Send an email to the 1st person in the results of the <code>find</code> command.</p>
+Composes an email addressed to the 1st person in the results of the <code>find</code> command.</p>
 </li>
 </ul>
 </div>
@@ -504,8 +446,10 @@ Send an email to the 1st person in the results of the <code>find</code> command.
 <div class="sect2">
 <h3 id="listing-entered-commands-code-history-code"><a class="link" href="#listing-entered-commands-code-history-code">2.8. Listing entered commands : <code>history</code></a></h3>
 <div class="paragraph">
-<p>Lists all the commands that you have entered in reverse chronological order.<br>
-Format: <code>history</code></p>
+<p>Lists all the commands that you have entered in reverse chronological order.<br></p>
+</div>
+<div class="paragraph">
+<p>Format: <code>history</code></p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -515,7 +459,7 @@ Format: <code>history</code></p>
 </td>
 <td class="content">
 <div class="paragraph">
-<p>Pressing the <kbd>&uarr;</kbd> and <kbd>&darr;</kbd> arrows will display the previous and next input respectively in the command box.</p>
+<p>Pressing the ↑ and  ↓ keys will display the previous and next input respectively in the command box.</p>
 </div>
 </td>
 </tr>
@@ -525,8 +469,10 @@ Format: <code>history</code></p>
 <div class="sect2">
 <h3 id="undoing-previous-command-code-undo-code"><a class="link" href="#undoing-previous-command-code-undo-code">2.9. Undoing previous command : <code>undo</code></a></h3>
 <div class="paragraph">
-<p>Restores the address book to the state before the previous <em>undoable</em> command was executed.<br>
-Format: <code>undo</code></p>
+<p>Restores the address book to the state before the previous <em>undoable</em> command was executed.<br></p>
+</div>
+<div class="paragraph">
+<p>Format: <code>undo</code></p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -536,7 +482,7 @@ Format: <code>undo</code></p>
 </td>
 <td class="content">
 <div class="paragraph">
-<p>Undoable commands: those commands that modify the address book&#8217;s content (<code>add</code>, <code>delete</code>, <code>edit</code> and <code>clear</code>).</p>
+<p>Undoable commands: commands that modify the application&#8217;s content (<code>add</code>, <code>delete</code>, <code>edit</code> and <code>clear</code>).</p>
 </div>
 </td>
 </tr>
@@ -570,8 +516,10 @@ The <code>undo</code> command fails as there are no undoable commands executed p
 <div class="sect2">
 <h3 id="redoing-the-previously-undone-command-code-redo-code"><a class="link" href="#redoing-the-previously-undone-command-code-redo-code">2.10. Redoing the previously undone command : <code>redo</code></a></h3>
 <div class="paragraph">
-<p>Reverses the most recent <code>undo</code> command.<br>
-Format: <code>redo</code></p>
+<p>Reverses the most recent <code>undo</code> command.<br></p>
+</div>
+<div class="paragraph">
+<p>Format: <code>redo</code></p>
 </div>
 <div class="paragraph">
 <p>Examples:</p>
@@ -602,7 +550,7 @@ The <code>redo</code> command fails as there are no <code>undo</code> commands e
 <div class="sect2">
 <h3 id="adding-an-alias-for-a-command-code-alias-code"><a class="link" href="#adding-an-alias-for-a-command-code-alias-code">2.11. Adding an alias for a command : <code>alias</code></a></h3>
 <div class="paragraph">
-<p>Allows you to add an alias for any command used in the address book.</p>
+<p>Allows you to add an alias for any command used in the application.</p>
 </div>
 <div class="paragraph">
 <p>Format: <code>alias USER_ALIAS COMMAND</code></p>
@@ -615,7 +563,7 @@ The <code>redo</code> command fails as there are no <code>undo</code> commands e
 <p>The <code>USER_ALIAS</code> must either be a single word or single character</p>
 </li>
 <li>
-<p>The <code>USER_ALIAS</code> cannot be any of the commands</p>
+<p>The <code>USER_ALIAS</code> cannot be the name of any valid commands.</p>
 </li>
 <li>
 <p>The <code>COMMAND</code> must be a valid command</p>
@@ -632,6 +580,10 @@ The <code>redo</code> command fails as there are no <code>undo</code> commands e
 </div>
 <div class="ulist">
 <ul>
+<li>
+<p><code>alias add help</code><br>
+This command fails as <code>add</code> is the name of a valid command.</p>
+</li>
 <li>
 <p><code>alias a add</code><br>
 Assigns the alias 'a' to the add command. 'a' can now be used in place of add.</p>
@@ -676,15 +628,37 @@ it is no longer assigned to delete.</p>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>Opens the Google authentication page in your default web browser to allow access to your contacts.<br>
-HitMeUp will wait for <strong>20 seconds</strong> for you to enter your credentials.</p>
+<p>Opens the Google authentication page (as shown below) in HitMeUp to grant the app access to your contacts.</p>
+<div class="imageblock">
+<div class="content">
+<img src="images/HitMeUpImportStep1.png" alt="HitMeUpImportStep1" width="790">
+</div>
+</div>
 </li>
 <li>
-<p>Once access has been granted, HitMeUp will come to the front of the screen and a progress window<br>
-will pop up to indicate progress of import.</p>
+<p>Once you have logged in with your credentials, the consent screen below will be loaded:</p>
+<div class="imageblock">
+<div class="content">
+<img src="images/HitMeUpImportStep2.png" alt="HitMeUpImportStep2" width="790">
+</div>
+</div>
 </li>
 <li>
-<p>After import has completed, the application will show the number of contacts successfully imported and the number of failures.</p>
+<p>After granting access, HitMeUp will display a progress bar (as shown below) to indicate the progress of import.</p>
+<div class="imageblock">
+<div class="content">
+<img src="images/HitMeUpImportStep3.png" alt="HitMeUpImportStep3" width="790">
+</div>
+</div>
+</li>
+<li>
+<p>After import has completed, the application will show the number of contacts successfully imported and the names of contacts that were
+unable to be imported.</p>
+<div class="imageblock">
+<div class="content">
+<img src="images/HitMeUpImportStep4.png" alt="HitMeUpImportStep4" width="790">
+</div>
+</div>
 </li>
 </ol>
 </div>
@@ -707,7 +681,7 @@ will pop up to indicate progress of import.</p>
 <div class="ulist">
 <ul>
 <li>
-<p>Exports all information of all contacts or at the specified INDEX into a vCard format file.</p>
+<p>Exports all information of all contacts or the contact at the specified INDEX into a vCard format file.</p>
 </li>
 <li>
 <p>The input 'all' is case-sensitive.</p>
@@ -805,10 +779,12 @@ Changes the tag 'friends' into 'losers' for all persons with that tag.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="find-persons-improved-code-find-code"><a class="link" href="#find-persons-improved-code-find-code">2.16. Find persons (improved) : <code>find</code></a></h3>
+<h3 id="find-persons-code-find-code"><a class="link" href="#find-persons-code-find-code">2.16. Find persons : <code>find</code></a></h3>
 <div class="paragraph">
-<p>Searches for persons whose name or tags contain any of the given keywords.<br>
-Format: <code>find KEYWORD [MORE_KEYWORDS]</code><br></p>
+<p>Searches for persons whose name or tags contain any of the given keywords.<br></p>
+</div>
+<div class="paragraph">
+<p>Format: <code>find KEYWORD [MORE_KEYWORDS]</code><br></p>
 </div>
 <div class="sidebarblock">
 <div class="content">
@@ -821,7 +797,7 @@ Format: <code>find KEYWORD [MORE_KEYWORDS]</code><br></p>
 <p>The order of keywords does not matter. (example below)</p>
 </li>
 <li>
-<p>Name, tags and initial can be searched.</p>
+<p>Name, tags and the first alphabet of a name can be searched.</p>
 </li>
 <li>
 <p>For names, only full words will be matched. e.g. <code>Han</code> will not match <code>Hans</code></p>
@@ -872,8 +848,10 @@ e.g.: <code>find BeRnICe FrIEnDs</code> is the same as <code>find Bernice friend
 <div class="sect2">
 <h3 id="viewing-a-contact-s-twitter-instagram-profile-code-social-code"><a class="link" href="#viewing-a-contact-s-twitter-instagram-profile-code-social-code">2.17. Viewing a contact&#8217;s Twitter/Instagram profile : <code>social</code></a></h3>
 <div class="paragraph">
-<p>Opens up a person&#8217;s Twitter or Instagram profile in browser panel.<br>
-Format: <code>social INDEX SOCIAL_MEDIA</code><br></p>
+<p>Opens a person&#8217;s Twitter or Instagram profile in the browser panel.<br></p>
+</div>
+<div class="paragraph">
+<p>Format: <code>social INDEX SOCIAL_MEDIA</code><br></p>
 </div>
 <div class="sidebarblock">
 <div class="content">
@@ -914,8 +892,10 @@ Opens up the Twitter profile of the person at index 2.</p>
 <div class="sect2">
 <h3 id="viewing-a-contact-s-address-code-location-code"><a class="link" href="#viewing-a-contact-s-address-code-location-code">2.18. Viewing a contact&#8217;s address : <code>location</code></a></h3>
 <div class="paragraph">
-<p>View a person&#8217;s address using Google Maps in the browser panel.<br>
-Format: <code>location INDEX</code></p>
+<p>View a person&#8217;s address in the browser panel using Google Maps.<br></p>
+</div>
+<div class="paragraph">
+<p>Format: <code>location INDEX</code></p>
 </div>
 <div class="sidebarblock">
 <div class="content">
@@ -938,21 +918,25 @@ Format: <code>location INDEX</code></p>
 <div class="sect2">
 <h3 id="clearing-all-entries-code-clear-code"><a class="link" href="#clearing-all-entries-code-clear-code">2.19. Clearing all entries : <code>clear</code></a></h3>
 <div class="paragraph">
-<p>Clears all entries from the address book.<br>
-Format: <code>clear</code></p>
+<p>Clears all entries from the address book.<br></p>
+</div>
+<div class="paragraph">
+<p>Format: <code>clear</code></p>
 </div>
 </div>
 <div class="sect2">
 <h3 id="exiting-the-program-code-exit-code"><a class="link" href="#exiting-the-program-code-exit-code">2.20. Exiting the program : <code>exit</code></a></h3>
 <div class="paragraph">
-<p>Exits the program.<br>
-Format: <code>exit</code></p>
+<p>Exits the program.<br></p>
+</div>
+<div class="paragraph">
+<p>Format: <code>exit</code></p>
 </div>
 </div>
 <div class="sect2">
 <h3 id="saving-the-data"><a class="link" href="#saving-the-data">2.21. Saving the data</a></h3>
 <div class="paragraph">
-<p>Address book data are saved in the hard disk automatically after any command that changes the data.<br>
+<p>Application data is automatically saved to the hard disk after any command that changes the data.<br>
 There is no need to save manually.</p>
 </div>
 </div>
@@ -977,6 +961,10 @@ There is no need to save manually.</p>
 e.g. <code>add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 b/03/04/1990 t/friend t/colleague</code></p>
 </li>
 <li>
+<p><strong>Alias</strong> : <code>alias ALIAS COMMAND</code><br>
+e.g. <code>alias a add</code></p>
+</li>
+<li>
 <p><strong>Clear</strong> : <code>clear</code></p>
 </li>
 <li>
@@ -988,31 +976,47 @@ e.g. <code>delete 3</code></p>
 e.g. <code>edit 2 n/James Lee e/jameslee@example.com</code></p>
 </li>
 <li>
-<p><strong>Find</strong> : <code>find KEYWORD [MORE_KEYWORDS]</code><br>
-e.g. <code>find James Jake</code></p>
+<p><strong>Email</strong> : <code>email INDEX [INDEX]&#8230;&#8203;</code><br>
+e.g. <code>email 1 2</code></p>
 </li>
 <li>
-<p><strong>List</strong> : <code>list</code></p>
+<p><strong>Export</strong> : <code>export INDEX [INDEX]&#8230;&#8203;</code><br>
+e.g. <code>export 1 2</code></p>
+</li>
+<li>
+<p><strong>Exit</strong> : <code>exit</code></p>
+</li>
+<li>
+<p><strong>Find</strong> : <code>find KEYWORD [MORE_KEYWORDS]</code><br>
+e.g. <code>find James Jake</code></p>
 </li>
 <li>
 <p><strong>Help</strong> : <code>help</code></p>
 </li>
 <li>
-<p><strong>Select</strong> : <code>select INDEX</code><br>
-e.g.<code>select 2</code></p>
-</li>
-<li>
 <p><strong>History</strong> : <code>history</code></p>
 </li>
 <li>
-<p><strong>Undo</strong> : <code>undo</code></p>
+<p><strong>Import</strong> : <code>import</code><br>
+e.g. <code>import Google</code></p>
+</li>
+<li>
+<p><strong>List</strong> : <code>list</code></p>
+</li>
+<li>
+<p><strong>Location</strong> : <code>location</code><br>
+e.g. <code>location 1</code></p>
 </li>
 <li>
 <p><strong>Redo</strong> : <code>redo</code></p>
 </li>
 <li>
-<p><strong>Alias</strong> : <code>alias ALIAS COMMAND</code><br>
-e.g. <code>alias a add</code></p>
+<p><strong>Select</strong> : <code>select INDEX</code><br>
+e.g. <code>select 2</code></p>
+</li>
+<li>
+<p><strong>Social</strong> : <code>social INDEX SOCIAL_MEDIA</code><br>
+e.g. <code>social 1 ig</code></p>
 </li>
 <li>
 <p><strong>Tag Delete</strong>: <code>tagdelete TAG_NAME</code><br>
@@ -1023,12 +1027,7 @@ e.g. <code>tagdelete friends</code></p>
 e.g. <code>tagedit friends losers</code></p>
 </li>
 <li>
-<p><strong>Email</strong> : <code>email INDEX [INDEX]&#8230;&#8203;</code><br>
-e.g. <code>email 1 2</code></p>
-</li>
-<li>
-<p><strong>Social</strong> : <code>social INDEX SOCIAL_MEDIA</code><br>
-e.g. <code>social 1 ig</code></p>
+<p><strong>Undo</strong> : <code>undo</code></p>
 </li>
 </ul>
 </div>
@@ -1037,7 +1036,7 @@ e.g. <code>social 1 ig</code></p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-11-11 15:29:52 +00:00
+Last updated 2017-11-11 18:27:55 +00:00
 </div>
 </div>
 </body>

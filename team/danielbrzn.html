@@ -16,13 +16,18 @@
 </div>
 <div id="content">
 <div class="sect1">
-<h2 id="project-addressbook-level-4"><a class="link" href="#project-addressbook-level-4">Project: AddressBook - Level 4</a></h2>
+<h2 id="project-hitmeup"><a class="link" href="#project-hitmeup">Project: HitMeUp</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>AddressBook - Level 4 is a desktop address book application used for teaching Software Engineering principles. The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 6 kLoC.</p>
+<p>HitMeUp is an address book application designed with the sociable user in mind. It aims to provide a one stop solution for every need: To contact, keep up
+and organise.
+With the cloud import feature, a user would be able to get the application
+up and running a matter of minutes. Being able to group your contacts, and view each group at a glance affords
+convenience like never before. Social integration to Instagram and Twitter is baked in, allowing users to view profiles
+in the application itself without having to switch to a browser or check their phone.</p>
 </div>
 <div class="paragraph">
-<p><strong>Code contributed</strong>: to be updated</p>
+<p><strong>Code contributed</strong>: [<a href="https://github.com/CS2103AUG2017-W14-B3/main/tree/master/collated/main/danielbrzn.md">Functional code</a>] [<a href="https://github.com/CS2103AUG2017-W14-B3/main/tree/master/collated/test/danielbrzn.md">[Test code</a>]</p>
 </div>
 <div class="sect2">
 <h3 id="enhancement-added-google-contacts-import"><a class="link" href="#enhancement-added-google-contacts-import">Enhancement Added: Google Contacts Import</a></h3>
@@ -65,15 +70,37 @@
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>Opens the Google authentication page in your default web browser to allow access to your contacts.<br>
-HitMeUp will wait for <strong>20 seconds</strong> for you to enter your credentials.</p>
+<p>Opens the Google authentication page (as shown below) in HitMeUp to grant the app access to your contacts.</p>
+<div class="imageblock">
+<div class="content">
+<img src="../images/HitMeUpImportStep1.png" alt="HitMeUpImportStep1" width="790">
+</div>
+</div>
 </li>
 <li>
-<p>Once access has been granted, HitMeUp will come to the front of the screen and a progress window<br>
-will pop up to indicate progress of import.</p>
+<p>Once you have logged in with your credentials, the consent screen below will be loaded:</p>
+<div class="imageblock">
+<div class="content">
+<img src="../images/HitMeUpImportStep2.png" alt="HitMeUpImportStep2" width="790">
+</div>
+</div>
 </li>
 <li>
-<p>After import has completed, the application will show the number of contacts successfully imported and the number of failures.</p>
+<p>After granting access, HitMeUp will display a progress bar (as shown below) to indicate the progress of import.</p>
+<div class="imageblock">
+<div class="content">
+<img src="../images/HitMeUpImportStep3.png" alt="HitMeUpImportStep3" width="790">
+</div>
+</div>
+</li>
+<li>
+<p>After import has completed, the application will show the number of contacts successfully imported and the names of contacts that were
+unable to be imported.</p>
+<div class="imageblock">
+<div class="content">
+<img src="../images/HitMeUpImportStep4.png" alt="HitMeUpImportStep4" width="790">
+</div>
+</div>
 </li>
 </ol>
 </div>
@@ -281,7 +308,7 @@ authorization URL to be shown in the <code>BrowserPanel</code><br>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-11-11 15:29:52 +00:00
+Last updated 2017-11-11 18:27:55 +00:00
 </div>
 </div>
 </body>
