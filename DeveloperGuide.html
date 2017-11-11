@@ -975,18 +975,20 @@ it is difficult to authorize every email services as some services such as Gmail
 <div class="sect2">
 <h3 id="import-mechanism"><a class="link" href="#import-mechanism">5.3. Import mechanism</a></h3>
 <div class="paragraph">
-<p>The import mechanism is facilitated by Google&#8217;s People API. It supports reading contacts from the user&#8217;s personal Google account and parsing them into a format that can be added to the address book. The import mechanism only supports
+<p>The import mechanism is facilitated by Google&#8217;s People API. It supports reading up to 1000 contacts from the user&#8217;s personal Google account and parsing them into a format that can be added to the address book. The import mechanism only supports
 adding contacts from Google but iCloud import is scheduled for release in a later version of the application.</p>
 </div>
 <div class="paragraph">
-<p>Before any importing can be done, the address book has to be authorized to request data from Google&#8217;s API. This is done using the OAuth 2.0 protocol as it is the standard used by Google for all of their APIs.
-As there are libraries from Google that make authorization easier, these libraries have been used in the implementation of the import mechanism.</p>
+<p>Before any importing can be done, HitMeUp to be authorized to request data from Google&#8217;s API. This is done using the OAuth 2.0 protocol as it is the standard used by Google for the People API.
+As there are libraries from Google that handle authorization, these libraries have been used in the implementation of the import mechanism.</p>
 </div>
 <div class="paragraph">
-<p>Client information such as the Client ID and Client secret are first loaded into a GoogleClientSecrets object. After which, A GoogleAuthorizationCodeFlow object is set up
-using the GoogleClientSecrets, HttpTransport, JsonFactory objects and the scope of access desired to the user&#8217;s Google Contacts data. In this implementation, we have chosen read-only as we are only importing
-contacts and no modification to the data on Google&#8217;s side will be performed. A AuthorizationCodeInstalledApp object is then created using the previously mentioned GoogleAuthorizationCodeFlow object, and also a LocalServerReceiver object which allows the application to listen on the local
-web server for the authorization code that is provided when the user gives consent to access his/her data.</p>
+<p>Client information such as the Client ID and Client secret are first loaded into a <code>GoogleClientSecrets</code> object. The client secrets are stored in a JSON file and since the executable will be distributed to users, as per
+<a href="https://developers.google.com/identity/protocols/OAuth2InstalledApp">Google&#8217;s OAuth documentation</a>, the client secrets are not treated as a secret in this context. After which, A <code>GoogleAuthorizationCodeFlow</code> object is set up
+using the <code>GoogleClientSecrets</code>, <code>HttpTransport</code>, <code>JsonFactory</code> objects and the scope of access desired to the user&#8217;s Google Contacts data. In this implementation, we have chosen read-only as we are only importing
+contacts and no modification to the user&#8217;s data on Google will be performed. An <code>AuthorizationUtil</code> object is then created using the previously mentioned <code>GoogleAuthorizationCodeFlow</code> object, and also a <code>LocalServerReceiver</code> object which allows the application to listen on the local
+web server for the authorization code that is provided when the user gives consent to access his/her data. The <code>AuthorizationUtil</code> inherits from <code>AuthorizationCodeInstalledApp</code> as the <code>browse</code> method was modified to allow for the authorization
+URL to be opened in the <code>BrowserPanel</code>.</p>
 </div>
 <div class="paragraph">
 <p>After which, the authorization flow can finally begin. The following sequence diagram illustrates this process.</p>
@@ -1000,30 +1002,75 @@ web server for the authorization code that is provided when the user gives conse
 <p>(Diagram from: <a href="https://developers.google.com/identity/protocols/OAuth2" class="bare">https://developers.google.com/identity/protocols/OAuth2</a>, reused under Creative Commons Attribution 3.0 License)</p>
 </div>
 <div class="paragraph">
-<p>A token is first requested by the AuthorizationCodeInstalledApp object, and a page for the user to login to his/her Google account is shown in the System&#8217;s default web browser.
-Once the user provides consent for the address book to access the data, an authorization code is sent back to the local web server where it is received by the LocalServerReceiver object and passed onto the GoogleAuthorizationCodeFlow
-object so that the code can be exchanged for a token. Once the token is received, a Credential object is created and returned to the executeUndoableCommand method.</p>
+<p>A token is first requested by invoking the <code>authorize</code> method from <code>GoogleUtil</code> where an <code>AuthorizationUtil</code> loads the page for the user to login to his/her Google account in the <code>BrowserPanel</code>.
+Once the user provides consent for the address book to access the data, an authorization code is sent back to the <code>LocalServerReceiver</code> object and passed on to the <code>GoogleAuthorizationCodeFlow</code>
+object so that the code can be exchanged for a token. Once the token is received, a <code>Credential</code> object is created and returned to the <code>executeUndoableCommand</code> method.</p>
 </div>
 <div class="paragraph">
-<p>The Credential object is then passed to a <code>retrieveContacts</code> method that creates a <code>PeopleService</code> object that allows the application to interact with Google&#8217;s People API.
+<p>The Credential object is then passed to a <code>retrieveContacts</code> method from <code>GoogleUtil</code> that creates a <code>PeopleService</code> object that allows the application to interact with Google&#8217;s People API.
 The parameters used to get the list of the user&#8217;s connections (Google&#8217;s term for contacts) are as follows:</p>
 </div>
 <div class="listingblock">
 <div class="content">
 <pre>PageSize: 1000
-PersonFields: Names, EmailAddresses, PhoneNumbers</pre>
+PersonFields: Names, EmailAddresses, PhoneNumbers, Addresses, Birthdays</pre>
 </div>
 </div>
 <div class="paragraph">
 <p>A PageSize (the number of connections to fetch) of 1000 is chosen as it is the amount of contacts that the address book should be able to hold before it gets sluggish.
-The PersonFields chosen are the ones most relevant to storing a contact, and more fields such as addresses will be added in future updates.</p>
+The PersonFields chosen are the ones most relevant to storing a contact in HitMeUp.</p>
 </div>
 <div class="paragraph">
-<p><code>retrieveContacts</code> will then pass the <code>List&lt;Person&gt;</code> of connections back to the caller and finally, a <code>importContacts</code> method will be called on the <code>List&lt;Person&gt;</code>.</p>
+<p><code>retrieveContacts</code> will then pass the <code>List&lt;Person&gt;</code> of connections back to the caller and finally, the <code>importContacts</code> method will be called on the <code>List&lt;Person&gt;</code>.</p>
+</div>
+<div class="paragraph">
+<p>Refer to the code example below for implementation of the <code>importContacts</code> method:<br></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Code listing:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="comment">/**
+  * Imports contacts into the application using the given {@code List&lt;Person&gt;}
+  */</span>
+    <span class="directive">public</span> <span class="type">void</span> importContacts(<span class="predefined-type">List</span>&lt;Person&gt; connections) {
+
+        Task&lt;<span class="predefined-type">Void</span>&gt; task = <span class="keyword">new</span> Task&lt;<span class="predefined-type">Void</span>&gt;() {
+            <span class="annotation">@Override</span>
+            <span class="directive">protected</span> <span class="predefined-type">Void</span> call() <span class="directive">throws</span> <span class="exception">Exception</span> {
+
+                <span class="type">int</span> amountToAdd = connections.size();
+                invalidPeople = <span class="keyword">new</span> <span class="predefined-type">ArrayList</span>&lt;<span class="predefined-type">String</span>&gt;();
+                <span class="keyword">for</span> (Person person : connections) {
+                    seedu.address.model.person.Person toAdd = GoogleUtil.convertPerson(person);
+                    <span class="keyword">if</span> (toAdd == <span class="predefined-constant">null</span>) {
+                        invalidPeople.add(person.getNames().get(FIRST_PERSON_INDEX).getDisplayName());
+                        <span class="keyword">continue</span>;
+                    }
+                    <span class="keyword">try</span> {
+                        model.addPerson(toAdd);
+                        peopleAdded++;
+                    } <span class="keyword">catch</span> (DuplicatePersonException e) {
+                        e.printStackTrace();
+                    }
+                    updateProgress(peopleAdded, amountToAdd);
+                }
+                <span class="keyword">return</span> <span class="predefined-constant">null</span>;
+            }
+        };
+
+        <span class="comment">// housekeeping code for the start/end of the Task</span>
+    }</code></pre>
+</div>
+</div>
+</li>
+</ul>
 </div>
 <div class="paragraph">
 <p>The <code>importContacts</code> method is implemented using the <code>Task</code> class from JavaFX and takes care of importing contacts to the address book. <code>importContacts</code> is run in a separate <code>Thread</code> from the main program.
-It parses every connection from the <code>List&lt;Person&gt;</code> using a <code>convertPerson</code> method that converts a <code>Person</code> object to a <code>seedu.address.model.person.Person</code> such that it can be added to the address book.
+It parses every connection from the <code>List&lt;Person&gt;</code> using a <code>convertPerson</code> method in <code>GoogleUtil</code> that converts a <code>Person</code> object to a <code>seedu.address.model.person.Person</code> such that it can be added to the address book.
 A progress bar for importing is also shown to the user, implemented using the <code>progressProperty()</code> method of the <code>Task</code> class.</p>
 </div>
 <div class="paragraph">
@@ -1064,12 +1111,13 @@ Threading has to be used to allow the progress bar to update as the <code>import
 <hr>
 <div class="paragraph">
 <p><strong>Aspect:</strong> Implementation of authorization<br>
-<strong>Alternative 1 (current choice):</strong> Pop-up the authorization page in the user&#8217;s default browser<br>
-<strong>Pros:</strong> Easy for the user to authorize as they may already be logged in to their Google account on their browsers.<br>
-<strong>Cons:</strong> Takes the focus away from the main application to the user&#8217;s default browser, which may be a jarring user experience.<br>
-<strong>Alternative 2:</strong> Use the existing browser panel to show the authorization page<br>
+<strong>Alternative 1 (current choice):</strong> Use the <code>BrowserPanel</code> to show the authorization page<br>
 <strong>Pros:</strong> Clearer for the user to understand and focus is kept on the main application.<br>
-<strong>Cons:</strong> Requires implementing a new class to listen on the local web server for the authorization code instead of using the provided <code>LocalServerReceiver</code> from the Google Client Library.<br></p>
+<strong>Cons:</strong> Requires implementing a new class as modification to the existing classes provided by the Google Libraries is needed to allow for the<br>
+authorization URL to be shown in the <code>BrowserPanel</code><br>
+<strong>Alternative 2 :</strong> Pop-up the authorization page in the user&#8217;s default browser<br>
+<strong>Pros:</strong> Easy for the user to authorize as they may already be logged in to their Google account on their browsers.<br>
+<strong>Cons:</strong> Takes the focus away from the main application to the user&#8217;s default browser, which may be a jarring user experience.<br></p>
 </div>
 </div>
 </div>
@@ -2537,7 +2585,7 @@ name and address information for use in AddressBook.</pre>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-11-11 12:45:32 +00:00
+Last updated 2017-11-11 15:29:52 +00:00
 </div>
 </div>
 </body>
