@@ -93,12 +93,23 @@ Exports the 1st and 2nd person from the list of contacts listed.</p>
 <div class="sect2">
 <h3 id="export-mechanism"><a class="link" href="#export-mechanism">Export mechanism</a></h3>
 <div class="paragraph">
-<p>The export mechanism is facilitated by java <code>File</code> and <code>FileOutputStream</code> class. It supports writing contact information into a vCard format file.
-This file will be saved in the application data folder where user can import it into other applications such as Google Contacts.</p>
+<p>The export mechanism is facilitated by java <code>File</code> and <code>FileOutputStream</code> class. It supports writing contact information into a <a href="#vCard">vCard</a> by creating a vCard format file.
+This file will be saved in the application data folder where user can import it into other platforms such as Google Contacts.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../images/VcardClassDiagram.png" alt="VcardClassDiagram" width="400">
+</div>
 </div>
 <div class="paragraph">
-<p>Firstly, a <code>Vcard</code> object has be to created for every person that user wants to export. <code>Vcard</code> of each person contains a unique
-String <code>cardDetails</code> that stores information about the person. The current version of vCard used is 3.0 as shown in the code example below:</p>
+<p><em>Figure 5.4 Vcard Class Diagram</em></p>
+</div>
+<div class="paragraph">
+<p>With reference to the class diagram of <code>Vcard</code> above, a <code>Vcard</code> object created is unique for every person that user wants to export. <code>Vcard</code> of each person contains a unique
+String <code>cardDetails</code> that stores all information about the person such as <code>Name</code> and <code>Phone</code>.</p>
+</div>
+<div class="paragraph">
+<p>The current version of vCard used is 3.0 as shown in the code example below:</p>
 </div>
 <div class="ulist">
 <ul>
@@ -125,21 +136,22 @@ String <code>cardDetails</code> that stores information about the person. The cu
 </div>
 <div class="paragraph">
 <p>Next, a <code>File</code> will be created. In order to store all the <code>cardDetails</code> created earlier, <code>FileOutputStream</code> will call its
-method write to write and saved all information in the <code>File</code> named as "contacts.vcf". An example of how write method is execute is shown below:</p>
+method write to write and saved all information in the <code>File</code> named as "contacts.vcf". An example of how the write method is executed is shown below:</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>FileOutputStream write method:<br>
-<code>cardDetails</code> are first encoded into a sequence of bytes and stored in a byte array, b.
-<code>FileOutputStream</code> calls write(byte[] b) in order to write the encoded string into the file.</p>
+<p>FileOutputStream write method:<br></p>
+</li>
+</ul>
+</div>
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="java"><span class="comment">// Creating an instance of FileOutputStream</span>
 fos = <span class="keyword">new</span> <span class="predefined-type">FileOutputStream</span>(file);
 <span class="comment">// For each Vcard created earlier</span>
     <span class="keyword">try</span> {
-        <span class="comment">// FileOutputStream will write the string encoded as byte array into the file.</span>
+        <span class="comment">// cardDetails are first encoded before FileOutputStream writes the encoded string into the file.</span>
         fos.write(vCard.getCardDetails().getBytes());
     } <span class="keyword">catch</span> (<span class="exception">IOException</span> e) {
         <span class="comment">// Print exception</span>
@@ -147,16 +159,38 @@ fos = <span class="keyword">new</span> <span class="predefined-type">FileOutputS
 }</code></pre>
 </div>
 </div>
-</li>
-</ul>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<code>cardDetails</code> are first encoded into a sequence of bytes and stored in a byte array.
+<code>FileOutputStream</code> calls the write method in order to write the encoded string into the file.
+</td>
+</tr>
+</table>
 </div>
 <div class="paragraph">
-<p>Finally, the directory for the "contacts.vcf" will be shown to the user and the file can be imported to other applications.</p>
+<p>Finally, the directory that stores the "contacts.vcf" file will be shown to the user and the file can be imported to other platforms that support vCard files.</p>
+</div>
+<div class="sect3">
+<h4 id="design-considerations"><a class="link" href="#design-considerations">Design Considerations</a></h4>
+<div class="paragraph">
+<p><strong>Aspect:</strong> Type of file to create<br>
+<strong>Alternative 1 (current choice):</strong> Creates vCard file<br>
+<strong>Pros:</strong> It is more flexible with the types of data that can be stored. Examples of include photos, multiple phone numbers and website information.<br>
+<strong>Cons:</strong> It does not support importing of multiple contacts in vCard file for applications such as Outlook.<br>
+<strong>Alternative 2:</strong> Creates <a href="#csv">CSV</a> file<br>
+<strong>Pros:</strong> It is more readable and allows easy manipulation of the data in the file when used in spreadsheets such as Excel.<br>
+<strong>Cons:</strong> It lacks of standardization whereby there are no rules in defining how contacts information are being written or read by other programs. It does not support programs such as iCloud as well.</p>
 </div>
 <div class="paragraph">
 <p><mark>End of Extract</mark></p>
 </div>
 <hr>
+</div>
 </div>
 <div class="sect2">
 <h3 id="enhancement-added-email"><a class="link" href="#enhancement-added-email">Enhancement Added: Email</a></h3>
@@ -225,21 +259,26 @@ Send an email to the 1st person in the results of the <code>find</code> command.
 <h3 id="email-mechanism"><a class="link" href="#email-mechanism">Email mechanism</a></h3>
 <div class="paragraph">
 <p>The email mechanism is facilitated by java <code>Desktop</code> class which allows java application to launch default mail client registered on the users' native desktop to handle a Uniform Resource Indentifier <code>URI</code>.
-In this case, the <a href="#uri">URI</a> created is a reference to the mail command scheme and email addresses to mail to.</p>
+In this case, the <a href="#uri">URI</a> is created with reference to the mail command scheme and email addresses to mail to.</p>
 </div>
 <div class="sect3">
 <h4 id="email-command-implementation"><a class="link" href="#email-command-implementation">Email command implementation</a></h4>
-<div class="paragraph">
-<p>image::3.2.1 Email Command Implementation.png[width="800"]</p>
+<div class="imageblock">
+<div class="content">
+<img src="../images/EmailCommandSequenceDiagram.png" alt="EmailCommandSequenceDiagram" width="800">
+</div>
 </div>
 <div class="paragraph">
-<p><div align="center"><b>Figure 3.2.1 Email Command Implementation</b></div></p>
+<p><em>Figure 3.2.1 Email Command Sequence Diagram</em></p>
 </div>
 <div class="paragraph">
 <p>From the diagram above, when users enter the command <code>email 1</code> to email a person in their address book.
-<code>EmailCommandParser</code> will parse the arguments, which are either a single index or multiple indices, provided by the users and store them
-in an array called <code>targetIndices</code> and return a <code>EmailCommand</code>. Next, <code>EmailCommand</code> will call its method <code>execute()</code>
-and ensure that <code>Index</code> specified is valid and construct a String <code>allEmaillAddress</code> which contains all the email addresses. Refer to code example below:<br></p>
+<code>EmailCommandParser</code> will parse the arguments, which is a single index, provided by the user and stores it
+in an array called <code>targetIndices</code> before returning a <code>EmailCommand</code>.</p>
+</div>
+<div class="paragraph">
+<p>Next, <code>EmailCommand</code> will call its method <code>execute()</code> as shown below and ensures that <code>Index</code> specified is valid.
+It also constructs a String <code>allEmaillAddresses</code> which contains the email addresses specified.<br></p>
 </div>
 <div class="ulist">
 <ul>
@@ -247,20 +286,35 @@ and ensure that <code>Index</code> specified is valid and construct a String <co
 <p>Code listing:</p>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="java">        <span class="comment">// Do others in EmailCommand.execute()</span>
-        <span class="comment">// StringBuilder helps to append the email addresses of each person</span>
-        <span class="predefined-type">StringBuilder</span> addresses = <span class="keyword">new</span> <span class="predefined-type">StringBuilder</span>();
-        <span class="keyword">for</span> (Index targetIndex : targetIndices) {
-            <span class="comment">// Throws exception if target index is out of bounds</span>
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> CommandResult execute() <span class="directive">throws</span> CommandException {
+    <span class="predefined-type">List</span>&lt;ReadOnlyPerson&gt; lastShownList = model.getFilteredPersonList();
+    <span class="comment">// Constructs a StringBuilder to append all the names and email addresses</span>
+    <span class="predefined-type">StringBuilder</span> addresses = <span class="keyword">new</span> <span class="predefined-type">StringBuilder</span>();
+    <span class="predefined-type">StringBuilder</span> persons = <span class="keyword">new</span> <span class="predefined-type">StringBuilder</span>();
+    <span class="keyword">for</span> (Index targetIndex : targetIndices) {
+        <span class="keyword">if</span> (targetIndex.getZeroBased() &gt;= lastShownList.size()) {
+            <span class="keyword">throw</span> <span class="keyword">new</span> CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX
+                    + targetIndex.getOneBased());
         }
-            addresses.append(<span class="string"><span class="delimiter">&quot;</span><span class="content"> </span><span class="delimiter">&quot;</span></span>);
-            addresses.append(personToEmail.getEmail().toString());
+        ReadOnlyPerson personToEmail = lastShownList.get(targetIndex.getZeroBased());
+        <span class="comment">// Throws exception if personToEmail has no email address</span>
+        <span class="keyword">if</span> (personToEmail.getEmail().toString().isEmpty()) {
+            <span class="keyword">throw</span> <span class="keyword">new</span> CommandException(Messages.MESSAGE_INVALID_PERSON_TO_EMAIL + targetIndex.getOneBased());
         }
-<span class="comment">// Add a comma between all email addresses</span>
-<span class="predefined-type">String</span> allEmailAddresses = addresses.toString().trim().replaceAll(<span class="string"><span class="delimiter">&quot;</span><span class="content"> </span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">,</span><span class="delimiter">&quot;</span></span>);
-<span class="comment">// Return a CommandResult</span>
-EventsCenter.getInstance().post(<span class="keyword">new</span> EmailRequestEvent(allEmailAddresses));
-<span class="keyword">return</span> <span class="keyword">new</span> CommandResult(<span class="predefined-type">String</span>.format(MESSAGE_EMAIL_PERSON_SUCCESS, allPersons));</code></pre>
+        <span class="comment">// Appends all names and email addresses of the persons to email</span>
+        persons.append(<span class="string"><span class="delimiter">&quot;</span><span class="content">, </span><span class="delimiter">&quot;</span></span> + personToEmail.getName().toString());
+        addresses.append(<span class="string"><span class="delimiter">&quot;</span><span class="content"> </span><span class="delimiter">&quot;</span></span> + personToEmail.getEmail().toString());
+    }
+    <span class="comment">// Removes the substring &quot;, &quot; at the start of the allPersons string</span>
+    <span class="predefined-type">String</span> allPersons = persons.toString().trim().substring(<span class="integer">2</span>, persons.length());
+    <span class="comment">// Replaces all white spaces in the addresses String with commas</span>
+    <span class="predefined-type">String</span> allEmailAddresses = addresses.toString().trim().replaceAll(<span class="string"><span class="delimiter">&quot;</span><span class="content"> </span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">,</span><span class="delimiter">&quot;</span></span>);
+
+    <span class="comment">// Post the EmailRequestEvent</span>
+    EventsCenter.getInstance().post(<span class="keyword">new</span> EmailRequestEvent(allEmailAddresses));
+    <span class="comment">// Returns CommandResult to display all person that user wants to email</span>
+    <span class="keyword">return</span> <span class="keyword">new</span> CommandResult(<span class="predefined-type">String</span>.format(MESSAGE_EMAIL_PERSON_SUCCESS, allPersons));
+}</code></pre>
 </div>
 </div>
 <div class="admonitionblock note">
@@ -270,7 +324,7 @@ EventsCenter.getInstance().post(<span class="keyword">new</span> EmailRequestEve
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-The String <code>allEmailAddresses</code> is constructed by appending a comma after each email address of a contact. This is done to ensure that it follows the syntax required when
+The String <code>allEmailAddresses</code> is constructed by appending a comma after each email address of a contact. This is done to ensure that it follows the mailing scheme required when
 constructing a <code>URI</code>.
 </td>
 </tr>
@@ -282,14 +336,16 @@ constructing a <code>URI</code>.
 </div>
 <div class="sect3">
 <h4 id="email-request-event-process"><a class="link" href="#email-request-event-process">Email request event process</a></h4>
-<div class="paragraph">
-<p>image::3.2.1 Email Request Event Process.png[width="800"]</p>
+<div class="imageblock">
+<div class="content">
+<img src="../images/EmailRequestEventSequenceDiagram.png" alt="EmailRequestEventSequenceDiagram" width="800">
+</div>
 </div>
 <div class="paragraph">
-<p><div align="center"><b>Figure 3.2.2 Email Request Event Process</b></div></p>
+<p><em>Figure 5.2.1 Email Request Event Sequence Diagram</em></p>
 </div>
 <div class="paragraph">
-<p>With reference to the diagram above, after <code>EmailCommand</code> has executed, it will post a new <code>EmailRequestEvent</code> and allow the UI to handle this event. In the UI, we are using java <code>Desktop</code> class to
+<p>With reference to the diagram above, after <code>EmailCommand</code> has executed, it will post a new <code>EmailRequestEvent</code> and allows the UI to handle this event. In the UI, we are using java <code>Desktop</code> class to
 launch the default mail client registered on users' native desktop. A <code>URI</code> instance have to be created and pass to the mail method in the <code>Desktop</code> class.
 Refer to the code example below:<br></p>
 </div>
@@ -301,16 +357,27 @@ Refer to the code example below:<br></p>
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="java"><span class="directive">private</span> staic <span class="directive">final</span> <span class="predefined-type">String</span> EMAIL_URI_PREFIX = <span class="string"><span class="delimiter">&quot;</span><span class="content">mailTo:</span><span class="delimiter">&quot;</span></span>;
 
-<span class="comment">// Do others in MainWindow</span>
-
-<span class="predefined-type">URI</span> mailTo = <span class="keyword">new</span> <span class="predefined-type">URI</span>(EMAIL_URI_PREFIX + allEmailAddresses);
-    <span class="comment">// Checks if Desktop class is supported</span>
+<span class="directive">public</span> <span class="type">void</span> handleEmail(<span class="predefined-type">String</span> allEmailAddresses) {
+    <span class="predefined-type">URI</span> mailTo = <span class="predefined-constant">null</span>;
+    <span class="keyword">try</span> {
+        <span class="comment">// Creates a valid URI instance or throws an exception if syntax is wrong</span>
+        mailTo = <span class="keyword">new</span> <span class="predefined-type">URI</span>(EMAIL_URI_PREFIX + allEmailAddresses);
+    } <span class="keyword">catch</span> (<span class="exception">URISyntaxException</span> e) {
+        e.printStackTrace();
+    }
+    <span class="comment">// Checks if Desktop operations can be supported</span>
     <span class="keyword">if</span> (Desktop.isDesktopSupported()) {
+        <span class="comment">// Creates a Desktop instance if it is supported</span>
         Desktop userDesktop = Desktop.getDesktop();
-        userDesktop.mail(mailTo);
-    } <span class="keyword">else</span> {
-        <span class="comment">// Throws Execepton</span>
-    }</code></pre>
+        logger.info(<span class="string"><span class="delimiter">&quot;</span><span class="content">Showing user's default mail client</span><span class="delimiter">&quot;</span></span>);
+        <span class="keyword">try</span> {
+            <span class="comment">// Desktop mail method will launch user default mail client</span>
+            userDesktop.mail(mailTo);
+        } <span class="keyword">catch</span> (<span class="exception">IOException</span> e) {
+            e.printStackTrace();
+        }
+    }
+}</code></pre>
 </div>
 </div>
 </li>
@@ -323,7 +390,7 @@ Refer to the code example below:<br></p>
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-To construct a valid <code>URI</code> instance, the scheme <code>EMAIL_URI_PREFIX</code> which specifies the operation to launch user&#8217;s default mail client must be
+To construct a valid <code>URI</code> instance, the String <code>EMAIL_URI_PREFIX</code> which specifies the scheme to launch user&#8217;s default mail client must be
 followed by the String <code>allEmailAddresses</code>.
 </td>
 </tr>
@@ -338,15 +405,24 @@ the email to their recipients.</p>
 <div class="sect3">
 <h4 id="design-consideration"><a class="link" href="#design-consideration">Design consideration</a></h4>
 <div class="paragraph">
-<p><strong>Aspect:</strong> Type of application to send emails<br>
-<strong>Alternative 1 (current choice):</strong> Use user&#8217;s default mail client<br>
-<strong>Pros:</strong> Default mail client tend to load faster than the default browser <code>WebView</code> used by <code>UI</code>: <code>BrowserPanel</code>.<br>
-<strong>Cons:</strong> Does not support some operating systems such as Linux.<br>
-<strong>Alternative 2:</strong> Use web browser to access user email services online.<br>
-<strong>Pros:</strong> Able to support more users to use this email feature as there are more options for different users.<br>
-<strong>Cons:</strong> Not all users use the same email services such as Gmail or Outlook. Moreover,
-it is difficult to authorize every email services for all users since it is often dependent
-on the type of email services they need.<br></p>
+<p><strong>Aspect:</strong> Types of application to send emails<br>
+<strong>Alternative 1 (current choice):</strong> Use user&#8217;s default mail client in their desktop<br>
+<strong>Pros:</strong> The default mail client tends to load faster than the Javafx <code>WebView</code> used by the <code>BrowserPanel</code> in the <code>UI</code>.<br>
+<strong>Cons:</strong> Some users may have set their default mail client as other applications such as web browser where they have to make changes before it can be used.<br>
+<strong>Alternative 2:</strong> Use web browsers to access user email services online<br>
+<strong>Pros:</strong> It is able to support more users as there are more options for different users using different email services.<br>
+<strong>Cons:</strong> Since all users may not use the same email services such as <a href="#gmail">Gmail</a> or <a href="#outlook">Outlook</a>,
+it is difficult to authorize every email services as some services such as Gmail which requires OAuth 2.0 protocol for authorization.<br></p>
+</div>
+<hr>
+<div class="paragraph">
+<p><strong>Aspect:</strong> Types of API used<br>
+<strong>Alternative 1 (current choice):</strong> Use <code>Desktop</code> API<br>
+<strong>Pros:</strong> It allows user to format their messages using text editor in default mail client.<br>
+<strong>Cons:</strong> It does not require authentication if user has already configured so it may be misused if application is used by someone else.<br>
+<strong>Alternative 2:</strong> Use <code>JavaMail</code> API<br>
+<strong>Pros:</strong> It is able to support most email services such as Outlook.<br>
+<strong>Cons:</strong> By entering username and password to authorize a session, there may be some security breaches if not encrypted properly.</p>
 </div>
 <div class="paragraph">
 <p><mark>End of Extract</mark></p>
@@ -376,7 +452,7 @@ on the type of email services they need.<br></p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-11-10 09:08:36 +00:00
+Last updated 2017-11-11 11:10:17 +00:00
 </div>
 </div>
 </body>
