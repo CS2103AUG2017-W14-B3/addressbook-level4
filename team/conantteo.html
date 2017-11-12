@@ -37,7 +37,7 @@
 <div class="sect2">
 <h3 id="exporting-contacts-code-export-code"><a class="link" href="#exporting-contacts-code-export-code">Exporting contacts : <code>export</code></a></h3>
 <div class="paragraph">
-<p>Allows you to export contacts from the application.</p>
+<p>Allows you to export contacts from HitMeUp into a vCard file.</p>
 </div>
 <div class="paragraph">
 <p>Format: <code>export all</code> or <code>export INDEX [INDEX]&#8230;&#8203;</code></p>
@@ -47,7 +47,7 @@
 <div class="ulist">
 <ul>
 <li>
-<p>Exports all information of all contacts or the contact at the specified INDEX into a vCard format file.</p>
+<p>Exports all information of all contacts or the contact at the specified INDEX into a vCard file.</p>
 </li>
 <li>
 <p>The input 'all' is case-sensitive.</p>
@@ -58,9 +58,19 @@
 <li>
 <p>The index must be a positive integer 1, 2, 3, &#8230;&#8203;</p>
 </li>
+<li>
+<p>The data folder directory where the vCard file ("contacts.vcf") is located will be displayed after a successful export as shown below.</p>
+</li>
+<li>
+<p>If you would like to move this vCard file to another folder, please close HitMeUp first.</p>
+</li>
 </ul>
 </div>
 </div>
+</div>
+<div class="paragraph">
+<p><span class="image"><img src="../images/ExportDirectory.png" alt="ExportDirectory" width="790"></span>
+<em>Figure 3.12. Data folder directory containing vCard file</em></p>
 </div>
 <div class="paragraph">
 <p>Examples:</p>
@@ -69,12 +79,12 @@
 <ul>
 <li>
 <p><code>export all</code><br>
-Exports all contacts into a vCard format file.</p>
+Exports all contacts into a vCard file.</p>
 </li>
 <li>
 <p><code>list</code><br>
 <code>export 1 2</code><br>
-Exports the 1st and 2nd person from the list of contacts listed.</p>
+Exports the 1st and 2nd persons from the list of contacts into a vCard file.</p>
 </li>
 </ul>
 </div>
@@ -215,16 +225,38 @@ fos = <span class="keyword">new</span> <span class="predefined-type">FileOutputS
 <div class="ulist">
 <ul>
 <li>
-<p>Opens your default email application and composes a new email with the email addresses
-of persons at the specified indices.</p>
-</li>
-<li>
 <p>The index refers to the index number shown in the most recent listing</p>
 </li>
 <li>
 <p>The index <strong>must be a positive integer</strong> 1, 2, 3, &#8230;&#8203;</p>
 </li>
+<li>
+<p>The person specified must have a valid email address.</p>
+</li>
+<li>
+<p>Opens the default mail application in your desktop as shown below with the email addresses of the specified persons</p>
+</li>
 </ul>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p><span class="image"><img src="../images/EmailWindow.png" alt="EmailWindow" width="790"></span>
+<em>Figure 3.13. Default mail application in Windows 10</em></p>
+</div>
+<div class="exampleblock">
+<div class="content">
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+You can set your own default mail application. Please refer to instructions in the <a href="#mailsettings">FAQ</a>.
+</td>
+</tr>
+</table>
 </div>
 </div>
 </div>
@@ -236,12 +268,12 @@ of persons at the specified indices.</p>
 <li>
 <p><code>list</code><br>
 <code>email 2 3</code><br>
-Composes an email addressed to the 2nd person and 3rd person from the list of contacts listed.</p>
+Opens the default mail application to send an email to the 2nd and 3rd persons from the list of contacts.</p>
 </li>
 <li>
 <p><code>find Betsy</code><br>
 <code>email 1</code><br>
-Composes an email addressed to the 1st person in the results of the <code>find</code> command.</p>
+Opens the default mail application to send an email to the 1st person in the results of the <code>find</code> command.</p>
 </li>
 </ul>
 </div>
@@ -454,7 +486,7 @@ it is difficult to authorize every email services as some services such as Gmail
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-11-12 00:52:00 +00:00
+Last updated 2017-11-12 03:48:38 +00:00
 </div>
 </div>
 </body>
