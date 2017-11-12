@@ -27,7 +27,7 @@ convenience like never before. Social integration to Instagram and Twitter is ba
 in the application itself without having to switch to a browser or check their phone.</p>
 </div>
 <div class="paragraph">
-<p><strong>Code contributed</strong>: [<a href="https://github.com/CS2103AUG2017-W14-B3/main/tree/master/collated/main/danielbrzn.md">Functional code</a>] [<a href="https://github.com/CS2103AUG2017-W14-B3/main/tree/master/collated/test/danielbrzn.md">[Test code</a>]</p>
+<p><strong>Code contributed</strong>: [<a href="https://github.com/CS2103AUG2017-W14-B3/main/tree/master/collated/main/danielbrzn.md">Functional code</a>] [<a href="https://github.com/CS2103AUG2017-W14-B3/main/tree/master/collated/test/danielbrzn.md">Test code</a>]</p>
 </div>
 <div class="sect2">
 <h3 id="enhancement-added-google-contacts-import"><a class="link" href="#enhancement-added-google-contacts-import">Enhancement Added: Google Contacts Import</a></h3>
@@ -120,11 +120,13 @@ unable to be imported.</p>
 <div class="paragraph">
 <p><mark>End of Extract</mark></p>
 </div>
-<hr>
 <div class="sect3">
 <h4 id="justification"><a class="link" href="#justification">Justification</a></h4>
+<hr>
 <div class="paragraph">
-<p>{Justify the need for, and the current design (i.e. external behavior) of, the feature}</p>
+<p>Users of HitMeUp would want a quick and easy way to get started with the application, especially if they have a large amount of contacts.<br>
+Having an import function that takes in all their contacts from Google in a matter of seconds allows them to not worry about the transition
+to a new application.</p>
 </div>
 </div>
 <div class="sect3">
@@ -241,7 +243,7 @@ A progress bar for importing is also shown to the user, implemented using the <c
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="../images/ImportSequenceDiagram.png" alt="ImportSequenceDiagram" width="800">
+<img src="../images/ImportSequenceDiagram.png" alt="ImportSequenceDiagram" width="1000">
 </div>
 </div>
 <div class="paragraph">
@@ -289,8 +291,182 @@ authorization URL to be shown in the <code>BrowserPanel</code><br>
 </div>
 </div>
 <div class="sect2">
-<h3 id="enhancement-proposed-to-be-updated"><a class="link" href="#enhancement-proposed-to-be-updated">Enhancement Proposed: to be updated</a></h3>
-
+<h3 id="enhancement-added-location-command"><a class="link" href="#enhancement-added-location-command">Enhancement Added: Location Command</a></h3>
+<div class="sect3">
+<h4 id="external-behavior-2"><a class="link" href="#external-behavior-2">External behavior</a></h4>
+<hr>
+<div class="paragraph">
+<p><mark>Start of Extract [from: User Guide]</mark></p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="viewing-a-contact-s-address-code-location-code"><a class="link" href="#viewing-a-contact-s-address-code-location-code">Viewing a contact&#8217;s address : <code>location</code></a></h3>
+<div class="paragraph">
+<p>View a person&#8217;s address in the browser panel using Google Maps.<br></p>
+</div>
+<div class="paragraph">
+<p>Format: <code>location INDEX</code></p>
+</div>
+<div class="sidebarblock">
+<div class="content">
+<div class="ulist">
+<ul>
+<li>
+<p>The index <strong>must be a positive integer</strong> 1, 2, 3, &#8230;&#8203;</p>
+</li>
+<li>
+<p>The index refers to the index number shown in the most recent listing.</p>
+</li>
+<li>
+<p>The person at the chosen index should have an address.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>Examples:<br></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>location 1</code><br>
+Opens up the Google Maps location of the person at index 1.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p><mark>End of Extract</mark></p>
+</div>
+<div class="sect3">
+<h4 id="justification-2"><a class="link" href="#justification-2">Justification</a></h4>
+<hr>
+<div class="paragraph">
+<p>While having the location of a contact is useful, it is an inconvenience to the user to copy the address into Google Maps
+manually in order to figure out the directions to a friend&#8217;s place. As such, the location command allows the user to directly view the location of a contact
+in HitMeUp without having to switch to a browser.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="implementation-2"><a class="link" href="#implementation-2">Implementation</a></h4>
+<hr>
+<div class="paragraph">
+<p><mark>Start of Extract [from: Developer Guide]</mark></p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="location"><a class="link" href="#location">Location</a></h3>
+<div class="paragraph">
+<p>The location command is facilitated by the <code>BrowserPanel</code> class. It allows HitMeUp to load any URL through the use of the general <code>ShowUrlEvent</code> class
+that sends an event to the <code>MainWindow</code> class, which subsequently invokes the <code>handleShowUrlEvent</code> that allows the URL to be displayed in the <code>BrowserPanel</code>. The URL
+in this context would be a Google Maps URL which contains the address of the contact at the index selected by the user.</p>
+</div>
+<div class="paragraph">
+<p>The input from the user will first be parsed by the <code>LocationCommandParser</code> which will determine whether or not the command conforms to the expected format.</p>
+</div>
+<div class="paragraph">
+<p>The following code snippet shows the <code>execute</code> method of the <code>LocationCommand</code> class:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Code listing:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java">    <span class="directive">public</span> CommandResult execute() <span class="directive">throws</span> CommandException {
+            <span class="predefined-type">List</span>&lt;ReadOnlyPerson&gt; lastShownList = model.getFilteredPersonList();
+            <span class="comment">// Check if index is valid</span>
+            <span class="keyword">if</span> (index.getZeroBased() &gt;= lastShownList.size()) {
+                <span class="keyword">throw</span> <span class="keyword">new</span> CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+            }
+            <span class="comment">// Check if Google is reachable</span>
+            <span class="keyword">if</span> (!GoogleUtil.isReachable()) {
+                <span class="keyword">throw</span> <span class="keyword">new</span> CommandException(MESSAGE_FAILURE);
+            }
+            ReadOnlyPerson current = lastShownList.get(index.getZeroBased());
+            <span class="comment">// Check if Person has an address</span>
+            <span class="keyword">if</span> (current.getAddress().toString().length() == <span class="integer">0</span>) {
+                <span class="keyword">throw</span> <span class="keyword">new</span> CommandException(<span class="predefined-type">String</span>.format(MESSAGE_NO_ADDRESS, current.getName().toString()));
+            }
+            <span class="predefined-type">String</span> finalUrl = GOOGLE_MAPS_URL_PREFIX + parseAddressForUrl(current.getAddress());
+            EventsCenter.getInstance().post(<span class="keyword">new</span> ShowUrlEvent(finalUrl));
+            <span class="keyword">return</span> <span class="keyword">new</span> CommandResult(<span class="predefined-type">String</span>.format(MESSAGE_SUCCESS, current.getName().toString()));
+        }</code></pre>
+</div>
+</div>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>After the input is successfully parsed, the <code>userInput</code> is passed to the <code>LocationCommand</code> class where 3 important checks are performed. Firstly, the index that is input by the user is checked to ensure
+that it does not exceed the length of the list that is currently shown to the user. Next, a check is performed to see if the Google website is up, otherwise the Google Maps URL
+would fail to load. Lastly, a check on the person at the user&#8217;s specified index is done to see if he or she has an address. Once these checks are done, the
+<code>parseAddressForUrl</code> method of the <code>LocationCommand</code> class takes in the address of the person and appends it to a <code>GOOGLE_MAPS_URL_PREFIX</code> to build the final URL. This method is
+included in the <code>LocationCommand</code> class to allow for higher cohesion as this is the only class that would need to parse an address into a Google Maps URL.</p>
+</div>
+<div class="paragraph">
+<p>The following activity diagram summarizes the flow of the location command:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../images/LocationActivityDiagram.png" alt="LocationActivityDiagram" width=""800">
+</div>
+</div>
+<div class="sect3">
+<h4 id="design-considerations-2"><a class="link" href="#design-considerations-2">Design Considerations</a></h4>
+<div class="paragraph">
+<p><strong>Aspect:</strong> How the Google Maps URL is passed to the BrowserPanel<br>
+<strong>Alternative 1 (current choice):</strong> Use a <code>showUrlEvent</code> to send the URL to the <code>MainWindow</code> subscriber<br>
+<strong>Pros:</strong> Allows <code>LocationCommand</code> to be more cohesive as it does not need to have an extra method to deal with the logic<br>
+for displaying a URL in the <code>BrowserPanel</code><br>
+<strong>Cons:</strong> <code>LocationCommand</code> class would be more coupled with the <code>EventsCenter</code> class as it relies on the event for its core functionality<br>
+<strong>Alternative 2:</strong> Create a public method in <code>MainWindow</code> for showing a URL in the <code>BrowserPanel</code> <br>
+<strong>Pros:</strong> Easy to implement, only 1 method in <code>MainWindow</code> required and it is called from the <code>execute</code> method of <code>LocationCommand</code><br>
+<strong>Cons:</strong> Exposes functionality of <code>MainWindow</code> unnecessarily to other classes</p>
+</div>
+<div class="paragraph">
+<p><mark>End of Extract</mark></p>
+</div>
+<hr>
+</div>
+</div>
+<div class="sect2">
+<h3 id="enhancement-proposed-icloud-import"><a class="link" href="#enhancement-proposed-icloud-import">Enhancement Proposed: iCloud Import</a></h3>
+<div class="sect3">
+<h4 id="external-behavior-3"><a class="link" href="#external-behavior-3">External behavior</a></h4>
+<hr>
+<div class="paragraph">
+<p>The iCloud import would be invoked by typing <code>iCloud</code> as the parameter for the import command instead of <code>Google</code>.</p>
+</div>
+<hr>
+</div>
+<div class="sect3">
+<h4 id="justification-3"><a class="link" href="#justification-3">Justification</a></h4>
+<hr>
+<div class="paragraph">
+<p>While import from Google Contacts is available, there may be users who have their contacts stored on iCloud instead and would prefer
+to import from iCloud instead of having to manually add their contacts. Having this feature would allow the user the freedom of choice in
+which cloud service to import their contacts from, and would thus allow HitMeUp to be a more versatile application.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="implementation-3"><a class="link" href="#implementation-3">Implementation</a></h4>
+<hr>
+<div class="paragraph">
+<p>The iCloud import would be facilitated by the <code>CloudKit JS</code> framework provided by Apple in their Developer Program. However, as there are no native Java APIs
+provided by Apple for usage, the import would have to be facilitated using HTTP requests in contrast to the implementation of the Google import. The <a href="http://unirest.io/java.html">Unirest</a> HTTP Request libraries would be used to achieve this.</p>
+</div>
+<div class="paragraph">
+<p>A HTTP request would be sent to Apple&#8217;s servers with the user&#8217;s credentials for authentication. Once authenticated, another request containing parameters to access the contacts
+of the authenticated user would be sent, and the returned data would be parsed into a <code>Person</code> and added to the application if the fields are valid.</p>
+</div>
+<div class="paragraph">
+<p>The user&#8217;s credentials will never be stored in the application.</p>
+</div>
+<hr>
+</div>
 </div>
 <div class="sect2">
 <h3 id="other-contributions"><a class="link" href="#other-contributions">Other contributions</a></h3>
@@ -308,6 +484,9 @@ authorization URL to be shown in the <code>BrowserPanel</code><br>
 <li>
 <p>Responsible for managing weekly milestones and releases</p>
 </li>
+<li>
+<p>Set up AppVeyor and Travis CI for the team repository</p>
+</li>
 </ul>
 </div>
 </div>
@@ -316,7 +495,7 @@ authorization URL to be shown in the <code>BrowserPanel</code><br>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-11-12 18:27:13 +00:00
+Last updated 2017-11-12 20:16:35 +00:00
 </div>
 </div>
 </body>

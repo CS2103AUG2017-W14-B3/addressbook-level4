@@ -53,8 +53,9 @@
 <li><a href="#tag-edit">5.6. Tag Edit</a></li>
 <li><a href="#find">5.7. Find</a></li>
 <li><a href="#social">5.8. Social</a></li>
-<li><a href="#logging">5.9. Logging</a></li>
-<li><a href="#configuration">5.10. Configuration</a></li>
+<li><a href="#location">5.9. Location</a></li>
+<li><a href="#logging">5.10. Logging</a></li>
+<li><a href="#configuration">5.11. Configuration</a></li>
 </ul>
 </li>
 <li><a href="#documentation">6. Documentation</a>
@@ -953,7 +954,7 @@ the email to their recipients.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="design-consideration"><a class="link" href="#design-consideration">5.2.3. Design consideration</a></h4>
+<h4 id="design-considerations-2"><a class="link" href="#design-considerations-2">5.2.3. Design Considerations</a></h4>
 <div class="paragraph">
 <p><strong>Aspect:</strong> Types of application to send emails<br>
 <strong>Alternative 1 (current choice):</strong> Use user&#8217;s default mail application in their desktop<br>
@@ -1082,7 +1083,7 @@ A progress bar for importing is also shown to the user, implemented using the <c
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="images/ImportSequenceDiagram.png" alt="ImportSequenceDiagram" width="800">
+<img src="images/ImportSequenceDiagram.png" alt="ImportSequenceDiagram" width="1000">
 </div>
 </div>
 <div class="paragraph">
@@ -1090,7 +1091,7 @@ A progress bar for importing is also shown to the user, implemented using the <c
 <code>undo</code> command.</p>
 </div>
 <div class="sect3">
-<h4 id="design-considerations-2"><a class="link" href="#design-considerations-2">5.3.1. Design Considerations</a></h4>
+<h4 id="design-considerations-3"><a class="link" href="#design-considerations-3">5.3.1. Design Considerations</a></h4>
 <div class="paragraph">
 <p><strong>Aspect:</strong> How import executes<br>
 <strong>Alternative 1 (current choice):</strong> Individually adds each contact.<br>
@@ -1222,7 +1223,7 @@ The <code>DEFAULT_FILE_DIR</code> is the data folder found in the application di
 <p>Finally, the directory that stores the "contacts.vcf" file will be shown to the user and the file can be imported to other platforms that support vCard files.</p>
 </div>
 <div class="sect3">
-<h4 id="design-considerations-3"><a class="link" href="#design-considerations-3">5.4.1. Design Considerations</a></h4>
+<h4 id="design-considerations-4"><a class="link" href="#design-considerations-4">5.4.1. Design Considerations</a></h4>
 <div class="paragraph">
 <p><strong>Aspect:</strong> Type of file to create<br>
 <strong>Alternative 1 (current choice):</strong> Creates vCard file<br>
@@ -1381,7 +1382,7 @@ The returned path will be stored as the display picture value of a person.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="design-considerations-4"><a class="link" href="#design-considerations-4">5.5.3. Design Considerations</a></h4>
+<h4 id="design-considerations-5"><a class="link" href="#design-considerations-5">5.5.3. Design Considerations</a></h4>
 <div class="paragraph">
 <p><strong>Aspect:</strong> When to implement the feature<br>
 <strong>Alternative 1 (current choice):</strong> Prompts for display picture when parser detects <code>dp/</code> in <code>add</code> or <code>edit</code> commands<br>
@@ -1435,7 +1436,7 @@ they are <code>friends</code> and <code>losers</code>) provided by the user and 
 will call its method <code>executeUndoableCommand()</code> and ensure that the tag <code>friends</code> specified is valid.</p>
 </div>
 <div class="sect3">
-<h4 id="design-considerations-5"><a class="link" href="#design-considerations-5">5.6.1. Design Considerations</a></h4>
+<h4 id="design-considerations-6"><a class="link" href="#design-considerations-6">5.6.1. Design Considerations</a></h4>
 <div class="paragraph">
 <p><strong>Aspect:</strong> Implementation of <code>TagEditCommand</code><br>
 <strong>Alternative 1 (current choice):</strong> implement it by extending <code>UndoableCommand</code><br>
@@ -1531,7 +1532,7 @@ against the existing list of names and tags and return all persons with the matc
 tag <code>friends</code>. Finally, <code>execute()</code> will run <code>updateFilteredPersonList</code> to show the list of persons returned.</p>
 </div>
 <div class="sect3">
-<h4 id="design-consideration-2"><a class="link" href="#design-consideration-2">5.7.1. Design consideration</a></h4>
+<h4 id="design-considerations-7"><a class="link" href="#design-considerations-7">5.7.1. Design Considerations</a></h4>
 <div class="paragraph">
 <p><strong>Aspect:</strong> How to input arguments for the command<br>
 <strong>Alternative 1 (current choice):</strong> flexible input, no prefixes needed<br>
@@ -1569,7 +1570,7 @@ posting a new <code>SocialRequestEvent</code> to the UI. In the UI, the <code>Ma
 load the Instagram page of the person at index 1.</p>
 </div>
 <div class="sect3">
-<h4 id="design-consideration-3"><a class="link" href="#design-consideration-3">5.8.1. Design consideration</a></h4>
+<h4 id="design-considerations-8"><a class="link" href="#design-considerations-8">5.8.1. Design Considerations</a></h4>
 <div class="paragraph">
 <p><strong>Aspect:</strong> What the user input for social media field should be<br>
 <strong>Alternative 1 (current choice):</strong> Use the same prefixes when adding person<br>
@@ -1585,7 +1586,79 @@ type less into the CLI<br></p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="logging"><a class="link" href="#logging">5.9. Logging</a></h3>
+<h3 id="location"><a class="link" href="#location">5.9. Location</a></h3>
+<div class="paragraph">
+<p>The location command is facilitated by the <code>BrowserPanel</code> class. It allows HitMeUp to load any URL through the use of the general <code>ShowUrlEvent</code> class
+that sends an event to the <code>MainWindow</code> class, which subsequently invokes the <code>handleShowUrlEvent</code> that allows the URL to be displayed in the <code>BrowserPanel</code>. The URL
+in this context would be a Google Maps URL which contains the address of the contact at the index selected by the user.</p>
+</div>
+<div class="paragraph">
+<p>The input from the user will first be parsed by the <code>LocationCommandParser</code> which will determine whether or not the command conforms to the expected format.</p>
+</div>
+<div class="paragraph">
+<p>The following code snippet shows the <code>execute</code> method of the <code>LocationCommand</code> class:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Code listing:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java">    <span class="directive">public</span> CommandResult execute() <span class="directive">throws</span> CommandException {
+            <span class="predefined-type">List</span>&lt;ReadOnlyPerson&gt; lastShownList = model.getFilteredPersonList();
+            <span class="comment">// Check if index is valid</span>
+            <span class="keyword">if</span> (index.getZeroBased() &gt;= lastShownList.size()) {
+                <span class="keyword">throw</span> <span class="keyword">new</span> CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+            }
+            <span class="comment">// Check if Google is reachable</span>
+            <span class="keyword">if</span> (!GoogleUtil.isReachable()) {
+                <span class="keyword">throw</span> <span class="keyword">new</span> CommandException(MESSAGE_FAILURE);
+            }
+            ReadOnlyPerson current = lastShownList.get(index.getZeroBased());
+            <span class="comment">// Check if Person has an address</span>
+            <span class="keyword">if</span> (current.getAddress().toString().length() == <span class="integer">0</span>) {
+                <span class="keyword">throw</span> <span class="keyword">new</span> CommandException(<span class="predefined-type">String</span>.format(MESSAGE_NO_ADDRESS, current.getName().toString()));
+            }
+            <span class="predefined-type">String</span> finalUrl = GOOGLE_MAPS_URL_PREFIX + parseAddressForUrl(current.getAddress());
+            EventsCenter.getInstance().post(<span class="keyword">new</span> ShowUrlEvent(finalUrl));
+            <span class="keyword">return</span> <span class="keyword">new</span> CommandResult(<span class="predefined-type">String</span>.format(MESSAGE_SUCCESS, current.getName().toString()));
+        }</code></pre>
+</div>
+</div>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>After the input is successfully parsed, the <code>userInput</code> is passed to the <code>LocationCommand</code> class where 3 important checks are performed. Firstly, the index that is input by the user is checked to ensure
+that it does not exceed the length of the list that is currently shown to the user. Next, a check is performed to see if the Google website is up, otherwise the Google Maps URL
+would fail to load. Lastly, a check on the person at the user&#8217;s specified index is done to see if he or she has an address. Once these checks are done, the
+<code>parseAddressForUrl</code> method of the <code>LocationCommand</code> class takes in the address of the person and appends it to a <code>GOOGLE_MAPS_URL_PREFIX</code> to build the final URL. This method is
+included in the <code>LocationCommand</code> class to allow for higher cohesion as this is the only class that would need to parse an address into a Google Maps URL.</p>
+</div>
+<div class="paragraph">
+<p>The following activity diagram summarizes the flow of the location command:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/LocationActivityDiagram.png" alt="LocationActivityDiagram" width=""800">
+</div>
+</div>
+<div class="sect3">
+<h4 id="design-considerations-9"><a class="link" href="#design-considerations-9">5.9.1. Design Considerations</a></h4>
+<div class="paragraph">
+<p><strong>Aspect:</strong> How the Google Maps URL is passed to the BrowserPanel<br>
+<strong>Alternative 1 (current choice):</strong> Use a <code>showUrlEvent</code> to send the URL to the <code>MainWindow</code> subscriber<br>
+<strong>Pros:</strong> Allows <code>LocationCommand</code> to be more cohesive as it does not need to have an extra method to deal with the logic<br>
+for displaying a URL in the <code>BrowserPanel</code><br>
+<strong>Cons:</strong> <code>LocationCommand</code> class would be more coupled with the <code>EventsCenter</code> class as it relies on the event for its core functionality<br>
+<strong>Alternative 2:</strong> Create a public method in <code>MainWindow</code> for showing a URL in the <code>BrowserPanel</code> <br>
+<strong>Pros:</strong> Easy to implement, only 1 method in <code>MainWindow</code> required and it is called from the <code>execute</code> method of <code>LocationCommand</code><br>
+<strong>Cons:</strong> Exposes functionality of <code>MainWindow</code> unnecessarily to other classes</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="logging"><a class="link" href="#logging">5.10. Logging</a></h3>
 <div class="paragraph">
 <p>We are using <code>java.util.logging</code> package for logging. The <code>LogsCenter</code> class is used to manage the logging levels and logging destinations.</p>
 </div>
@@ -1623,7 +1696,7 @@ type less into the CLI<br></p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="configuration"><a class="link" href="#configuration">5.10. Configuration</a></h3>
+<h3 id="configuration"><a class="link" href="#configuration">5.11. Configuration</a></h3>
 <div class="paragraph">
 <p>Certain properties of the application can be controlled (e.g App name, logging level) through the configuration file (default: <code>config.json</code>).</p>
 </div>
@@ -2699,7 +2772,7 @@ name and address information for use in AddressBook.</pre>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-11-12 18:27:13 +00:00
+Last updated 2017-11-12 20:16:35 +00:00
 </div>
 </div>
 </body>
