@@ -209,7 +209,7 @@ Email, Address, Birthday, Twitter, Instagram, Display Picture, Tag</p>
 <p>Adds a person to the application.<br></p>
 </div>
 <div class="paragraph">
-<p>Format: <code>add n/NAME p/PHONE_NUMBER [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [tw/TWITTER] [ig/INSTAGRAM] [dp/DISPLAY_PIC_CHOICE] [t/TAG]&#8230;&#8203;</code></p>
+<p>Format: <code>add n/NAME p/PHONE_NUMBER [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [tw/TWITTER] [ig/INSTAGRAM] [dp/] [t/TAG]&#8230;&#8203;</code></p>
 </div>
 <div class="sidebarblock">
 <div class="content">
@@ -258,22 +258,48 @@ If you do not have a display picture to add, leave out the dp/ prefix.
 </div>
 </div>
 <div class="paragraph">
-<p>Examples:</p>
+<p>Example:</p>
 </div>
+<div class="exampleblock">
+<div class="content">
 <div class="ulist">
 <ul>
 <li>
-<p><code>add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 b/19/09/1999 tw/john_doe dp/Y</code><br>
-Adds a person called <code>John Doe</code> with a phone number of <code>98765432</code>, an email address of <code>johnd@example.com</code>, an address of
-<code>John street, block 123, #01-01</code>, a Twitter username of <code>john_doe</code>. In addition, as the <code>DISPLAY_PIC_CHOICE</code> is set to <code>Y</code>,
-a file picker will open to allow you to choose a custom display picture for <code>John Doe</code>.</p>
+<p><code>add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 b/19/09/1999 tw/john_doe dp/</code><br></p>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Pops up the file chooser for user to choose the image they want to set as display picture.</p>
+<div class="imageblock">
+<div class="content">
+<img src="images/AddDP1.png" alt="width"800">
+</div>
+</div>
 </li>
 <li>
-<p><code>add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 b/25/06/1994 ig/crowe_94 t/criminal</code><br>
-Adds a person called <code>Betsy Crowe</code> with tags of <code>friend</code> and <code>criminal</code>, an email address of <code>betsycrowe@example.com</code>, an address of <code>Newgate Prison</code>,
-a phone number of <code>1234567</code>, a birthday of <code>5/06/1994</code> and an Instagram username of <code>crowe_94</code>.</p>
+<p>Adds a person called <strong>John Doe</strong> with a phone number of <strong>98765432</strong>, an email address of <strong>johnd@example.com</strong>, an address of <strong>John street,
+block 123, #01-01</strong>, a Twitter username of <strong>john_doe</strong>.
+John Doe is also added with the image chosen as his display picture.</p>
+<div class="imageblock">
+<div class="content">
+<img src="images/AddDP2.png" alt="width"800">
+</div>
+</div>
+</li>
+<li>
+<p>The image is copied into the designated display picture storage directory with a unique name.</p>
+<div class="imageblock">
+<div class="content">
+<img src="images/AddDP3.png" alt="width"800">
+</div>
+</div>
+</li>
+</ol>
+</div>
 </li>
 </ul>
+</div>
+</div>
 </div>
 </div>
 <div class="sect2">
@@ -292,7 +318,7 @@ a phone number of <code>1234567</code>, a birthday of <code>5/06/1994</code> and
 </div>
 <div class="paragraph">
 <p>Format: <code>edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [tw/TWITTER]
-[ig/INSTAGRAM] [dp/DISPLAY_PIC_CHOICE] [t/TAG]&#8230;&#8203;</code></p>
+[ig/INSTAGRAM] [dp/] [t/TAG]&#8230;&#8203;</code></p>
 </div>
 <div class="sidebarblock">
 <div class="content">
@@ -333,7 +359,42 @@ Edits the phone number and email address of the 1st person to be <code>91234567<
 <p><code>edit 2 n/Betsy Crower t/</code><br>
 Edits the name of the 2nd person to be <code>Betsy Crower</code> and clears all existing tags.</p>
 </li>
+<li>
+<p><code>edit 3 dp/</code><br></p>
+</li>
 </ul>
+</div>
+<div class="exampleblock">
+<div class="content">
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Pops up the file chooser for user toc hoose the image they want to set as display picture.<br></p>
+<div class="imageblock">
+<div class="content">
+<img src="images/EditDP1.png" alt="EditDP1" width="800">
+</div>
+</div>
+</li>
+<li>
+<p>Display picture of the 3rd person is changed to the chosen image.<br></p>
+<div class="imageblock">
+<div class="content">
+<img src="images/EditDP2.png" alt="EditDP2" width="800">
+</div>
+</div>
+</li>
+<li>
+<p>The image is copied into the designated display picture storage directory with a unique name.<br></p>
+<div class="imageblock">
+<div class="content">
+<img src="images/EditDP3.png" alt="EditDP3" width="800">
+</div>
+</div>
+</li>
+</ol>
+</div>
+</div>
 </div>
 </div>
 <div class="sect2">
@@ -1121,7 +1182,7 @@ e.g. <code>tagedit friends losers</code></p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-11-12 15:38:56 +00:00
+Last updated 2017-11-12 18:27:13 +00:00
 </div>
 </div>
 </body>

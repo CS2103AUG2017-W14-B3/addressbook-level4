@@ -599,6 +599,9 @@ The result of the command execution is encapsulated as a <code>CommandResult</co
 <li>
 <p>save the Address Book data in xml format and read it back.</p>
 </li>
+<li>
+<p>copy chosen images into the storage</p>
+</li>
 </ul>
 </div>
 </div>
@@ -1234,81 +1237,180 @@ The <code>DEFAULT_FILE_DIR</code> is the data folder found in the application di
 <div class="sect2">
 <h3 id="display-picture-mechanism"><a class="link" href="#display-picture-mechanism">5.5. Display Picture Mechanism</a></h3>
 <div class="paragraph">
-<p>This feature was implemented to facilitate users to remember their friends with ease. It allows user to select display picture for each of their contacts if they have a picture ready. Otherwise, they can simple assign a default display picture for them.</p>
+<p>This feature is facilitated by javafx <code>FileChooser</code> and java <code>IO</code> class. It supports choosing of images from hard disk via a pop up and
+copies the chosen image into the designated image storage folder indicated in <code>UserPref</code>. The chosen image will then be displayed
+in the <code>GUI</code> for reference to the specific contact.</p>
+</div>
+<div class="sect3">
+<h4 id="display-picture-implementation"><a class="link" href="#display-picture-implementation">5.5.1. Display picture implementation</a></h4>
+<div class="paragraph">
+<p>This section will discuss the implementation of the display picture feature.<br></p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/DisplayPicLogicSequenceDiagram.png" alt="DisplayPicLogicSequenceDiagram" width="800">
+</div>
 </div>
 <div class="paragraph">
-<p>JavaFX <code>FileChooser</code> class allows user to choose the display picture that they want to use for a contact and returns the path to that picture. The path to the picture is then stored as a field in <code>Persons</code>.</p>
+<p><em>Figure 5.5.1 shows a sequence diagram of editing the display picture of a person</em></p>
 </div>
 <div class="paragraph">
-<p>When an event is raised from Storage to UI, the path will be used to make an image using JavaFX <code>Image</code> class and displayed using JavaFX <code>ImageView</code>.</p>
-</div>
-<div class="paragraph">
-<p>This feature is an add-on to the current <code>Add</code> and <code>Edit</code> command. The prefix for display picture is <code>dp/[CHOICE]</code>. The <code>[CHOICE]</code> is to indicate <code>y/n</code>.</p>
-</div>
-<div class="paragraph">
-<p>An example for an Add command:</p>
+<p>From the diagram above, we can see that additional work is done at <code>ArgumentTokenizer</code> in order to get the final display picture path with resides in the designated display picture file directory.<br>
+<br>
+Since <code>ArgumentTokenizer</code> is only called in <code>AddCommandParser</code> and <code>EditCommandParser</code>, writing <code>dp/</code> in other command will not cause the display picture feature to be called.<br>
+<br>
+When <code>dp/</code> is present in the command, <code>getCurrentImgPath</code> will be called. This function returns the path of the image that the user want to set as his display picture. Afterwards,
+<code>createUniqueDisplayName</code> will create a unique name for the image chosen by hashing all the other fields of the person.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>add n/John Doe p/98142142 e/johndoe@gmail.com a/Clementi road b/28.01.1995 dp/Y t/friends</pre>
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">private</span> <span class="directive">static</span> <span class="predefined-type">String</span> createUniqueDisplayPicName(ArgumentMultimap argMultimap, <span class="predefined-type">String</span> currentImgPath, Prefix... prefixes) {
+    <span class="predefined-type">String</span> displayPicName = currentImgPath;
+    <span class="keyword">for</span> (Prefix prefix : prefixes) {
+        displayPicName += argMultimap.getValue(prefix);
+    }
+    <span class="keyword">return</span> <span class="predefined-type">String</span>.valueOf(displayPicName.hashCode());
+}</code></pre>
 </div>
-</div>
-<div class="admonitionblock tip">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-tip" title="Tip"></i>
-</td>
-<td class="content">
-If you do not have a display picture for your contact, indicate dp/N to give him/her a default display picture.
-</td>
-</tr>
-</table>
 </div>
 <div class="paragraph">
-<p>A static class ImagePathUtil is used to detect <code>dp/[CHOICE]</code> when the user enters a command.
-The following function check for the users <code>[CHOICE]</code> and append the command input accordingly.</p>
+<p>Since duplicated users cannot be added, by hashing all the fields of a person, we can ensure that a unique hashcode is created which will then be used as the filename for the image.<br>
+This is to ensure that images in the display picture file folder will not be overwritten as files with same name will overwrite each other.<br>
+<br>
+ Afterwards, <code>getFinalImgPath</code> will return the display picture file path that has been copied to the designated display picture folder. This path will be the value for the prefix <code>dp/</code>, which will be parsed into the respective command parsers.</p>
 </div>
-<div class="ulist">
-<ul>
-<li>
-<p>Code listing:</p>
+</div>
+<div class="sect3">
+<h4 id="event-processes-for-choosing-and-copying-of-display-picture"><a class="link" href="#event-processes-for-choosing-and-copying-of-display-picture">5.5.2. Event processes for choosing and copying of display picture</a></h4>
+<div class="paragraph">
+<p>This section will discuss the flow of events when users wants to select display pictures for their contacts.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/SDforDisplayPic.png" alt="SDforDisplayPic" width="800">
+</div>
+</div>
+<div class="paragraph">
+<p><em>Figure 5.5.2a shows the interaction between components for <code>edit 1 dp/</code> command (part 1)</em></p>
+</div>
+<div class="paragraph">
+<p>The above diagrams shows the series of event when <code>ArgumentTokenizer</code> detects the prefix <code>dp/</code>.<br>
+The following code snippets will show how the events are posted within each methods.</p>
+</div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="directive">static</span> <span class="predefined-type">String</span> setPath(<span class="predefined-type">String</span> arguments, CommandBox commandBox) <span class="directive">throws</span> <span class="exception">ParseException</span> {
-    <span class="keyword">try</span> {
-        <span class="type">int</span> prefixIndex = findPrefixPosition(arguments, PREFIX_DP.getPrefix(), <span class="integer">0</span>);
-        <span class="predefined-type">StringBuilder</span> sb = <span class="keyword">new</span> <span class="predefined-type">StringBuilder</span>(arguments);
-        <span class="predefined-type">String</span> choice = sb.substring(prefixIndex + PREFIX_LENGTH, prefixIndex + PREFIX_LENGTH + <span class="integer">1</span>);
-        <span class="keyword">if</span> (requireFileChooser(choice)) {
-            <span class="predefined-type">String</span> selectedPath = commandBox.getDisplayPicPath();
-            sb.replace(prefixIndex, prefixIndex + PREFIX_LENGTH + <span class="integer">1</span>, PREFIX_DP.getPrefix() + selectedPath + <span class="string"><span class="delimiter">&quot;</span><span class="content"> </span><span class="delimiter">&quot;</span></span>);
-            arguments = sb.toString();
-        } <span class="keyword">else</span> {
-            sb.replace(prefixIndex, prefixIndex + PREFIX_LENGTH + <span class="integer">1</span>, PREFIX_DP.getPrefix()
-                    + DEFAULT_DISPLAY_PIC + <span class="string"><span class="delimiter">&quot;</span><span class="content"> </span><span class="delimiter">&quot;</span></span>);
-            arguments = sb.toString();
-        }
-        <span class="keyword">return</span> arguments;
-    } <span class="keyword">catch</span> (<span class="exception">StringIndexOutOfBoundsException</span> sioe) {
-        <span class="keyword">throw</span> <span class="keyword">new</span> <span class="exception">ParseException</span>(ERROR_MESSAGE, sioe);
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">private</span> <span class="directive">static</span> <span class="predefined-type">String</span> getCurrentImgPath() {
+    FileChooserEvent fileChooserEvent = <span class="keyword">new</span> FileChooserEvent();
+    EventsCenter.getInstance().post(fileChooserEvent);
+    <span class="keyword">return</span> fileChooserEvent.getImgPath();
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><code>getCurrentImgPath</code> posts the <code>FileChooserEvent</code> which will be handled by <code>UI</code> to retrieve the path of the chosen image for the display picture.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">private</span> <span class="directive">static</span> <span class="predefined-type">String</span> getFinalImgPath(<span class="predefined-type">String</span> hashedDisplayPicName, <span class="predefined-type">String</span> imgPath) {
+    NewImageEvent newImageEvent = <span class="keyword">new</span> NewImageEvent(hashedDisplayPicName, imgPath);
+    EventsCenter.getInstance().post(newImageEvent);
+    <span class="keyword">return</span> newImageEvent.getImagePath();
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><code>getFinalImgPath</code> posts the <code>NewImageEvent</code> which will be handled by <code>Storage</code> to retrieve the final display picture path in the designated display picture directory.<br>
+<br>
+ The following diagram shows how the the events posted previously are being handled:<br></p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/SDforDisplayPicHandling.png" alt="SDforDisplayPicHandling" width="800">
+</div>
+</div>
+<div class="paragraph">
+<p><em>Figure 5.5.2b shows the interaction between components for <code>edit 1 dp/</code> command (part 2)</em></p>
+</div>
+<div class="paragraph">
+<p>When <code>FileChooserEvent</code> is posted, it will be handled by <code>UI</code> and the method <code>getDisplayPicPath</code> will be called.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">private</span> <span class="predefined-type">String</span> getDisplayPicPath() {
+    FileChooser fileChooser = <span class="keyword">new</span> FileChooser();
+    FileChooser.ExtensionFilter extFilter = <span class="keyword">new</span> FileChooser.ExtensionFilter(<span class="string"><span class="delimiter">&quot;</span><span class="content">PICTURE files</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">*.jpg</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">*.png</span><span class="delimiter">&quot;</span></span>);
+    fileChooser.getExtensionFilters().add(extFilter);
+    <span class="predefined-type">File</span> selectedFile = fileChooser.showOpenDialog(primaryStage);
+    <span class="keyword">if</span> (selectedFile != <span class="predefined-constant">null</span>) {
+        <span class="keyword">return</span> selectedFile.getAbsolutePath();
+    } <span class="keyword">else</span> {
+        <span class="keyword">return</span> DEFAULT_DP;
     }
 }</code></pre>
 </div>
 </div>
-</li>
-</ul>
+<div class="paragraph">
+<p>This method will initiate a pop up in the <code>GUI</code> of HitMeUp for the user to choose the image they want to use. Afterwards, it returns the absolute path of the chosen image.</p>
+</div>
+<div class="paragraph">
+<p>Afterwards, <code>NewImageEvent</code> will be posted and handled by <code>Storage</code>, the method <code>copyImageFile</code> will be called.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">void</span> copyImage(<span class="predefined-type">String</span> currentImagePath, <span class="predefined-type">String</span> imageName) <span class="directive">throws</span> <span class="exception">IOException</span> {
+    <span class="predefined-type">File</span> currentImage = <span class="keyword">new</span> <span class="predefined-type">File</span>(currentImagePath);
+    <span class="predefined-type">BufferedInputStream</span> bis = <span class="keyword">new</span> <span class="predefined-type">BufferedInputStream</span>(<span class="keyword">new</span> <span class="predefined-type">FileInputStream</span>(currentImage));
+    createImageDir();
+    <span class="predefined-type">String</span> newImagePath = getImageFilePath(imageName);
+    <span class="predefined-type">BufferedOutputStream</span> bos = <span class="keyword">new</span> <span class="predefined-type">BufferedOutputStream</span>(<span class="keyword">new</span> <span class="predefined-type">FileOutputStream</span>(newImagePath));
+
+    <span class="type">int</span> data;
+
+    <span class="keyword">while</span> ((data = bis.read()) != -<span class="integer">1</span>) {
+        bos.write(data);
+    }
+
+    bis.close();
+    bos.close();
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This method will copy the chosen image into the designated display picture storage folder and return the path to the copied image.
+The returned path will be stored as the display picture value of a person.</p>
+</div>
 </div>
 <div class="sect3">
-<h4 id="design-considerations-4"><a class="link" href="#design-considerations-4">5.5.1. Design Considerations</a></h4>
+<h4 id="design-considerations-4"><a class="link" href="#design-considerations-4">5.5.3. Design Considerations</a></h4>
 <div class="paragraph">
-<p><strong>Aspect:</strong> How to select Display Picture<br>
+<p><strong>Aspect:</strong> When to implement the feature<br>
+<strong>Alternative 1 (current choice):</strong> Prompts for display picture when parser detects <code>dp/</code> in <code>add</code> or <code>edit</code> commands<br>
+<strong>Pros:</strong> Natural flow of event as users can decide to add a display picture while adding the person<br>
+<strong>Cons:</strong> Much more complex implementation is needed as we have to intercept the parsing of <code>add</code> or <code>edit</code> commands to add information for display picture<br>
+<strong>Alternative 2:</strong>  Have a separate command <code>DisplayPic [INDEX]</code> to select a display picture for the person at <code>INDEX</code> after adding the person<br>
+<strong>Pros:</strong> Easier implementation as it is very similar to the existing <code>edit</code> command<br>
+<strong>Cons:</strong> Troublesome as users will need 2 step to add a display picture for their contacts<br></p>
+</div>
+<hr>
+<div class="paragraph">
+<p><strong>Aspect:</strong> How to select display picture<br>
 <strong>Alternative 1 (current choice):</strong> Use a FileChooser and allow Users to select the file<br>
-<strong>Pros:</strong> User only have to click to select the file.<br>
+<strong>Pros:</strong> Convenient for users as  to select the file<br>
 <strong>Cons:</strong> No longer a CLI interface<br>
+<strong>Cons:</strong> Hard to deploy JUnit testing as there are not way to automate the choosing of files in FileChooser<br>
 <strong>Alternative 2:</strong> Users find the path of the file themselves and add it into the command<br>
 <strong>Pros:</strong> CLI interface<br>
-<strong>Cons:</strong> It is hard for users who are not tech-savvy to find know the path to the file</p>
+<strong>Cons:</strong> Hard for users who are not tech-savvy to find know the path of the image file<br></p>
+</div>
+<hr>
+<div class="paragraph">
+<p><strong>Aspect:</strong> How is chosen image made accessible in the storage<br>
+<strong>Alternative 1 (current choice):</strong> Copying the chosen image into the designated storage path<br>
+<strong>Pros:</strong> Image will still be present at original path for users to use the image<br>
+<strong>Cons:</strong> Inefficient memory usage as duplicate copy of the same image is made<br>
+<strong>Alternative 2:</strong> Moving the chosen image to the designated storage path<br>
+<strong>Pros:</strong> Efficient memory usage as duplicate copies will not be created<br>
+<strong>Cons:</strong> Users may have difficulty finding the chosen image for later use as they will be renamed to prevent overwriting of image in the designated storage<br></p>
 </div>
 <hr>
 </div>
@@ -2597,7 +2699,7 @@ name and address information for use in AddressBook.</pre>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-11-12 15:38:56 +00:00
+Last updated 2017-11-12 18:27:13 +00:00
 </div>
 </div>
 </body>
