@@ -529,7 +529,7 @@ for displaying a URL in the <code>BrowserPanel</code><br>
 </div>
 </div>
 <div class="sect2">
-<h3 id="enhancement-proposed-icloud-import"><a class="link" href="#enhancement-proposed-icloud-import">Enhancement Proposed: iCloud Import</a></h3>
+<h3 id="enhancement-proposed-icloud-contacts-import"><a class="link" href="#enhancement-proposed-icloud-contacts-import">Enhancement Proposed: iCloud Contacts Import</a></h3>
 <div class="sect3">
 <h4 id="external-behavior-3"><a class="link" href="#external-behavior-3">External behavior</a></h4>
 <hr>
@@ -557,6 +557,14 @@ provided by Apple for usage, the import would have to be facilitated using HTTP 
 <div class="paragraph">
 <p>A HTTP request would be sent to Apple&#8217;s servers with the user&#8217;s credentials for authentication. Once authenticated, another request containing parameters to access the contacts
 of the authenticated user would be sent, and the returned data would be parsed into a <code>Person</code> and added to the application if the fields are valid.</p>
+</div>
+<div class="paragraph">
+<p>The following activity diagram summarizes the flow of the iCloud import:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../images/iCloudImportActivityDIagram.png" alt="iCloudImportActivityDIagram" width="800">
+</div>
 </div>
 <div class="paragraph">
 <p>The user&#8217;s credentials will never be stored in the application.</p>
@@ -591,7 +599,7 @@ of the authenticated user would be sent, and the returned data would be parsed i
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-11-13 11:25:17 +00:00
+Last updated 2017-11-13 11:57:23 +00:00
 </div>
 </div>
 </body>
