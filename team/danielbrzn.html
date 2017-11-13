@@ -301,46 +301,45 @@ A progress bar for importing is also shown to the user, implemented using the <c
 <p>The import mechanism is built upon an <code>UndoableCommand</code>, which means that any changes made by the command can be easily reversed by calling the
 <code>undo</code> command.</p>
 </div>
-<div class="paragraph">
-<p><strong>Design Considerations</strong>:</p>
-</div>
-<hr>
+<div class="sect4">
+<h5 id="design-considerations"><a class="link" href="#design-considerations">Design Considerations:</a></h5>
 <div class="paragraph">
 <p><strong>Aspect:</strong> How import executes<br>
 <strong>Alternative 1 (current choice):</strong> Individually adds each contact.<br>
 <strong>Pros:</strong> User is able to see each contact being added.<br>
-<strong>Cons:</strong> Slower than adding retrieved contacts all at once as the data has to be written to disk every time a contact is added individually<br>
+<strong>Cons:</strong> It is slower than adding retrieved contacts all at once as the data has to be written to disk every time a contact is added individually<br>
 <strong>Alternative 2:</strong> Contacts are only added after every single <code>Person</code> is parsed<br>
-<strong>Pros:</strong> Faster than adding as soon as each <code>Person</code> is parsed as data is written all at once, instead of multiple times<br>
-<strong>Cons:</strong> Requires a new method <code>addAllInList</code> to be implemented in model, which only has limited use as import is the only command doing a batch
+<strong>Pros:</strong> It is faster than adding as soon as each <code>Person</code> is parsed as data is written all at once, instead of multiple times<br>
+<strong>Cons:</strong> It requires a new method <code>addAllInList</code> to be implemented in model, which only has limited use as import is the only command doing a batch
 addition of contacts</p>
 </div>
 <hr>
 <div class="paragraph">
 <p><strong>Aspect:</strong> How import progress is shown to the user<br>
 <strong>Alternative 1 (current choice):</strong> Show a pop-up progress window indicating how many contacts have been added<br>
-<strong>Pros:</strong> Intuitive for the user to understand<br>
-<strong>Cons:</strong> Difficult to implement as importing contacts takes a (relatively) long time and thus, blocks the JavaFX thread from updating the UI in a timely manner. As such, the progress bar will not be updated until the <code>importContacts</code> function is completed.
+<strong>Pros:</strong> It is intuitive for the user to understand<br>
+<strong>Cons:</strong> It is difficult to implement as importing contacts takes a (relatively) long time and thus, blocks the JavaFX thread from updating the UI in a timely manner. As such, the progress bar will not be updated until the <code>importContacts</code> function is completed.
 Threading has to be used to allow the progress bar to update as the <code>importContacts</code> method is running.<br>
 <strong>Alternative 2:</strong> Show the user how many contacts have been added in <code>ResultDisplay</code> <br>
-<strong>Pros:</strong> Easy to implement as no new UI elements have to be added<br>
-<strong>Cons:</strong> Not as user-friendly as having a progress bar<br></p>
+<strong>Pros:</strong> It is easier to implement as no new UI elements have to be added<br>
+<strong>Cons:</strong> It is not as user-friendly as having a progress bar<br></p>
 </div>
 <hr>
 <div class="paragraph">
 <p><strong>Aspect:</strong> Implementation of authorization<br>
 <strong>Alternative 1 (current choice):</strong> Use the <code>BrowserPanel</code> to show the authorization page<br>
-<strong>Pros:</strong> Clearer for the user to understand and focus is kept on the main application.<br>
-<strong>Cons:</strong> Requires implementing a new class as modification to the existing classes provided by the Google Libraries is needed to allow for the<br>
+<strong>Pros:</strong> It is clearer for the user to understand and focus is kept on the main application.<br>
+<strong>Cons:</strong> It requires implementing a new class as modification to the existing classes provided by the Google Libraries is needed to allow for the<br>
 authorization URL to be shown in the <code>BrowserPanel</code><br>
 <strong>Alternative 2 :</strong> Pop-up the authorization page in the user&#8217;s default browser<br>
-<strong>Pros:</strong> Easy for the user to authorize as they may already be logged in to their Google account on their browsers.<br>
-<strong>Cons:</strong> Takes the focus away from the main application to the user&#8217;s default browser, which may be a jarring user experience.<br></p>
+<strong>Pros:</strong> It is easy for the user to authorize as they may already be logged in to their Google account on their browsers.<br>
+<strong>Cons:</strong> It takes the focus away from the main application to the user&#8217;s default browser, which may be a jarring user experience.<br></p>
 </div>
 <div class="paragraph">
 <p><mark>End of Extract</mark></p>
 </div>
 <hr>
+</div>
 </div>
 <div class="sect2">
 <h3 id="enhancement-added-location-command"><a class="link" href="#enhancement-added-location-command">Enhancement Added: Location Command</a></h3>
@@ -469,23 +468,23 @@ included in the <code>LocationCommand</code> class to allow for higher cohesion 
 <div class="paragraph">
 <p><em>Figure 5.10. Location Activity Diagram</em></p>
 </div>
-<div class="paragraph">
-<p><strong>Design Considerations</strong>:</p>
-</div>
+<div class="sect4">
+<h5 id="design-considerations-2"><a class="link" href="#design-considerations-2">Design Considerations:</a></h5>
 <div class="paragraph">
 <p><strong>Aspect:</strong> How the Google Maps URL is passed to the BrowserPanel<br>
 <strong>Alternative 1 (current choice):</strong> Use a <code>showUrlEvent</code> to send the URL to the <code>MainWindow</code> subscriber<br>
-<strong>Pros:</strong> Allows <code>LocationCommand</code> to be more cohesive as it does not need to have an extra method to deal with the logic<br>
-for displaying a URL in the <code>BrowserPanel</code><br>
-<strong>Cons:</strong> <code>LocationCommand</code> class would be more coupled with the <code>EventsCenter</code> class as it relies on the event for its core functionality<br>
+<strong>Pros:</strong> It allows <code>LocationCommand</code> to be more cohesive as it does not need to have an extra method to deal with the logic<br>
+for displaying a URL in the <code>BrowserPanel</code>.<br>
+<strong>Cons:</strong> <code>LocationCommand</code> class would be more coupled with the <code>EventsCenter</code> class as it relies on the event for its core functionality.<br>
 <strong>Alternative 2:</strong> Create a public method in <code>MainWindow</code> for showing a URL in the <code>BrowserPanel</code> <br>
-<strong>Pros:</strong> Easy to implement, only 1 method in <code>MainWindow</code> required and it is called from the <code>execute</code> method of <code>LocationCommand</code><br>
-<strong>Cons:</strong> Exposes functionality of <code>MainWindow</code> unnecessarily to other classes</p>
+<strong>Pros:</strong> It is easy to implement as only 1 method in <code>MainWindow</code> is required and it is called from the <code>execute</code> method of <code>LocationCommand</code>.<br>
+<strong>Cons:</strong> It exposes functionality of <code>MainWindow</code> unnecessarily to other classes.<br></p>
 </div>
 <div class="paragraph">
 <p><mark>End of Extract</mark></p>
 </div>
 <hr>
+</div>
 </div>
 <div class="sect2">
 <h3 id="enhancement-proposed-icloud-contacts-import"><a class="link" href="#enhancement-proposed-icloud-contacts-import">Enhancement Proposed: iCloud Contacts Import</a></h3>
@@ -563,7 +562,7 @@ of the authenticated user would be sent, and the returned data would be parsed i
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-11-13 13:02:59 +00:00
+Last updated 2017-11-13 13:27:47 +00:00
 </div>
 </div>
 </body>

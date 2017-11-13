@@ -199,21 +199,20 @@ tag <code>losers</code> in the address book. <code>TagEditCommandParser</code> w
 they are <code>friends</code> and <code>losers</code>) provided by the user and it will return <code>TagEditCommand</code>. Next, <code>TagEditCommand</code>
 will call its method <code>executeUndoableCommand()</code> and ensure that the tag <code>friends</code> specified is valid.</p>
 </div>
-<div class="paragraph">
-<p><strong>Design Considerations</strong>:</p>
-</div>
-<hr>
+<div class="sect4">
+<h5 id="design-considerations"><a class="link" href="#design-considerations">Design Considerations:</a></h5>
 <div class="paragraph">
 <p><strong>Aspect:</strong> Implementation of <code>TagEditCommand</code><br>
 <strong>Alternative 1 (current choice):</strong> implement it by extending <code>UndoableCommand</code><br>
-<strong>Pros:</strong> Editing tags is undoable/redoable<br>
-<strong>Cons:</strong> May be difficult for new developers to understand the flow<br>
+<strong>Pros:</strong> Editing tags is undoable/redoable.<br>
+<strong>Cons:</strong> It may be difficult for new developers to understand the flow.<br>
 <strong>Alternative 2:</strong> just override <code>execute()</code><br>
-<strong>Pros:</strong> Does not involve template pattern, easier to understand<br>
-<strong>Cons:</strong> Cannot undo/redo unless <code>super.execute()</code> is called</p>
+<strong>Pros:</strong> It does not involve template pattern, easier to understand.<br>
+<strong>Cons:</strong> It cannot be undo/redo unless <code>super.execute()</code> is called.</p>
 </div>
 <div class="paragraph">
 <p><mark>End of Extract</mark></p>
+</div>
 </div>
 </div>
 <div class="sect2">
@@ -402,21 +401,20 @@ return <code>FindCommand</code>. In <code>FindCommand</code>, the method <code>P
 against the existing list of names and tags and return all persons with the matching keyword <code>Alex</code> in their names and
 tag <code>friends</code>. Finally, <code>execute()</code> will run <code>updateFilteredPersonList</code> to show the list of persons returned.</p>
 </div>
-<div class="paragraph">
-<p><strong>Design Considerations</strong>:</p>
-</div>
-<hr>
+<div class="sect4">
+<h5 id="design-considerations-2"><a class="link" href="#design-considerations-2">Design Considerations:</a></h5>
 <div class="paragraph">
 <p><strong>Aspect:</strong> How to input arguments for the command<br>
-<strong>Alternative 1 (current choice):</strong> flexible input, no prefixes needed<br>
-<strong>Pros:</strong> easy and simple to use for the users<br>
-<strong>Cons:</strong> harder to implement and edit in future<br>
-<strong>Alternative 2:</strong> require users to enter prefixes to use find<br>
-<strong>Pros:</strong> easy and simple to implement<br>
-<strong>Cons:</strong> inconvenient and inflexible for the users</p>
+<strong>Alternative 1 (current choice):</strong> Flexible input, no prefixes needed<br>
+<strong>Pros:</strong> It is easy and simple to use for the users.<br>
+<strong>Cons:</strong> It is harder to implement and edit in future.<br>
+<strong>Alternative 2:</strong> Require users to enter prefixes to use find<br>
+<strong>Pros:</strong> It is easy and simple to implement.<br>
+<strong>Cons:</strong> It is inconvenient and inflexible for the users.<br></p>
 </div>
 <div class="paragraph">
 <p><mark>End of Extract</mark></p>
+</div>
 </div>
 </div>
 <div class="sect2">
@@ -513,25 +511,25 @@ of social media platform in the 2nd argument of the user input. In this case, th
 posting a new <code>SocialRequestEvent</code> to the UI. In the UI, the <code>MainWindow</code> calls an instance of the <code>BrowserPanel</code> to
 load the Instagram page of the person at index 1.</p>
 </div>
-<div class="paragraph">
-<p><strong>Design Considerations</strong>:</p>
-</div>
-<hr>
+<div class="sect4">
+<h5 id="design-considerations-3"><a class="link" href="#design-considerations-3">Design Considerations:</a></h5>
 <div class="paragraph">
 <p><strong>Aspect:</strong> What the user input for social media field should be<br>
 <strong>Alternative 1 (current choice):</strong> Use the same prefixes when adding person<br>
-<strong>Pros:</strong> Feels intuitive since you add people with the prefixes <code>ig</code> and <code>tw</code> and therefore should be able to invoke
-this command the same way<br>
-<strong>Cons:</strong> New users might instinctively type in the full name Instagram and Twitter instead of using the aliases<br>
+<strong>Pros:</strong> It feels intuitive since you add people with the prefixes <code>ig</code> and <code>tw</code> and therefore should be able to invoke
+this command the same way.<br>
+<strong>Cons:</strong> New users might instinctively type in the full name Instagram and Twitter instead of using the aliases.<br>
 <strong>Alternative 2:</strong> Use the full name of the social media platform<br>
-<strong>Pros:</strong> Might be natural for some people to type in the full name and is convenient since users type less into the CLI<br>
-<strong>Cons:</strong> Might not make sense since you add people&#8217;s social media into their details based on shortcuts and yet in this
-command the full name of the chosen social media is required.<br></p>
+<strong>Pros:</strong> It might be natural for some people to type in the full name.<br>
+<strong>Cons:</strong> It might not make sense since you add people&#8217;s social media into their details based on shortcuts and yet in this
+command the full name of the chosen social media is required. Moreover, it might be more user-friendly to allow them to
+type less into the CLI.<br></p>
 </div>
 <div class="paragraph">
 <p><mark>End of Extract</mark></p>
 </div>
 <hr>
+</div>
 </div>
 <div class="sect2">
 <h3 id="other-contributions"><a class="link" href="#other-contributions">Other contributions</a></h3>
@@ -552,7 +550,7 @@ command the full name of the chosen social media is required.<br></p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-11-13 13:02:59 +00:00
+Last updated 2017-11-13 13:27:47 +00:00
 </div>
 </div>
 </body>

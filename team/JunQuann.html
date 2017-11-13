@@ -32,7 +32,7 @@ in the application itself without having to switch to a browser or check their p
 <div class="sect2">
 <h3 id="enhancement-added-developed-the-graphic-user-interface"><a class="link" href="#enhancement-added-developed-the-graphic-user-interface">Enhancement Added: Developed the Graphic User Interface</a></h3>
 <div class="paragraph">
-<p>Change to graphic user interface of HitMeUp (Pull request <a href="https://github.com/CS2103AUG2017-W14-B3/main/pull/88">#88</a>)</p>
+<p>Change the Graphic User Interface (GUI) of HitMeUp</p>
 </div>
 <div class="imageblock">
 <div class="content">
@@ -48,9 +48,12 @@ in the application itself without having to switch to a browser or check their p
 </div>
 <div class="sect2">
 <h3 id="enhancement-added-display-picture-for-contacts"><a class="link" href="#enhancement-added-display-picture-for-contacts">Enhancement Added: Display Picture for contacts</a></h3>
+<div class="sect3">
+<h4 id="external-behavior"><a class="link" href="#external-behavior">External behavior</a></h4>
 <hr>
 <div class="paragraph">
 <p><mark>Start of Extract [from: User Guide]</mark></p>
+</div>
 </div>
 </div>
 <div class="sect2">
@@ -128,7 +131,7 @@ If you do not have a display picture to add, leave out the dp/ prefix.
 </li>
 <li>
 <p>Adds a person called <strong>John Doe</strong> with a phone number of <strong>98765432</strong>, an email address of <strong>johnd@example.com</strong>, an address of <strong>John street,
-block 123, #01-01</strong>, a Twitter username of <strong>john_doe</strong>.
+block 123, #01-01</strong> and a Twitter username of <strong>john_doe</strong>.
 John Doe is also added with the image chosen as his display picture.</p>
 <div class="imageblock">
 <div class="content">
@@ -288,7 +291,8 @@ in the <code>GUI</code> for reference to the specific contact.</p>
 Since <code>ArgumentTokenizer</code> is only called in <code>AddCommandParser</code> and <code>EditCommandParser</code>, writing <code>dp/</code> in other command will not cause the display picture feature to be called.<br>
 <br>
 When <code>dp/</code> is present in the command, <code>getCurrentImgPath</code> will be called. This function returns the path of the image that the user want to set as his display picture. Afterwards,
-<code>createUniqueDisplayName</code> will create a unique name for the image chosen by hashing all the other fields of the person.</p>
+<code>createUniqueDisplayName</code> will create a unique name for the image chosen by hashing all the other fields of the person.<br>
+The following is the code snippet for <code>createUniqueDisplayPicName</code>:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -360,7 +364,8 @@ The following code snippets will show how the events are posted within each meth
 <p><em>Figure 5.5.2b shows the interaction between components for <code>edit 1 dp/</code> command (part 2)</em></p>
 </div>
 <div class="paragraph">
-<p>When <code>FileChooserEvent</code> is posted, it will be handled by <code>UI</code> and the method <code>getDisplayPicPath</code> will be called.</p>
+<p>When <code>FileChooserEvent</code> is posted, it will be handled by <code>UI</code> and the method <code>getDisplayPicPath</code> will be called.<br>
+The following is the code snippet for <code>getDisplayPicPath</code>:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -381,7 +386,8 @@ The following code snippets will show how the events are posted within each meth
 <p>This method will initiate a pop up in the <code>GUI</code> of HitMeUp for the user to choose the image they want to use. Afterwards, it returns the absolute path of the chosen image.</p>
 </div>
 <div class="paragraph">
-<p>Afterwards, <code>NewImageEvent</code> will be posted and handled by <code>Storage</code>, the method <code>copyImageFile</code> will be called.</p>
+<p>Afterwards, <code>NewImageEvent</code> will be posted and handled by <code>Storage</code>, the method <code>copyImageFile</code> will be called.<br>
+The following is the code snippet for <code>copyImage</code>:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -407,39 +413,37 @@ The following code snippets will show how the events are posted within each meth
 <p>This method will copy the chosen image into the designated display picture storage folder and return the path to the copied image.
 The returned path will be stored as the display picture value of a person.</p>
 </div>
+<div class="sect4">
+<h5 id="design-considerations"><a class="link" href="#design-considerations">Design Considerations:</a></h5>
 <div class="paragraph">
-<p><strong>Design Considerations</strong>:</p>
-</div>
-<hr>
-<div class="paragraph">
-<p><strong>Aspect:</strong> When to implement the feature<br>
+<p><strong>Aspect:</strong> How to implement this feature<br>
 <strong>Alternative 1 (current choice):</strong> Prompts for display picture when parser detects <code>dp/</code> in <code>add</code> or <code>edit</code> commands<br>
-<strong>Pros:</strong> Natural flow of event as users can decide to add a display picture while adding the person<br>
-<strong>Cons:</strong> Much more complex implementation is needed as we have to intercept the parsing of <code>add</code> or <code>edit</code> commands to add information for display picture<br>
+<strong>Pros:</strong> It is easier for users to add display picture as they can add a display picture while adding the person.<br>
+<strong>Cons:</strong> It is much more complex to implement is needed as we have to intercept the parsing of <code>add</code> or <code>edit</code> commands to add information for display picture.<br>
 <strong>Alternative 2:</strong>  Have a separate command <code>DisplayPic [INDEX]</code> to select a display picture for the person at <code>INDEX</code> after adding the person<br>
-<strong>Pros:</strong> Easier implementation as it is very similar to the existing <code>edit</code> command<br>
-<strong>Cons:</strong> Troublesome as users will need 2 step to add a display picture for their contacts<br></p>
+<strong>Pros:</strong> It is easier implementation as it is very similar to the existing <code>edit</code> command.<br>
+<strong>Cons:</strong> It will be more troublesome as users will need 2 step to add a display picture for their contacts.<br></p>
 </div>
 <hr>
 <div class="paragraph">
 <p><strong>Aspect:</strong> How to select display picture<br>
 <strong>Alternative 1 (current choice):</strong> Use a FileChooser and allow Users to select the file<br>
-<strong>Pros:</strong> Convenient for users as  to select the file<br>
-<strong>Cons:</strong> No longer a CLI interface<br>
-<strong>Cons:</strong> Hard to deploy JUnit testing as there are not way to automate the choosing of files in FileChooser<br>
-<strong>Alternative 2:</strong> Users find the path of the file themselves and add it into the command<br>
-<strong>Pros:</strong> CLI interface<br>
-<strong>Cons:</strong> Hard for users who are not tech-savvy to find know the path of the image file<br></p>
+<strong>Pros:</strong> It is more convenient for users as they just have to select a file from the pop up.<br>
+<strong>Cons:</strong> It deviates from CLI interface.<br>
+<strong>Cons:</strong> It is difficult to deploy JUnit testing as it is hard to automate the choosing of files in FileChooser.<br>
+<strong>Alternative 2:</strong> Find the path of the file themselves and add it into the command<br>
+<strong>Pros:</strong> It remains as a CLI interface.<br>
+<strong>Cons:</strong> It is hard for users who are not tech-savvy to find know the path of the image file.<br></p>
 </div>
 <hr>
 <div class="paragraph">
 <p><strong>Aspect:</strong> How is chosen image made accessible in the storage<br>
 <strong>Alternative 1 (current choice):</strong> Copying the chosen image into the designated storage path<br>
-<strong>Pros:</strong> Image will still be present at original path for users to use the image<br>
-<strong>Cons:</strong> Inefficient memory usage as duplicate copy of the same image is made<br>
+<strong>Pros:</strong> Image will still be present at original path for users to use the image.<br>
+<strong>Cons:</strong> This results in inefficient memory usage as duplicate copy of the same image is made.<br>
 <strong>Alternative 2:</strong> Moving the chosen image to the designated storage path<br>
-<strong>Pros:</strong> Efficient memory usage as duplicate copies will not be created<br>
-<strong>Cons:</strong> Users may have difficulty finding the chosen image for later use as they will be renamed to prevent overwriting of image in the designated storage<br></p>
+<strong>Pros:</strong> This enables efficient memory usage as duplicate copies will not be created.<br>
+<strong>Cons:</strong> Users may have difficulty finding the chosen image for later use as they will be renamed.<br></p>
 </div>
 <hr>
 <div class="paragraph">
@@ -448,16 +452,40 @@ The returned path will be stored as the display picture value of a person.</p>
 <hr>
 </div>
 </div>
+</div>
 <div class="sect2">
 <h3 id="enhancement-proposed"><a class="link" href="#enhancement-proposed">Enhancement Proposed:</a></h3>
 <div class="paragraph">
 <p>Delete the picture in display picture storage directory when the image is not used anymore.</p>
+</div>
+<div class="sect3">
+<h4 id="external-behavior-2"><a class="link" href="#external-behavior-2">External behavior</a></h4>
+<div class="paragraph">
+<p>When the display picture of the person is edited or when the person is deleted, the image that is no longer in used should be deleted as well.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="justification-3"><a class="link" href="#justification-3">Justification</a></h4>
+<div class="paragraph">
+<p>Images that are no longer in used will not use up space in the storage.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="implementation-2"><a class="link" href="#implementation-2">Implementation</a></h4>
+<div class="paragraph">
+<p>When editing the display picture of a person or deleting a person, we can check the display picture path that is stored as the <code>DisplayPic</code> field and delete the image.<br>
+However, this will cause the image to not render properly if we undo the <code>Edit</code> the <code>Delete</code> command.<br>
+Possible solution is to store images that are no longer in use in a back up folder. Whenever the application closes, delete all the images in the back up folder.</p>
+</div>
 </div>
 </div>
 <div class="sect2">
 <h3 id="other-contributions"><a class="link" href="#other-contributions">Other contributions</a></h3>
 <div class="ulist">
 <ul>
+<li>
+<p>Added DisplayPic field for person (Pull request <a href="https://github.com/CS2103AUG2017-W14-B3/main/pull/59">#59</a>)</p>
+</li>
 <li>
 <p>Made UI MockUp based on material design using Adobe PhotoShop (Pull request <a href="https://github.com/CS2103AUG2017-W14-B3/main/pull/60">#60</a>)</p>
 <div class="imageblock">
@@ -481,13 +509,10 @@ The returned path will be stored as the display picture value of a person.</p>
 </div>
 </li>
 <li>
-<p>Added Instagram and Twitter Icons for person with Instagram and Twitter account in person card (Pull request <a href="https://github.com/CS2103AUG2017-W14-B3/main/pull/140">#140</a>)</p>
-</li>
-<li>
-<p>Added DisplayPic field for person (Pull request <a href="https://github.com/CS2103AUG2017-W14-B3/main/pull/59">#59</a>)</p>
-</li>
-<li>
 <p>Wrote test cases for all features that were implemented by me (Pull requests <a href="https://github.com/CS2103AUG2017-W14-B3/main/pull/128">#128</a>, <a href="https://github.com/CS2103AUG2017-W14-B3/main/pull/129">#129</a>)</p>
+</li>
+<li>
+<p>Added Instagram and Twitter Icons for person with Instagram and Twitter account in person card (Pull request <a href="https://github.com/CS2103AUG2017-W14-B3/main/pull/140">#140</a>)</p>
 </li>
 </ul>
 </div>
@@ -497,7 +522,7 @@ The returned path will be stored as the display picture value of a person.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-11-13 13:02:59 +00:00
+Last updated 2017-11-13 13:27:47 +00:00
 </div>
 </div>
 </body>

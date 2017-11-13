@@ -92,10 +92,10 @@
 <h2 id="introduction"><a class="link" href="#introduction">1. Introduction</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>HitMeUp is an address book application designed with the sociable user in mind. It aims to provide a one stop solution for every need: To contact, keep up
-and organise.
-With the cloud import feature, a user would be able to get the application
-up and running a matter of minutes. Being able to group your contacts, and view each group at a glance affords
+<p>HitMeUp is an address book application designed with the sociable user in mind. It aims to provide a one stop solution for majority of your needs: To contact your friends, maintain relationships
+and organise your contacts.
+With the cloud import feature, a user will be able to get the application
+up and running a matter of minutes. Being able to group your contacts, and view each group at a glance enables
 convenience like never before. Social integration to Instagram and Twitter is baked in, allowing users to view profiles
 in the application itself without having to switch to a browser or check their phone.</p>
 </div>
@@ -443,7 +443,7 @@ Note how the event is propagated through the <code>EventsCenter</code> to the <c
 <div class="sect2">
 <h3 id="ui-component"><a class="link" href="#ui-component">4.2. UI component</a></h3>
 <div class="paragraph">
-<p>With reference to the diagram below, the UI consists of a <code>MainWindow</code> that is made up of parts such as <code>CommandBox</code>, <code>ResultDisplay</code>, <code>PersonListPanel</code>, <code>StatusBarFooter</code>, <code>BrowserPanel</code>. All these, including the <code>MainWindow</code>, inherit the abstract <code>UiPart</code> class.</p>
+<p>With reference to the diagram below, the UI consists of a <code>MainWindow</code> that is made up of parts such as <code>CommandBox</code>, <code>ResultDisplay</code>, <code>PersonListPanel</code>, <code>GroupListPanel</code>, <code>PersonDescriptionPanel</code>, <code>StatusBarFooter</code> and <code>BrowserPanel</code>. All these, including the <code>MainWindow</code>, inherit the abstract <code>UiPart</code> class.</p>
 </div>
 <div class="imageblock">
 <div class="content">
@@ -788,14 +788,12 @@ If the <code>redoStack</code> is empty, then there are no other commands left to
 <div class="paragraph">
 <p><em>Figure 5.1h. Undo Redo Activity Diagram</em></p>
 </div>
-<div class="paragraph">
-<p><strong>Design Considerations</strong>:</p>
-</div>
-<hr>
+<div class="sect4">
+<h5 id="design-considerations"><a class="link" href="#design-considerations">Design Considerations:</a></h5>
 <div class="paragraph">
 <p><strong>Aspect:</strong> Implementation of <code>UndoableCommand</code><br>
 <strong>Alternative 1 (current choice):</strong> Add a new abstract method <code>executeUndoableCommand()</code><br>
-<strong>Pros:</strong> We will not lose any undone/redone functionality as it is now part of the default behaviour. Classes that deal with <code>Command</code> do not have to know that <code>executeUndoableCommand()</code> exist.<br>
+<strong>Pros:</strong> It will not lose any undone/redone functionality as it is now part of the default behaviour. Classes that deal with <code>Command</code> do not have to know that <code>executeUndoableCommand()</code> exist.<br>
 <strong>Cons:</strong> It will be hard for new developers to understand the template pattern.<br>
 <strong>Alternative 2:</strong> Override <code>execute()</code><br>
 <strong>Pros:</strong> It does not involve the template pattern so that it is easier for new developers to understand.<br>
@@ -831,6 +829,7 @@ If the <code>redoStack</code> is empty, then there are no other commands left to
 <strong>Alternative 2:</strong> Use <code>HistoryManager</code> for undo/redo<br>
 <strong>Pros:</strong> We do not need to maintain a separate stack and can reuse what is already in the codebase.<br>
 <strong>Cons:</strong> It requires dealing with commands that have already been undone so we must remember to skip these commands. It violates Single Responsibility Principle and Separation of Concerns as <code>HistoryManager</code> now needs to do two different things.<br></p>
+</div>
 </div>
 </div>
 <div class="sect2">
@@ -968,10 +967,8 @@ followed by the String <code>allEmailAddresses</code>.
 <p>Lastly, users' desktop will launch a default mail application where they can compose the subject and message body of the email.
 Moreover, users can also edit their recipients field or attach files before sending out the email to their recipients.</p>
 </div>
-<div class="paragraph">
-<p><strong>Design Considerations</strong>:</p>
-</div>
-<hr>
+<div class="sect4">
+<h5 id="design-considerations-2"><a class="link" href="#design-considerations-2">Design Considerations:</a></h5>
 <div class="paragraph">
 <p><strong>Aspect:</strong> Type of application to send emails<br>
 <strong>Alternative 1 (current choice):</strong> Use user&#8217;s default mail application in their desktop<br>
@@ -992,6 +989,7 @@ On some platforms such as Linux, this API is dependent on the availability of th
 <strong>Alternative 2:</strong> Use <code>JavaMail</code> API<br>
 <strong>Pros:</strong> It is able to support most email services such as Outlook and also allows users to enter their message within the application itself.<br>
 <strong>Cons:</strong> By entering username and password to authorize a session, there may be some security breaches if it is not encrypted properly.</p>
+</div>
 </div>
 </div>
 <div class="sect2">
@@ -1107,41 +1105,40 @@ A progress bar for importing is also shown to the user, implemented using the <c
 <p>The import mechanism is built upon an <code>UndoableCommand</code>, which means that any changes made by the command can be easily reversed by calling the
 <code>undo</code> command.</p>
 </div>
-<div class="paragraph">
-<p><strong>Design Considerations</strong>:</p>
-</div>
-<hr>
+<div class="sect4">
+<h5 id="design-considerations-3"><a class="link" href="#design-considerations-3">Design Considerations:</a></h5>
 <div class="paragraph">
 <p><strong>Aspect:</strong> How import executes<br>
 <strong>Alternative 1 (current choice):</strong> Individually adds each contact.<br>
 <strong>Pros:</strong> User is able to see each contact being added.<br>
-<strong>Cons:</strong> Slower than adding retrieved contacts all at once as the data has to be written to disk every time a contact is added individually<br>
+<strong>Cons:</strong> It is slower than adding retrieved contacts all at once as the data has to be written to disk every time a contact is added individually<br>
 <strong>Alternative 2:</strong> Contacts are only added after every single <code>Person</code> is parsed<br>
-<strong>Pros:</strong> Faster than adding as soon as each <code>Person</code> is parsed as data is written all at once, instead of multiple times<br>
-<strong>Cons:</strong> Requires a new method <code>addAllInList</code> to be implemented in model, which only has limited use as import is the only command doing a batch
+<strong>Pros:</strong> It is faster than adding as soon as each <code>Person</code> is parsed as data is written all at once, instead of multiple times<br>
+<strong>Cons:</strong> It requires a new method <code>addAllInList</code> to be implemented in model, which only has limited use as import is the only command doing a batch
 addition of contacts</p>
 </div>
 <hr>
 <div class="paragraph">
 <p><strong>Aspect:</strong> How import progress is shown to the user<br>
 <strong>Alternative 1 (current choice):</strong> Show a pop-up progress window indicating how many contacts have been added<br>
-<strong>Pros:</strong> Intuitive for the user to understand<br>
-<strong>Cons:</strong> Difficult to implement as importing contacts takes a (relatively) long time and thus, blocks the JavaFX thread from updating the UI in a timely manner. As such, the progress bar will not be updated until the <code>importContacts</code> function is completed.
+<strong>Pros:</strong> It is intuitive for the user to understand<br>
+<strong>Cons:</strong> It is difficult to implement as importing contacts takes a (relatively) long time and thus, blocks the JavaFX thread from updating the UI in a timely manner. As such, the progress bar will not be updated until the <code>importContacts</code> function is completed.
 Threading has to be used to allow the progress bar to update as the <code>importContacts</code> method is running.<br>
 <strong>Alternative 2:</strong> Show the user how many contacts have been added in <code>ResultDisplay</code> <br>
-<strong>Pros:</strong> Easy to implement as no new UI elements have to be added<br>
-<strong>Cons:</strong> Not as user-friendly as having a progress bar<br></p>
+<strong>Pros:</strong> It is easier to implement as no new UI elements have to be added<br>
+<strong>Cons:</strong> It is not as user-friendly as having a progress bar<br></p>
 </div>
 <hr>
 <div class="paragraph">
 <p><strong>Aspect:</strong> Implementation of authorization<br>
 <strong>Alternative 1 (current choice):</strong> Use the <code>BrowserPanel</code> to show the authorization page<br>
-<strong>Pros:</strong> Clearer for the user to understand and focus is kept on the main application.<br>
-<strong>Cons:</strong> Requires implementing a new class as modification to the existing classes provided by the Google Libraries is needed to allow for the<br>
+<strong>Pros:</strong> It is clearer for the user to understand and focus is kept on the main application.<br>
+<strong>Cons:</strong> It requires implementing a new class as modification to the existing classes provided by the Google Libraries is needed to allow for the<br>
 authorization URL to be shown in the <code>BrowserPanel</code><br>
 <strong>Alternative 2 :</strong> Pop-up the authorization page in the user&#8217;s default browser<br>
-<strong>Pros:</strong> Easy for the user to authorize as they may already be logged in to their Google account on their browsers.<br>
-<strong>Cons:</strong> Takes the focus away from the main application to the user&#8217;s default browser, which may be a jarring user experience.<br></p>
+<strong>Pros:</strong> It is easy for the user to authorize as they may already be logged in to their Google account on their browsers.<br>
+<strong>Cons:</strong> It takes the focus away from the main application to the user&#8217;s default browser, which may be a jarring user experience.<br></p>
+</div>
 </div>
 </div>
 <div class="sect2">
@@ -1265,10 +1262,8 @@ The <code>DEFAULT_FILE_DIR</code> is the data folder found in the application di
 <div class="paragraph">
 <p>Finally, the directory that stores the "contacts.vcf" file will be shown to the user and the file can be imported to other platforms that support vCard files.</p>
 </div>
-<div class="paragraph">
-<p><strong>Design Considerations</strong>:</p>
-</div>
-<hr>
+<div class="sect4">
+<h5 id="design-consideration"><a class="link" href="#design-consideration">Design Consideration:</a></h5>
 <div class="paragraph">
 <p><strong>Aspect:</strong> Type of file to create<br>
 <strong>Alternative 1 (current choice):</strong> Creates vCard file<br>
@@ -1277,6 +1272,7 @@ The <code>DEFAULT_FILE_DIR</code> is the data folder found in the application di
 <strong>Alternative 2:</strong> Creates <a href="#csv">CSV</a> file<br>
 <strong>Pros:</strong> It is more readable and allows easy manipulation of the data when used in spreadsheets such as <a href="#excel">Excel</a>.<br>
 <strong>Cons:</strong> It lacks of standardization whereby there are no rules in defining how contacts information are being written or read by other programs. It does not support some programs such as iCloud as well.</p>
+</div>
 </div>
 </div>
 <div class="sect2">
@@ -1305,7 +1301,8 @@ in the <code>GUI</code> for reference to the specific contact.</p>
 Since <code>ArgumentTokenizer</code> is only called in <code>AddCommandParser</code> and <code>EditCommandParser</code>, writing <code>dp/</code> in other command will not cause the display picture feature to be called.<br>
 <br>
 When <code>dp/</code> is present in the command, <code>getCurrentImgPath</code> will be called. This function returns the path of the image that the user want to set as his display picture. Afterwards,
-<code>createUniqueDisplayName</code> will create a unique name for the image chosen by hashing all the other fields of the person.</p>
+<code>createUniqueDisplayName</code> will create a unique name for the image chosen by hashing all the other fields of the person.<br>
+The following is the code snippet for <code>createUniqueDisplayPicName</code>:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1377,7 +1374,8 @@ The following code snippets will show how the events are posted within each meth
 <p><em>Figure 5.5.2b shows the interaction between components for <code>edit 1 dp/</code> command (part 2)</em></p>
 </div>
 <div class="paragraph">
-<p>When <code>FileChooserEvent</code> is posted, it will be handled by <code>UI</code> and the method <code>getDisplayPicPath</code> will be called.</p>
+<p>When <code>FileChooserEvent</code> is posted, it will be handled by <code>UI</code> and the method <code>getDisplayPicPath</code> will be called.<br>
+The following is the code snippet for <code>getDisplayPicPath</code>:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1398,7 +1396,8 @@ The following code snippets will show how the events are posted within each meth
 <p>This method will initiate a pop up in the <code>GUI</code> of HitMeUp for the user to choose the image they want to use. Afterwards, it returns the absolute path of the chosen image.</p>
 </div>
 <div class="paragraph">
-<p>Afterwards, <code>NewImageEvent</code> will be posted and handled by <code>Storage</code>, the method <code>copyImageFile</code> will be called.</p>
+<p>Afterwards, <code>NewImageEvent</code> will be posted and handled by <code>Storage</code>, the method <code>copyImageFile</code> will be called.<br>
+The following is the code snippet for <code>copyImage</code>:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1424,41 +1423,40 @@ The following code snippets will show how the events are posted within each meth
 <p>This method will copy the chosen image into the designated display picture storage folder and return the path to the copied image.
 The returned path will be stored as the display picture value of a person.</p>
 </div>
+<div class="sect4">
+<h5 id="design-considerations-4"><a class="link" href="#design-considerations-4">Design Considerations:</a></h5>
 <div class="paragraph">
-<p><strong>Design Considerations</strong>:</p>
-</div>
-<hr>
-<div class="paragraph">
-<p><strong>Aspect:</strong> When to implement the feature<br>
+<p><strong>Aspect:</strong> How to implement this feature<br>
 <strong>Alternative 1 (current choice):</strong> Prompts for display picture when parser detects <code>dp/</code> in <code>add</code> or <code>edit</code> commands<br>
-<strong>Pros:</strong> Natural flow of event as users can decide to add a display picture while adding the person<br>
-<strong>Cons:</strong> Much more complex implementation is needed as we have to intercept the parsing of <code>add</code> or <code>edit</code> commands to add information for display picture<br>
+<strong>Pros:</strong> It is easier for users to add display picture as they can add a display picture while adding the person.<br>
+<strong>Cons:</strong> It is much more complex to implement is needed as we have to intercept the parsing of <code>add</code> or <code>edit</code> commands to add information for display picture.<br>
 <strong>Alternative 2:</strong>  Have a separate command <code>DisplayPic [INDEX]</code> to select a display picture for the person at <code>INDEX</code> after adding the person<br>
-<strong>Pros:</strong> Easier implementation as it is very similar to the existing <code>edit</code> command<br>
-<strong>Cons:</strong> Troublesome as users will need 2 step to add a display picture for their contacts<br></p>
+<strong>Pros:</strong> It is easier implementation as it is very similar to the existing <code>edit</code> command.<br>
+<strong>Cons:</strong> It will be more troublesome as users will need 2 step to add a display picture for their contacts.<br></p>
 </div>
 <hr>
 <div class="paragraph">
 <p><strong>Aspect:</strong> How to select display picture<br>
 <strong>Alternative 1 (current choice):</strong> Use a FileChooser and allow Users to select the file<br>
-<strong>Pros:</strong> Convenient for users as  to select the file<br>
-<strong>Cons:</strong> No longer a CLI interface<br>
-<strong>Cons:</strong> Hard to deploy JUnit testing as there are not way to automate the choosing of files in FileChooser<br>
-<strong>Alternative 2:</strong> Users find the path of the file themselves and add it into the command<br>
-<strong>Pros:</strong> CLI interface<br>
-<strong>Cons:</strong> Hard for users who are not tech-savvy to find know the path of the image file<br></p>
+<strong>Pros:</strong> It is more convenient for users as they just have to select a file from the pop up.<br>
+<strong>Cons:</strong> It deviates from CLI interface.<br>
+<strong>Cons:</strong> It is difficult to deploy JUnit testing as it is hard to automate the choosing of files in FileChooser.<br>
+<strong>Alternative 2:</strong> Find the path of the file themselves and add it into the command<br>
+<strong>Pros:</strong> It remains as a CLI interface.<br>
+<strong>Cons:</strong> It is hard for users who are not tech-savvy to find know the path of the image file.<br></p>
 </div>
 <hr>
 <div class="paragraph">
 <p><strong>Aspect:</strong> How is chosen image made accessible in the storage<br>
 <strong>Alternative 1 (current choice):</strong> Copying the chosen image into the designated storage path<br>
-<strong>Pros:</strong> Image will still be present at original path for users to use the image<br>
-<strong>Cons:</strong> Inefficient memory usage as duplicate copy of the same image is made<br>
+<strong>Pros:</strong> Image will still be present at original path for users to use the image.<br>
+<strong>Cons:</strong> This results in inefficient memory usage as duplicate copy of the same image is made.<br>
 <strong>Alternative 2:</strong> Moving the chosen image to the designated storage path<br>
-<strong>Pros:</strong> Efficient memory usage as duplicate copies will not be created<br>
-<strong>Cons:</strong> Users may have difficulty finding the chosen image for later use as they will be renamed to prevent overwriting of image in the designated storage<br></p>
+<strong>Pros:</strong> This enables efficient memory usage as duplicate copies will not be created.<br>
+<strong>Cons:</strong> Users may have difficulty finding the chosen image for later use as they will be renamed.<br></p>
 </div>
 <hr>
+</div>
 </div>
 </div>
 <div class="sect2">
@@ -1519,18 +1517,17 @@ tag <code>losers</code> in the address book. <code>TagEditCommandParser</code> w
 they are <code>friends</code> and <code>losers</code>) provided by the user and it will return <code>TagEditCommand</code>. Next, <code>TagEditCommand</code>
 will call its method <code>executeUndoableCommand()</code> and ensure that the tag <code>friends</code> specified is valid.</p>
 </div>
-<div class="paragraph">
-<p><strong>Design Considerations</strong>:</p>
-</div>
-<hr>
+<div class="sect4">
+<h5 id="design-considerations-5"><a class="link" href="#design-considerations-5">Design Considerations:</a></h5>
 <div class="paragraph">
 <p><strong>Aspect:</strong> Implementation of <code>TagEditCommand</code><br>
 <strong>Alternative 1 (current choice):</strong> implement it by extending <code>UndoableCommand</code><br>
-<strong>Pros:</strong> Editing tags is undoable/redoable<br>
-<strong>Cons:</strong> May be difficult for new developers to understand the flow<br>
+<strong>Pros:</strong> Editing tags is undoable/redoable.<br>
+<strong>Cons:</strong> It may be difficult for new developers to understand the flow.<br>
 <strong>Alternative 2:</strong> just override <code>execute()</code><br>
-<strong>Pros:</strong> Does not involve template pattern, easier to understand<br>
-<strong>Cons:</strong> Cannot undo/redo unless <code>super.execute()</code> is called</p>
+<strong>Pros:</strong> It does not involve template pattern, easier to understand.<br>
+<strong>Cons:</strong> It cannot be undo/redo unless <code>super.execute()</code> is called.</p>
+</div>
 </div>
 </div>
 <div class="sect2">
@@ -1620,18 +1617,17 @@ return <code>FindCommand</code>. In <code>FindCommand</code>, the method <code>P
 against the existing list of names and tags and return all persons with the matching keyword <code>Alex</code> in their names and
 tag <code>friends</code>. Finally, <code>execute()</code> will run <code>updateFilteredPersonList</code> to show the list of persons returned.</p>
 </div>
-<div class="paragraph">
-<p><strong>Design Considerations</strong>:</p>
-</div>
-<hr>
+<div class="sect4">
+<h5 id="design-considerations-6"><a class="link" href="#design-considerations-6">Design Considerations:</a></h5>
 <div class="paragraph">
 <p><strong>Aspect:</strong> How to input arguments for the command<br>
-<strong>Alternative 1 (current choice):</strong> flexible input, no prefixes needed<br>
-<strong>Pros:</strong> easy and simple to use for the users<br>
-<strong>Cons:</strong> harder to implement and edit in future<br>
-<strong>Alternative 2:</strong> require users to enter prefixes to use find<br>
-<strong>Pros:</strong> easy and simple to implement<br>
-<strong>Cons:</strong> inconvenient and inflexible for the users</p>
+<strong>Alternative 1 (current choice):</strong> Flexible input, no prefixes needed<br>
+<strong>Pros:</strong> It is easy and simple to use for the users.<br>
+<strong>Cons:</strong> It is harder to implement and edit in future.<br>
+<strong>Alternative 2:</strong> Require users to enter prefixes to use find<br>
+<strong>Pros:</strong> It is easy and simple to implement.<br>
+<strong>Cons:</strong> It is inconvenient and inflexible for the users.<br></p>
+</div>
 </div>
 </div>
 <div class="sect2">
@@ -1659,20 +1655,20 @@ of social media platform in the 2nd argument of the user input. In this case, th
 posting a new <code>SocialRequestEvent</code> to the UI. In the UI, the <code>MainWindow</code> calls an instance of the <code>BrowserPanel</code> to
 load the Instagram page of the person at index 1.</p>
 </div>
-<div class="paragraph">
-<p><strong>Design Considerations</strong>:</p>
-</div>
-<hr>
+<div class="sect4">
+<h5 id="design-considerations-7"><a class="link" href="#design-considerations-7">Design Considerations:</a></h5>
 <div class="paragraph">
 <p><strong>Aspect:</strong> What the user input for social media field should be<br>
 <strong>Alternative 1 (current choice):</strong> Use the same prefixes when adding person<br>
-<strong>Pros:</strong> Feels intuitive since you add people with the prefixes <code>ig</code> and <code>tw</code> and therefore should be able to invoke
-this command the same way<br>
-<strong>Cons:</strong> New users might instinctively type in the full name Instagram and Twitter instead of using the aliases<br>
+<strong>Pros:</strong> It feels intuitive since you add people with the prefixes <code>ig</code> and <code>tw</code> and therefore should be able to invoke
+this command the same way.<br>
+<strong>Cons:</strong> New users might instinctively type in the full name Instagram and Twitter instead of using the aliases.<br>
 <strong>Alternative 2:</strong> Use the full name of the social media platform<br>
-<strong>Pros:</strong> Might be natural for some people to type in the full name and is convenient since users type less into the CLI<br>
-<strong>Cons:</strong> Might not make sense since you add people&#8217;s social media into their details based on shortcuts and yet in this
-command the full name of the chosen social media is required.<br></p>
+<strong>Pros:</strong> It might be natural for some people to type in the full name.<br>
+<strong>Cons:</strong> It might not make sense since you add people&#8217;s social media into their details based on shortcuts and yet in this
+command the full name of the chosen social media is required. Moreover, it might be more user-friendly to allow them to
+type less into the CLI.<br></p>
+</div>
 </div>
 </div>
 <div class="sect2">
@@ -1736,18 +1732,18 @@ included in the <code>LocationCommand</code> class to allow for higher cohesion 
 <div class="paragraph">
 <p><em>Figure 5.10. Location Activity Diagram</em></p>
 </div>
-<div class="paragraph">
-<p><strong>Design Considerations</strong>:</p>
-</div>
+<div class="sect4">
+<h5 id="design-considerations-8"><a class="link" href="#design-considerations-8">Design Considerations:</a></h5>
 <div class="paragraph">
 <p><strong>Aspect:</strong> How the Google Maps URL is passed to the BrowserPanel<br>
 <strong>Alternative 1 (current choice):</strong> Use a <code>showUrlEvent</code> to send the URL to the <code>MainWindow</code> subscriber<br>
-<strong>Pros:</strong> Allows <code>LocationCommand</code> to be more cohesive as it does not need to have an extra method to deal with the logic<br>
-for displaying a URL in the <code>BrowserPanel</code><br>
-<strong>Cons:</strong> <code>LocationCommand</code> class would be more coupled with the <code>EventsCenter</code> class as it relies on the event for its core functionality<br>
+<strong>Pros:</strong> It allows <code>LocationCommand</code> to be more cohesive as it does not need to have an extra method to deal with the logic<br>
+for displaying a URL in the <code>BrowserPanel</code>.<br>
+<strong>Cons:</strong> <code>LocationCommand</code> class would be more coupled with the <code>EventsCenter</code> class as it relies on the event for its core functionality.<br>
 <strong>Alternative 2:</strong> Create a public method in <code>MainWindow</code> for showing a URL in the <code>BrowserPanel</code> <br>
-<strong>Pros:</strong> Easy to implement, only 1 method in <code>MainWindow</code> required and it is called from the <code>execute</code> method of <code>LocationCommand</code><br>
-<strong>Cons:</strong> Exposes functionality of <code>MainWindow</code> unnecessarily to other classes</p>
+<strong>Pros:</strong> It is easy to implement as only 1 method in <code>MainWindow</code> is required and it is called from the <code>execute</code> method of <code>LocationCommand</code>.<br>
+<strong>Cons:</strong> It exposes functionality of <code>MainWindow</code> unnecessarily to other classes.<br></p>
+</div>
 </div>
 </div>
 <div class="sect2">
@@ -2870,7 +2866,7 @@ information like name and address information for use in any address book.</pre>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-11-13 13:02:59 +00:00
+Last updated 2017-11-13 13:27:47 +00:00
 </div>
 </div>
 </body>
