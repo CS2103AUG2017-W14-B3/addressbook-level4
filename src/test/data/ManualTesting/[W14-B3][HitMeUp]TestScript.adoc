@@ -7,17 +7,17 @@ ifdef::env-github[]
 endif::[]
 
 == Introduction
-This document provides the steps to perform manual testing and load our sample data.
+This document provides the steps to perform manual testing and to load our sample data.
 
 == Load Sample Data
 
 The following are the steps to load sample data to test:
 
-. Rename `[W14-B3][HitMeUp]SampleData.xml` > `HitMeUp.xml`
+. Open `[W14-B3][HitMeUp]SampleData.zip` and extract it to a folder.
 
 . Create a data folder where `HitMeUp.jar` is located
 
-. Move `HitMeUp.xml` into the data folder
+. Move the extracted file `HitMeUp.xml` and folder `images` into the data folder
 
 . Run `HitMeUp.jar`
 
