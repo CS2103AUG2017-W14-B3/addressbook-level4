@@ -19,10 +19,11 @@
 <h2 id="project-addressbook-level-4"><a class="link" href="#project-addressbook-level-4">Project: AddressBook - Level 4</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>AddressBook - Level 4 is a desktop address book application used for teaching Software Engineering principles. The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 6 kLoC.</p>
+<p>Project: HitMeUp
+HitMeUp is an address book application designed with the sociable user in mind. It aims to provide a one stop solution for every need: To contact, keep up and organise. With the cloud import feature, a user would be able to get the application up and running a matter of minutes. Being able to group your contacts, and view each group at a glance affords convenience like never before. Social integration to Instagram and Twitter is baked in, allowing users to view profiles in the application itself without having to switch to a browser or check their phone.</p>
 </div>
 <div class="paragraph">
-<p><strong>Code contributed</strong>: to be updated</p>
+<p><strong>Code contributed</strong>: [<a href="https://github.com/CS2103AUG2017-W14-B3/main/tree/master/collated/main/tbhbhbh.md">Functional code</a>] [<a href="https://github.com/CS2103AUG2017-W14-B3/main/tree/master/collated/test/tbhbhbh.md">Test code</a>]</p>
 </div>
 <div class="sect2">
 <h3 id="enhancement-added-tag-delete"><a class="link" href="#enhancement-added-tag-delete">Enhancement Added: Tag Delete</a></h3>
@@ -63,6 +64,55 @@ Deletes the tag 'friends' from all persons with the 'friends' tag in the address
 </div>
 <div class="paragraph">
 <p><mark>End of Extract</mark></p>
+</div>
+<div class="sect3">
+<h4 id="justification"><a class="link" href="#justification">Justification</a></h4>
+<hr>
+<div class="paragraph">
+<p>Being able to quickly delete tags assigned to people makes it convenient for the user to quickly organise contacts.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="implementation"><a class="link" href="#implementation">Implementation</a></h4>
+<hr>
+<div class="paragraph">
+<p><mark>Start of Extract [from: Developer Guide]</mark></p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="tag-delete"><a class="link" href="#tag-delete">Tag Delete</a></h3>
+<div class="paragraph">
+<p>This feature is implemented to provide users the ability to delete tags without having to update each person at a time.</p>
+</div>
+<div class="paragraph">
+<p>The following sequence diagram shows how the tag delete operation works:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../images/TagDeleteSequenceDiagram.png" alt="TagDeleteSequenceDiagram" width="800">
+</div>
+</div>
+<div class="paragraph">
+<p>The user will have to provide the command <code>tagdelete friends</code> to delete the tag <code>friends</code> from all persons in HitMeUp.
+<code>TagDeleteCommandParser</code> will parse the argument given after <code>tagdelete</code> provided by the user and it will return
+ <code>TagDeleteCommand</code>. Next, <code>TagDeleteCommand</code> will call its method <code>executeUndoableCommand()</code> and ensure that the tag
+ <code>friends</code> specified is valid.</p>
+</div>
+<div class="sect3">
+<h4 id="design-considerations"><a class="link" href="#design-considerations">Design Considerations</a></h4>
+<div class="paragraph">
+<p><strong>Aspect:</strong> implementation of <code>TagDeleteCommand</code><br>
+<strong>Alternative 1 (current choice):</strong> implement it by extending <code>UndoableCommand</code><br>
+<strong>Pros:</strong> Deleting tags is undoable/redoable<br>
+<strong>Cons:</strong> May be difficult for new developers to understand the flow<br>
+<strong>Alternative 2:</strong> just override <code>execute()</code><br>
+<strong>Pros:</strong> Does not involve template pattern, easier to understand<br>
+<strong>Cons:</strong> Cannot undo/redo unless <code>super.execute()</code> is called</p>
+</div>
+<div class="paragraph">
+<p><mark>End of Extract</mark></p>
+</div>
 </div>
 </div>
 <div class="sect2">
@@ -108,8 +158,19 @@ Changes the tag 'friends' into 'losers' for all persons with that tag.</p>
 <div class="paragraph">
 <p><mark>End of Extract</mark></p>
 </div>
+<div class="sect3">
+<h4 id="justification-2"><a class="link" href="#justification-2">Justification</a></h4>
+<hr>
+<div class="paragraph">
+<p>Being able to quickly edit tags assigned to people makes it convenient for the user to quickly organise contacts.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="implementation-2"><a class="link" href="#implementation-2">Implementation</a></h4>
+<hr>
 <div class="paragraph">
 <p><mark>Start of Extract [from: Developer Guide]</mark></p>
+</div>
 </div>
 </div>
 <div class="sect2">
@@ -132,7 +193,7 @@ they are <code>friends</code> and <code>losers</code>) provided by the user and 
 will call its method <code>executeUndoableCommand()</code> and ensure that the tag <code>friends</code> specified is valid.</p>
 </div>
 <div class="sect3">
-<h4 id="design-considerations"><a class="link" href="#design-considerations">Design Considerations</a></h4>
+<h4 id="design-considerations-2"><a class="link" href="#design-considerations-2">Design Considerations</a></h4>
 <div class="paragraph">
 <p><strong>Aspect:</strong> Implementation of <code>TagEditCommand</code><br>
 <strong>Alternative 1 (current choice):</strong> implement it by extending <code>UndoableCommand</code><br>
@@ -155,9 +216,9 @@ will call its method <code>executeUndoableCommand()</code> and ensure that the t
 </div>
 </div>
 <div class="sect2">
-<h3 id="find-persons-code-find-code"><a class="link" href="#find-persons-code-find-code">Find persons : <code>find</code></a></h3>
+<h3 id="find-persons-improved-code-find-code"><a class="link" href="#find-persons-improved-code-find-code">Find persons (improved) : <code>find</code></a></h3>
 <div class="paragraph">
-<p>Searches for persons whose name or tags contain any of the given keywords.<br></p>
+<p>Searches for persons whose name, tags, birthday or initials contain any of the given keywords.<br></p>
 </div>
 <div class="paragraph">
 <p>Format: <code>find KEYWORD [MORE_KEYWORDS]</code><br></p>
@@ -173,15 +234,14 @@ will call its method <code>executeUndoableCommand()</code> and ensure that the t
 <p>The order of keywords does not matter. (example below)</p>
 </li>
 <li>
-<p>Name, tags and the first alphabet of a name can be searched.</p>
-</li>
-<li>
 <p>For names, only full words will be matched. e.g. <code>Han</code> will not match <code>Hans</code></p>
 </li>
 </ul>
 </div>
 </div>
 </div>
+<div class="exampleblock">
+<div class="content">
 <div class="paragraph">
 <p>Examples with explanation:</p>
 </div>
@@ -206,6 +266,11 @@ e.g.:  <code>find Alex colleagues</code>
 are <code>colleagues</code>.</p>
 </li>
 <li>
+<p><code>find</code> supports searching for a birthday month.<br>
+e.g.: <code>find 12</code><br>
+<code>find 12</code> will return all persons whose birthdays are in the month of December.</p>
+</li>
+<li>
 <p><code>find</code> supports searching for an initial.<br>
 e.g.:  <code>find a</code><br>
 <code>find a</code> will return all persons whose last names or first names begin with the letter <code>a</code>.</p>
@@ -220,11 +285,26 @@ e.g.: <code>find BeRnICe FrIEnDs</code> is the same as <code>find Bernice friend
 </li>
 </ul>
 </div>
+</div>
+</div>
 <div class="paragraph">
 <p><mark>End of Extract</mark></p>
 </div>
+<div class="sect3">
+<h4 id="justification-3"><a class="link" href="#justification-3">Justification</a></h4>
+<hr>
+<div class="paragraph">
+<p>Allowing the user to find contacts based on a variety of possible inputs (name, tag, initial, birthday month), making
+it a one-stop solution to many problems that the user might face. Very flexible since the user can do a wide search
+simply with an initial or a tag, or a very specific search with a name and multiple tags together.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="implementation-3"><a class="link" href="#implementation-3">Implementation</a></h4>
+<hr>
 <div class="paragraph">
 <p><mark>Start of Extract [from: Developer Guide]</mark></p>
+</div>
 </div>
 </div>
 <div class="sect2">
@@ -239,13 +319,17 @@ features.</p>
 <p>When using the find feature, there are 2 possible cases:<br></p>
 </div>
 <div class="paragraph">
-<p><strong>Case 1: User input contains only 1 argument</strong><br>
-In this case there would be 4 possibilities:<br>
+<p><strong>Case 1: User input contains only 1 argument</strong><br></p>
+</div>
+<div class="paragraph">
+<p>In this case there would be 4 possibilities:<br>
 1) The user is searching for the keyword in the name,<br>
 2) The user is searching for the keyword in the tags,<br>
-4) The user is searching for a particular birthday month,<br>
-3) OR the user is searching for an initial in the names.<br>
-Contacts with the matching name, tag, birthday month or initial will be listed.</p>
+3) The user is searching for a particular birthday month,<br>
+4) OR the user is searching for an initial in the names.<br></p>
+</div>
+<div class="paragraph">
+<p>Contacts with the matching name, tag, birthday month or initial will be listed.</p>
 </div>
 <div class="paragraph">
 <p><strong>Case 2: User input contains more than 1 argument</strong><br>
@@ -311,7 +395,7 @@ against the existing list of names and tags and return all persons with the matc
 tag <code>friends</code>. Finally, <code>execute()</code> will run <code>updateFilteredPersonList</code> to show the list of persons returned.</p>
 </div>
 <div class="sect3">
-<h4 id="design-considerations-2"><a class="link" href="#design-considerations-2">Design Considerations</a></h4>
+<h4 id="design-considerations-3"><a class="link" href="#design-considerations-3">Design Considerations</a></h4>
 <div class="paragraph">
 <p><strong>Aspect:</strong> How to input arguments for the command<br>
 <strong>Alternative 1 (current choice):</strong> flexible input, no prefixes needed<br>
@@ -379,8 +463,20 @@ Opens up the Twitter profile of the person at index 2.</p>
 <div class="paragraph">
 <p><mark>End of Extract</mark></p>
 </div>
+<div class="sect3">
+<h4 id="justification-4"><a class="link" href="#justification-4">Justification</a></h4>
+<hr>
+<div class="paragraph">
+<p>Being able to quickly view your contacts' social media is a convenient way for users to be updated on what&#8217;s happening
+with their contacts' lives.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="implementation-4"><a class="link" href="#implementation-4">Implementation</a></h4>
+<hr>
 <div class="paragraph">
 <p><mark>Start of Extract [from: Developer Guide]</mark></p>
+</div>
 </div>
 </div>
 <div class="sect2">
@@ -394,7 +490,7 @@ provided that they have their usernames stored. Currently, HitMeUp supports Twit
 </div>
 <div class="imageblock">
 <div class="content">
-<img src="../images/SocialSequenceDiagram.png" alt="SocialSequenceDiagram" width=""800">
+<img src="../images/SocialSequenceDiagram.png" alt="SocialSequenceDiagram" width="800">
 </div>
 </div>
 <div class="paragraph">
@@ -409,7 +505,7 @@ posting a new <code>SocialRequestEvent</code> to the UI. In the UI, the <code>Ma
 load the Instagram page of the person at index 1.</p>
 </div>
 <div class="sect3">
-<h4 id="design-considerations-3"><a class="link" href="#design-considerations-3">Design Considerations</a></h4>
+<h4 id="design-considerations-4"><a class="link" href="#design-considerations-4">Design Considerations</a></h4>
 <div class="paragraph">
 <p><strong>Aspect:</strong> What the user input for social media field should be<br>
 <strong>Alternative 1 (current choice):</strong> Use the same prefixes when adding person<br>
@@ -417,14 +513,14 @@ load the Instagram page of the person at index 1.</p>
 this command the same way<br>
 <strong>Cons:</strong> New users might instinctively type in the full name Instagram and Twitter instead of using the aliases<br>
 <strong>Alternative 2:</strong> Use the full name of the social media platform<br>
-<strong>Pros:</strong> Might be natural for some people to type in the full name<br>
+<strong>Pros:</strong> Might be natural for some people to type in the full name and is convenient since users type less into the CLI<br>
 <strong>Cons:</strong> Might not make sense since you add people&#8217;s social media into their details based on shortcuts and yet in this
-command the full name of the chosen social media is required. Moreover, it might be more user-friendly to allow them to
-type less into the CLI<br></p>
+command the full name of the chosen social media is required.<br></p>
 </div>
 <div class="paragraph">
 <p><mark>End of Extract</mark></p>
 </div>
+<hr>
 </div>
 </div>
 <div class="sect2">
@@ -432,7 +528,11 @@ type less into the CLI<br></p>
 <div class="ulist">
 <ul>
 <li>
-<p>Implemented sorting feature that is case insensitive</p>
+<p>Implemented sorting feature that is case insensitive (Pull request <a href="https://github.com/CS2103AUG2017-W14-B3/main/pull/17">#17</a>)</p>
+</li>
+<li>
+<p>Made clicking on person cards load up social media
+(Pull request <a href="https://github.com/CS2103AUG2017-W14-B3/main/pull/125">#125</a>)</p>
 </li>
 </ul>
 </div>
@@ -442,7 +542,7 @@ type less into the CLI<br></p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-11-13 08:00:22 +00:00
+Last updated 2017-11-13 08:23:09 +00:00
 </div>
 </div>
 </body>
