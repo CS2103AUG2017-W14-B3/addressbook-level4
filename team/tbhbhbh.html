@@ -94,13 +94,18 @@ Deletes the tag 'friends' from all persons with the 'friends' tag in the address
 </div>
 </div>
 <div class="paragraph">
+<p><em>Figure 5.6. Tag Delete Sequence Diagram</em></p>
+</div>
+<div class="paragraph">
 <p>The user will have to provide the command <code>tagdelete friends</code> to delete the tag <code>friends</code> from all persons in HitMeUp.
 <code>TagDeleteCommandParser</code> will parse the argument given after <code>tagdelete</code> provided by the user and it will return
  <code>TagDeleteCommand</code>. Next, <code>TagDeleteCommand</code> will call its method <code>executeUndoableCommand()</code> and ensure that the tag
  <code>friends</code> specified is valid.</p>
 </div>
-<div class="sect3">
-<h4 id="design-considerations"><a class="link" href="#design-considerations">Design Considerations</a></h4>
+<div class="paragraph">
+<p><strong>Design Considerations</strong>:</p>
+</div>
+<hr>
 <div class="paragraph">
 <p><strong>Aspect:</strong> implementation of <code>TagDeleteCommand</code><br>
 <strong>Alternative 1 (current choice):</strong> implement it by extending <code>UndoableCommand</code><br>
@@ -112,7 +117,6 @@ Deletes the tag 'friends' from all persons with the 'friends' tag in the address
 </div>
 <div class="paragraph">
 <p><mark>End of Extract</mark></p>
-</div>
 </div>
 </div>
 <div class="sect2">
@@ -187,13 +191,18 @@ Changes the tag 'friends' into 'losers' for all persons with that tag.</p>
 </div>
 </div>
 <div class="paragraph">
+<p><em>Figure 5.7. Tag Edit Sequence Diagram</em></p>
+</div>
+<div class="paragraph">
 <p>The user will have to provide the command <code>tagedit friends losers</code> to change all persons with the tag <code>friends</code> to the
 tag <code>losers</code> in the address book. <code>TagEditCommandParser</code> will parse the 2 arguments given after <code>tagedit</code> (in this case,
 they are <code>friends</code> and <code>losers</code>) provided by the user and it will return <code>TagEditCommand</code>. Next, <code>TagEditCommand</code>
 will call its method <code>executeUndoableCommand()</code> and ensure that the tag <code>friends</code> specified is valid.</p>
 </div>
-<div class="sect3">
-<h4 id="design-considerations-2"><a class="link" href="#design-considerations-2">Design Considerations</a></h4>
+<div class="paragraph">
+<p><strong>Design Considerations</strong>:</p>
+</div>
+<hr>
 <div class="paragraph">
 <p><strong>Aspect:</strong> Implementation of <code>TagEditCommand</code><br>
 <strong>Alternative 1 (current choice):</strong> implement it by extending <code>UndoableCommand</code><br>
@@ -205,7 +214,6 @@ will call its method <code>executeUndoableCommand()</code> and ensure that the t
 </div>
 <div class="paragraph">
 <p><mark>End of Extract</mark></p>
-</div>
 </div>
 </div>
 <div class="sect2">
@@ -394,8 +402,10 @@ return <code>FindCommand</code>. In <code>FindCommand</code>, the method <code>P
 against the existing list of names and tags and return all persons with the matching keyword <code>Alex</code> in their names and
 tag <code>friends</code>. Finally, <code>execute()</code> will run <code>updateFilteredPersonList</code> to show the list of persons returned.</p>
 </div>
-<div class="sect3">
-<h4 id="design-considerations-3"><a class="link" href="#design-considerations-3">Design Considerations</a></h4>
+<div class="paragraph">
+<p><strong>Design Considerations</strong>:</p>
+</div>
+<hr>
 <div class="paragraph">
 <p><strong>Aspect:</strong> How to input arguments for the command<br>
 <strong>Alternative 1 (current choice):</strong> flexible input, no prefixes needed<br>
@@ -407,7 +417,6 @@ tag <code>friends</code>. Finally, <code>execute()</code> will run <code>updateF
 </div>
 <div class="paragraph">
 <p><mark>End of Extract</mark></p>
-</div>
 </div>
 </div>
 <div class="sect2">
@@ -494,7 +503,7 @@ provided that they have their usernames stored. Currently, HitMeUp supports Twit
 </div>
 </div>
 <div class="paragraph">
-<p><div align="center"><b>Figure 3.8.1 Social Command Implementation</b></div></p>
+<p><em>Figure 5.9. Social Sequence Diagram</em></p>
 </div>
 <div class="paragraph">
 <p>As shown above, when the user enters the command <code>social 1 ig</code>, <code>SocialCommandParser</code> will parse the arguments which
@@ -504,8 +513,10 @@ of social media platform in the 2nd argument of the user input. In this case, th
 posting a new <code>SocialRequestEvent</code> to the UI. In the UI, the <code>MainWindow</code> calls an instance of the <code>BrowserPanel</code> to
 load the Instagram page of the person at index 1.</p>
 </div>
-<div class="sect3">
-<h4 id="design-considerations-4"><a class="link" href="#design-considerations-4">Design Considerations</a></h4>
+<div class="paragraph">
+<p><strong>Design Considerations</strong>:</p>
+</div>
+<hr>
 <div class="paragraph">
 <p><strong>Aspect:</strong> What the user input for social media field should be<br>
 <strong>Alternative 1 (current choice):</strong> Use the same prefixes when adding person<br>
@@ -521,7 +532,6 @@ command the full name of the chosen social media is required.<br></p>
 <p><mark>End of Extract</mark></p>
 </div>
 <hr>
-</div>
 </div>
 <div class="sect2">
 <h3 id="other-contributions"><a class="link" href="#other-contributions">Other contributions</a></h3>
@@ -542,7 +552,7 @@ command the full name of the chosen social media is required.<br></p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-11-13 12:50:51 +00:00
+Last updated 2017-11-13 13:02:59 +00:00
 </div>
 </div>
 </body>

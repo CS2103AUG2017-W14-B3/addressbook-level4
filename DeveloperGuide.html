@@ -306,7 +306,7 @@ Having both Travis and AppVeyor ensures your App works on both Unix-based platfo
 </div>
 </div>
 <div class="paragraph">
-<p><em>Figure 2.1.1 : Architecture Diagram</em></p>
+<p><em>Figure 4.1.1. Architecture Diagram</em></p>
 </div>
 <div class="paragraph">
 <p>The <strong><em>Architecture Diagram</em></strong> given above explains the high-level design of the App. Given below is a quick overview of each component.</p>
@@ -374,7 +374,7 @@ The <code>.pptx</code> files used to create diagrams in this document can be fou
 <div class="ulist">
 <ul>
 <li>
-<p>Define its <em>API</em> in an <code>interface</code> with the same name as the Component.</p>
+<p>Define its <em><a href="#api">API</a></em> in an <code>interface</code> with the same name as the Component.</p>
 </li>
 <li>
 <p>Expose its functionality using a <code>{Component Name}Manager</code> class.</p>
@@ -390,7 +390,7 @@ The <code>.pptx</code> files used to create diagrams in this document can be fou
 </div>
 </div>
 <div class="paragraph">
-<p><em>Figure 2.1.2 : Class Diagram of the Logic Component</em></p>
+<p><em>Figure 4.1.2. Class Diagram of the Logic Component</em></p>
 </div>
 <h4 id="events-driven-nature-of-the-design" class="discrete">Events-Driven nature of the design</h4>
 <div class="paragraph">
@@ -402,7 +402,7 @@ The <code>.pptx</code> files used to create diagrams in this document can be fou
 </div>
 </div>
 <div class="paragraph">
-<p><em>Figure 2.1.3a : Component interactions for <code>delete 1</code> command (part 1)</em></p>
+<p><em>Figure 4.1.3a. Component interactions for <code>delete 1</code> command (part 1)</em></p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -425,7 +425,7 @@ Note how the <code>Model</code> simply raises a <code>AddressBookChangedEvent</c
 </div>
 </div>
 <div class="paragraph">
-<p><em>Figure 2.1.3b : Component interactions for <code>delete 1</code> command (part 2)</em></p>
+<p><em>Figure 4.1.3b. Component interactions for <code>delete 1</code> command (part 2)</em></p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -451,7 +451,7 @@ Note how the event is propagated through the <code>EventsCenter</code> to the <c
 </div>
 </div>
 <div class="paragraph">
-<p><em>Figure 2.2.1 : Structure of the UI Component</em></p>
+<p><em>Figure 4.2.1. Structure of the UI Component</em></p>
 </div>
 <div class="paragraph">
 <p>The <code>UI</code> component uses JavaFx UI framework. The layout of these UI parts are defined in matching <code>.fxml</code> files that are in the <code>src/main/resources/view</code> folder. For example, the layout of the <a href="https://github.com/CS2103AUG2017-W14-B3/main/tree/master/src/main/java/seedu/address/ui/MainWindow.java"><code>MainWindow</code></a> is specified in <a href="https://github.com/CS2103AUG2017-W14-B3/main/tree/master/src/main/resources/view/MainWindow.fxml"><code>MainWindow.fxml</code></a></p>
@@ -488,14 +488,14 @@ This results in a <code>Command</code> object which is executed by the <code>Log
 </div>
 </div>
 <div class="paragraph">
-<p><em>Figure 2.3.1 : Structure of the Logic Component</em></p>
+<p><em>Figure 4.3a. Structure of the Logic Component</em></p>
 </div>
 <div class="paragraph">
 <p>The command execution can affect the <code>Model</code> (e.g. adding a person) and/or raise events.
 The result of the command execution is encapsulated as a <code>CommandResult</code> object which is passed back to the <code>Ui</code>.</p>
 </div>
 <div class="paragraph">
-<p>The figure below shows the finer details concerning <code>XYZCommand</code> and <code>Command</code> in Figure 2.3.1.</p>
+<p>The figure below shows the finer details concerning <code>XYZCommand</code> and <code>Command</code> in Figure 4.3b.</p>
 </div>
 <div class="imageblock">
 <div class="content">
@@ -503,7 +503,7 @@ The result of the command execution is encapsulated as a <code>CommandResult</co
 </div>
 </div>
 <div class="paragraph">
-<p><em>Figure 2.3.2 : Structure of Commands in the Logic Component.</em></p>
+<p><em>Figure 4.3b. Structure of Commands in the Logic Component.</em></p>
 </div>
 <div class="paragraph">
 <p><strong>API</strong> :
@@ -531,7 +531,7 @@ The result of the command execution is encapsulated as a <code>CommandResult</co
 </div>
 </div>
 <div class="paragraph">
-<p><em>Figure 2.3.1 : Interactions Inside the Logic Component for the <code>delete 1</code> Command</em></p>
+<p><em>Figure 4.3c. Interactions Inside the Logic Component for the <code>delete 1</code> Command</em></p>
 </div>
 </div>
 <div class="sect2">
@@ -545,7 +545,7 @@ The result of the command execution is encapsulated as a <code>CommandResult</co
 </div>
 </div>
 <div class="paragraph">
-<p><em>Figure 2.4.1 : Structure of the Model Component</em></p>
+<p><em>Figure 4.4. Structure of the Model Component</em></p>
 </div>
 <div class="paragraph">
 <p><strong>API</strong> : <a href="https://github.com/CS2103AUG2017-W14-B3/main/tree/master/src/main/java/seedu/address/model/Model.java"><code>Model.java</code></a></p>
@@ -581,7 +581,7 @@ The result of the command execution is encapsulated as a <code>CommandResult</co
 </div>
 </div>
 <div class="paragraph">
-<p><em>Figure 2.5.1 : Structure of the Storage Component</em></p>
+<p><em>Figure 4.5. Structure of the Storage Component</em></p>
 </div>
 <div class="paragraph">
 <p><strong>API</strong> : <a href="https://github.com/CS2103AUG2017-W14-B3/main/tree/master/src/main/java/seedu/address/storage/Storage.java"><code>Storage.java</code></a></p>
@@ -609,7 +609,8 @@ The result of the command execution is encapsulated as a <code>CommandResult</co
 <h2 id="implementation"><a class="link" href="#implementation">5. Implementation</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>This section describes some noteworthy details on how certain features are implemented.</p>
+<p>This section describes some noteworthy details on how certain features are implemented.
+The design considerations are also discussed at the end of each feature.</p>
 </div>
 <div class="sect2">
 <h3 id="undo-redo-mechanism"><a class="link" href="#undo-redo-mechanism">5.1. Undo/Redo mechanism</a></h3>
@@ -623,6 +624,9 @@ The result of the command execution is encapsulated as a <code>CommandResult</co
 <div class="content">
 <img src="images/LogicCommandClassDiagram.png" alt="LogicCommandClassDiagram" width="800">
 </div>
+</div>
+<div class="paragraph">
+<p><em>Figure 5.1a. Logic Command Class Diagram</em></p>
 </div>
 <div class="paragraph">
 <p>As you can see from the diagram, <code>UndoableCommand</code> adds an extra layer between the abstract <code>Command</code> class and concrete commands that can be undone, such as the <code>DeleteCommand</code>. Note that extra tasks need to be done when executing a command in an <em>undoable</em> way, such as saving the state of the address book before execution. <code>UndoableCommand</code> contains the high-level algorithm for those extra tasks while the child classes implements the details of how to execute the specific command. Note that this technique of putting the high-level algorithm in the parent class and lower-level steps of the algorithm in child classes is also known as the <a href="https://www.tutorialspoint.com/design_pattern/template_pattern.htm">template pattern</a>.</p>
@@ -674,12 +678,18 @@ The result of the command execution is encapsulated as a <code>CommandResult</co
 </div>
 </div>
 <div class="paragraph">
+<p><em>Figure 5.1b. Undo Redo Starting Stack Diagram</em></p>
+</div>
+<div class="paragraph">
 <p>As the user continues to use the program, more commands are added into the <code>undoStack</code>. For example, the user may execute <code>add n/David &#8230;&#8203;</code> to add a new person.</p>
 </div>
 <div class="imageblock">
 <div class="content">
 <img src="images/UndoRedoNewCommand1StackDiagram.png" alt="UndoRedoNewCommand1StackDiagram" width="800">
 </div>
+</div>
+<div class="paragraph">
+<p><em>Figure 5.1c. Undo Redo New Command Stack Diagram</em></p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -704,6 +714,9 @@ If a command fails its execution, it will not be pushed to the <code>UndoRedoSta
 <img src="images/UndoRedoExecuteUndoStackDiagram.png" alt="UndoRedoExecuteUndoStackDiagram" width="800">
 </div>
 </div>
+<div class="paragraph">
+<p><em>Figure 5.1d. Undo Redo Execute Undo Stack Diagram</em></p>
+</div>
 <div class="admonitionblock note">
 <table>
 <tr>
@@ -723,6 +736,9 @@ If the <code>undoStack</code> is empty, then there are no other commands left to
 <div class="content">
 <img src="images/UndoRedoSequenceDiagram.png" alt="UndoRedoSequenceDiagram" width="800">
 </div>
+</div>
+<div class="paragraph">
+<p><em>Figure 5.1e. Undo Redo Sequence Diagram</em></p>
 </div>
 <div class="paragraph">
 <p>The redo does the exact opposite (pops from <code>redoStack</code>, push to <code>undoStack</code>, and restores the address book to the state after the command is executed).</p>
@@ -748,12 +764,18 @@ If the <code>redoStack</code> is empty, then there are no other commands left to
 </div>
 </div>
 <div class="paragraph">
+<p><em>Figure 5.1f. Undo Redo New Command Stack Diagram 2</em></p>
+</div>
+<div class="paragraph">
 <p>Commands that are not undoable are not added into the <code>undoStack</code>. For example, <code>list</code>, which inherits from <code>Command</code> rather than <code>UndoableCommand</code>, will not be added after execution:</p>
 </div>
 <div class="imageblock">
 <div class="content">
 <img src="images/UndoRedoNewCommand3StackDiagram.png" alt="UndoRedoNewCommand3StackDiagram" width="800">
 </div>
+</div>
+<div class="paragraph">
+<p><em>Figure 5.1g. Undo Redo New Command Stack Diagram 3</em></p>
 </div>
 <div class="paragraph">
 <p>The following activity diagram summarize what happens inside the <code>UndoRedoStack</code> when a user executes a new command:</p>
@@ -763,8 +785,13 @@ If the <code>redoStack</code> is empty, then there are no other commands left to
 <img src="images/UndoRedoActivityDiagram.png" alt="UndoRedoActivityDiagram" width="200">
 </div>
 </div>
-<div class="sect3">
-<h4 id="design-considerations"><a class="link" href="#design-considerations">5.1.1. Design Considerations</a></h4>
+<div class="paragraph">
+<p><em>Figure 5.1h. Undo Redo Activity Diagram</em></p>
+</div>
+<div class="paragraph">
+<p><strong>Design Considerations</strong>:</p>
+</div>
+<hr>
 <div class="paragraph">
 <p><strong>Aspect:</strong> Implementation of <code>UndoableCommand</code><br>
 <strong>Alternative 1 (current choice):</strong> Add a new abstract method <code>executeUndoableCommand()</code><br>
@@ -806,22 +833,19 @@ If the <code>redoStack</code> is empty, then there are no other commands left to
 <strong>Cons:</strong> It requires dealing with commands that have already been undone so we must remember to skip these commands. It violates Single Responsibility Principle and Separation of Concerns as <code>HistoryManager</code> now needs to do two different things.<br></p>
 </div>
 </div>
-</div>
 <div class="sect2">
 <h3 id="email-mechanism"><a class="link" href="#email-mechanism">5.2. Email mechanism</a></h3>
 <div class="paragraph">
 <p>The email mechanism is facilitated by java <code>Desktop</code> class which allows java application to launch default mail application registered on the users' native desktop to handle a Uniform Resource Indentifier (<a href="#uri">URI</a>).
 In this case, the URI is created with reference to the mail command scheme and email addresses to mail to.</p>
 </div>
-<div class="sect3">
-<h4 id="email-command-implementation"><a class="link" href="#email-command-implementation">5.2.1. Email command implementation</a></h4>
 <div class="imageblock">
 <div class="content">
 <img src="images/EmailCommandSequenceDiagram.png" alt="EmailCommandSequenceDiagram" width="800">
 </div>
 </div>
 <div class="paragraph">
-<p><em>Figure 3.2.1 Email Command Sequence Diagram</em></p>
+<p><em>Figure 5.2a. Email Command Sequence Diagram</em></p>
 </div>
 <div class="paragraph">
 <p>From the diagram above, when users enter the command <code>email 1</code> to email a person in the contact list.
@@ -880,19 +904,16 @@ constructing a <code>URI</code>.
 </li>
 </ul>
 </div>
-</div>
-<div class="sect3">
-<h4 id="email-request-event-process"><a class="link" href="#email-request-event-process">5.2.2. Email request event process</a></h4>
 <div class="imageblock">
 <div class="content">
 <img src="images/EmailRequestEventSequenceDiagram.png" alt="EmailRequestEventSequenceDiagram" width="800">
 </div>
 </div>
 <div class="paragraph">
-<p><em>Figure 5.2.1 Email Request Event Sequence Diagram</em></p>
+<p><em>Figure 5.2b. Email Request Event Sequence Diagram</em></p>
 </div>
 <div class="paragraph">
-<p>With reference to the diagram above, after <code>EmailCommand</code> has executed, it will post a new <code>EmailRequestEvent</code> and allows the UI to handle this event. In the UI, we are using java <code>Desktop</code> class to
+<p>The diagram above illustrates the event driven process of the <code>EmailCommand</code>. After <code>EmailCommand</code> has executed, it will post a new <code>EmailRequestEvent</code> and allows the UI to handle this event. In the UI, we are using java <code>Desktop</code> class to
 launch the default mail application registered on users' native desktop. A <code>URI</code> instance has to be created and passed to the mail method in the <code>Desktop</code> class.
 Refer to the code example below:<br></p>
 </div>
@@ -971,7 +992,6 @@ On some platforms such as Linux, this API is dependent on the availability of th
 <strong>Alternative 2:</strong> Use <code>JavaMail</code> API<br>
 <strong>Pros:</strong> It is able to support most email services such as Outlook and also allows users to enter their message within the application itself.<br>
 <strong>Cons:</strong> By entering username and password to authorize a session, there may be some security breaches if it is not encrypted properly.</p>
-</div>
 </div>
 </div>
 <div class="sect2">
@@ -1087,8 +1107,10 @@ A progress bar for importing is also shown to the user, implemented using the <c
 <p>The import mechanism is built upon an <code>UndoableCommand</code>, which means that any changes made by the command can be easily reversed by calling the
 <code>undo</code> command.</p>
 </div>
-<div class="sect3">
-<h4 id="design-considerations-2"><a class="link" href="#design-considerations-2">5.3.1. Design Considerations</a></h4>
+<div class="paragraph">
+<p><strong>Design Considerations</strong>:</p>
+</div>
+<hr>
 <div class="paragraph">
 <p><strong>Aspect:</strong> How import executes<br>
 <strong>Alternative 1 (current choice):</strong> Individually adds each contact.<br>
@@ -1122,20 +1144,31 @@ authorization URL to be shown in the <code>BrowserPanel</code><br>
 <strong>Cons:</strong> Takes the focus away from the main application to the user&#8217;s default browser, which may be a jarring user experience.<br></p>
 </div>
 </div>
-</div>
 <div class="sect2">
 <h3 id="export-mechanism"><a class="link" href="#export-mechanism">5.4. Export mechanism</a></h3>
 <div class="paragraph">
 <p>The export mechanism is facilitated by java <code>File</code> and <code>FileOutputStream</code> classes. It supports writing contact information into a <a href="#vCard">vCard</a> by creating a vCard format file.
 This file will be created and can be imported into other platforms such as Google Contacts.</p>
 </div>
+<div class="paragraph">
+<p>The process when user enters the export command to the creation of the vCard file is summarized using the activity
+diagram shown below.</p>
+</div>
 <div class="imageblock">
 <div class="content">
-<img src="images/vCardClassDiagram.png" alt="vCardClassDiagram" width="400">
+<img src="images/ExportActivityDiagram.png" alt="ExportActivityDiagram" width="800">
 </div>
 </div>
 <div class="paragraph">
-<p><em>Figure 5.4 Vcard Class Diagram</em></p>
+<p><em>Figure 5.4a. Export Activity Diagram</em></p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/vCardClassDiagram.png" alt="vCardClassDiagram" width="800">
+</div>
+</div>
+<div class="paragraph">
+<p><em>Figure 5.4b. Vcard Class Diagram</em></p>
 </div>
 <div class="paragraph">
 <p>With reference to the class diagram of <code>Vcard</code> above, a <code>Vcard</code> object created is unique for every person that user wants to export. <code>Vcard</code> of each person contains a unique
@@ -1391,9 +1424,10 @@ The following code snippets will show how the events are posted within each meth
 <p>This method will copy the chosen image into the designated display picture storage folder and return the path to the copied image.
 The returned path will be stored as the display picture value of a person.</p>
 </div>
+<div class="paragraph">
+<p><strong>Design Considerations</strong>:</p>
 </div>
-<div class="sect3">
-<h4 id="design-considerations-3"><a class="link" href="#design-considerations-3">5.5.3. Design Considerations</a></h4>
+<hr>
 <div class="paragraph">
 <p><strong>Aspect:</strong> When to implement the feature<br>
 <strong>Alternative 1 (current choice):</strong> Prompts for display picture when parser detects <code>dp/</code> in <code>add</code> or <code>edit</code> commands<br>
@@ -1441,13 +1475,18 @@ The returned path will be stored as the display picture value of a person.</p>
 </div>
 </div>
 <div class="paragraph">
+<p><em>Figure 5.6. Tag Delete Sequence Diagram</em></p>
+</div>
+<div class="paragraph">
 <p>The user will have to provide the command <code>tagdelete friends</code> to delete the tag <code>friends</code> from all persons in HitMeUp.
 <code>TagDeleteCommandParser</code> will parse the argument given after <code>tagdelete</code> provided by the user and it will return
  <code>TagDeleteCommand</code>. Next, <code>TagDeleteCommand</code> will call its method <code>executeUndoableCommand()</code> and ensure that the tag
  <code>friends</code> specified is valid.</p>
 </div>
-<div class="sect3">
-<h4 id="design-considerations-4"><a class="link" href="#design-considerations-4">5.6.1. Design Considerations</a></h4>
+<div class="paragraph">
+<p><strong>Design Considerations</strong>:</p>
+</div>
+<hr>
 <div class="paragraph">
 <p><strong>Aspect:</strong> implementation of <code>TagDeleteCommand</code><br>
 <strong>Alternative 1 (current choice):</strong> implement it by extending <code>UndoableCommand</code><br>
@@ -1456,7 +1495,6 @@ The returned path will be stored as the display picture value of a person.</p>
 <strong>Alternative 2:</strong> just override <code>execute()</code><br>
 <strong>Pros:</strong> Does not involve template pattern, easier to understand<br>
 <strong>Cons:</strong> Cannot undo/redo unless <code>super.execute()</code> is called</p>
-</div>
 </div>
 </div>
 <div class="sect2">
@@ -1473,13 +1511,18 @@ The returned path will be stored as the display picture value of a person.</p>
 </div>
 </div>
 <div class="paragraph">
+<p><em>Figure 5.7. Tag Edit Sequence Diagram</em></p>
+</div>
+<div class="paragraph">
 <p>The user will have to provide the command <code>tagedit friends losers</code> to change all persons with the tag <code>friends</code> to the
 tag <code>losers</code> in the address book. <code>TagEditCommandParser</code> will parse the 2 arguments given after <code>tagedit</code> (in this case,
 they are <code>friends</code> and <code>losers</code>) provided by the user and it will return <code>TagEditCommand</code>. Next, <code>TagEditCommand</code>
 will call its method <code>executeUndoableCommand()</code> and ensure that the tag <code>friends</code> specified is valid.</p>
 </div>
-<div class="sect3">
-<h4 id="design-considerations-5"><a class="link" href="#design-considerations-5">5.7.1. Design Considerations</a></h4>
+<div class="paragraph">
+<p><strong>Design Considerations</strong>:</p>
+</div>
+<hr>
 <div class="paragraph">
 <p><strong>Aspect:</strong> Implementation of <code>TagEditCommand</code><br>
 <strong>Alternative 1 (current choice):</strong> implement it by extending <code>UndoableCommand</code><br>
@@ -1488,7 +1531,6 @@ will call its method <code>executeUndoableCommand()</code> and ensure that the t
 <strong>Alternative 2:</strong> just override <code>execute()</code><br>
 <strong>Pros:</strong> Does not involve template pattern, easier to understand<br>
 <strong>Cons:</strong> Cannot undo/redo unless <code>super.execute()</code> is called</p>
-</div>
 </div>
 </div>
 <div class="sect2">
@@ -1578,8 +1620,10 @@ return <code>FindCommand</code>. In <code>FindCommand</code>, the method <code>P
 against the existing list of names and tags and return all persons with the matching keyword <code>Alex</code> in their names and
 tag <code>friends</code>. Finally, <code>execute()</code> will run <code>updateFilteredPersonList</code> to show the list of persons returned.</p>
 </div>
-<div class="sect3">
-<h4 id="design-considerations-6"><a class="link" href="#design-considerations-6">5.8.1. Design Considerations</a></h4>
+<div class="paragraph">
+<p><strong>Design Considerations</strong>:</p>
+</div>
+<hr>
 <div class="paragraph">
 <p><strong>Aspect:</strong> How to input arguments for the command<br>
 <strong>Alternative 1 (current choice):</strong> flexible input, no prefixes needed<br>
@@ -1588,7 +1632,6 @@ tag <code>friends</code>. Finally, <code>execute()</code> will run <code>updateF
 <strong>Alternative 2:</strong> require users to enter prefixes to use find<br>
 <strong>Pros:</strong> easy and simple to implement<br>
 <strong>Cons:</strong> inconvenient and inflexible for the users</p>
-</div>
 </div>
 </div>
 <div class="sect2">
@@ -1606,7 +1649,7 @@ provided that they have their usernames stored. Currently, HitMeUp supports Twit
 </div>
 </div>
 <div class="paragraph">
-<p><div align="center"><b>Figure 3.8.1 Social Command Implementation</b></div></p>
+<p><em>Figure 5.9. Social Sequence Diagram</em></p>
 </div>
 <div class="paragraph">
 <p>As shown above, when the user enters the command <code>social 1 ig</code>, <code>SocialCommandParser</code> will parse the arguments which
@@ -1616,8 +1659,10 @@ of social media platform in the 2nd argument of the user input. In this case, th
 posting a new <code>SocialRequestEvent</code> to the UI. In the UI, the <code>MainWindow</code> calls an instance of the <code>BrowserPanel</code> to
 load the Instagram page of the person at index 1.</p>
 </div>
-<div class="sect3">
-<h4 id="design-considerations-7"><a class="link" href="#design-considerations-7">5.9.1. Design Considerations</a></h4>
+<div class="paragraph">
+<p><strong>Design Considerations</strong>:</p>
+</div>
+<hr>
 <div class="paragraph">
 <p><strong>Aspect:</strong> What the user input for social media field should be<br>
 <strong>Alternative 1 (current choice):</strong> Use the same prefixes when adding person<br>
@@ -1628,7 +1673,6 @@ this command the same way<br>
 <strong>Pros:</strong> Might be natural for some people to type in the full name and is convenient since users type less into the CLI<br>
 <strong>Cons:</strong> Might not make sense since you add people&#8217;s social media into their details based on shortcuts and yet in this
 command the full name of the chosen social media is required.<br></p>
-</div>
 </div>
 </div>
 <div class="sect2">
@@ -1689,8 +1733,12 @@ included in the <code>LocationCommand</code> class to allow for higher cohesion 
 <img src="images/LocationActivityDiagram.png" alt="LocationActivityDiagram" width=""800">
 </div>
 </div>
-<div class="sect3">
-<h4 id="design-considerations-8"><a class="link" href="#design-considerations-8">5.10.1. Design Considerations</a></h4>
+<div class="paragraph">
+<p><em>Figure 5.10. Location Activity Diagram</em></p>
+</div>
+<div class="paragraph">
+<p><strong>Design Considerations</strong>:</p>
+</div>
 <div class="paragraph">
 <p><strong>Aspect:</strong> How the Google Maps URL is passed to the BrowserPanel<br>
 <strong>Alternative 1 (current choice):</strong> Use a <code>showUrlEvent</code> to send the URL to the <code>MainWindow</code> subscriber<br>
@@ -1700,7 +1748,6 @@ for displaying a URL in the <code>BrowserPanel</code><br>
 <strong>Alternative 2:</strong> Create a public method in <code>MainWindow</code> for showing a URL in the <code>BrowserPanel</code> <br>
 <strong>Pros:</strong> Easy to implement, only 1 method in <code>MainWindow</code> required and it is called from the <code>execute</code> method of <code>LocationCommand</code><br>
 <strong>Cons:</strong> Exposes functionality of <code>MainWindow</code> unnecessarily to other classes</p>
-</div>
 </div>
 </div>
 <div class="sect2">
@@ -1810,7 +1857,7 @@ Alternatively, you can download the AsciiDoc plugin for IntelliJ, which allows y
 </div>
 </div>
 <div class="paragraph">
-<p><em>Figure 6.3 : Saving documentation as PDF files in Chrome</em></p>
+<p><em>Figure 6.3. Saving documentation as PDF files in Chrome</em></p>
 </div>
 </div>
 </div>
@@ -2575,7 +2622,7 @@ e.g. <code>seedu.address.logic.LogicManagerTest</code></p>
 benefit of the user. In the Address Book, the user can keep track of his or her contacts.</pre>
 </div>
 </div>
-<div class="paragraph">
+<div id="api" class="paragraph">
 <p>Application Programming Interface (API)</p>
 </div>
 <div class="literalblock">
@@ -2823,7 +2870,7 @@ information like name and address information for use in any address book.</pre>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-11-13 12:50:51 +00:00
+Last updated 2017-11-13 13:02:59 +00:00
 </div>
 </div>
 </body>

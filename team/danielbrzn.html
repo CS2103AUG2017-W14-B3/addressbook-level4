@@ -126,7 +126,7 @@ Email, Address, Birthday, Twitter, Instagram, Display Picture, Tag</p>
 </div>
 </div>
 <div class="paragraph">
-<p><em>Figure 3.11.1 Google Authentication Page</em></p>
+<p><em>Figure 5.11a. Google Authentication Page</em></p>
 </div>
 </li>
 <li>
@@ -137,7 +137,7 @@ Email, Address, Birthday, Twitter, Instagram, Display Picture, Tag</p>
 </div>
 </div>
 <div class="paragraph">
-<p><em>Figure 3.11.2 Google Consent Page</em></p>
+<p><em>Figure 5.11b. Google Consent Page</em></p>
 </div>
 </li>
 <li>
@@ -148,7 +148,7 @@ Email, Address, Birthday, Twitter, Instagram, Display Picture, Tag</p>
 </div>
 </div>
 <div class="paragraph">
-<p><em>Figure 3.11.3 HitMeUp Import Progress</em></p>
+<p><em>Figure 5.11c. HitMeUp Import Progress</em></p>
 </div>
 </li>
 <li>
@@ -160,7 +160,7 @@ unable to be imported.</p>
 </div>
 </div>
 <div class="paragraph">
-<p><em>Figure 3.11.4 Import Result Display</em></p>
+<p><em>Figure 5.11d. Import Result Display</em></p>
 </div>
 </li>
 </ol>
@@ -301,8 +301,10 @@ A progress bar for importing is also shown to the user, implemented using the <c
 <p>The import mechanism is built upon an <code>UndoableCommand</code>, which means that any changes made by the command can be easily reversed by calling the
 <code>undo</code> command.</p>
 </div>
-<div class="sect3">
-<h4 id="design-considerations"><a class="link" href="#design-considerations">Design Considerations</a></h4>
+<div class="paragraph">
+<p><strong>Design Considerations</strong>:</p>
+</div>
+<hr>
 <div class="paragraph">
 <p><strong>Aspect:</strong> How import executes<br>
 <strong>Alternative 1 (current choice):</strong> Individually adds each contact.<br>
@@ -339,7 +341,6 @@ authorization URL to be shown in the <code>BrowserPanel</code><br>
 <p><mark>End of Extract</mark></p>
 </div>
 <hr>
-</div>
 </div>
 <div class="sect2">
 <h3 id="enhancement-added-location-command"><a class="link" href="#enhancement-added-location-command">Enhancement Added: Location Command</a></h3>
@@ -465,8 +466,12 @@ included in the <code>LocationCommand</code> class to allow for higher cohesion 
 <img src="../images/LocationActivityDiagram.png" alt="LocationActivityDiagram" width=""800">
 </div>
 </div>
-<div class="sect3">
-<h4 id="design-considerations-2"><a class="link" href="#design-considerations-2">Design Considerations</a></h4>
+<div class="paragraph">
+<p><em>Figure 5.10. Location Activity Diagram</em></p>
+</div>
+<div class="paragraph">
+<p><strong>Design Considerations</strong>:</p>
+</div>
 <div class="paragraph">
 <p><strong>Aspect:</strong> How the Google Maps URL is passed to the BrowserPanel<br>
 <strong>Alternative 1 (current choice):</strong> Use a <code>showUrlEvent</code> to send the URL to the <code>MainWindow</code> subscriber<br>
@@ -481,7 +486,6 @@ for displaying a URL in the <code>BrowserPanel</code><br>
 <p><mark>End of Extract</mark></p>
 </div>
 <hr>
-</div>
 </div>
 <div class="sect2">
 <h3 id="enhancement-proposed-icloud-contacts-import"><a class="link" href="#enhancement-proposed-icloud-contacts-import">Enhancement Proposed: iCloud Contacts Import</a></h3>
@@ -559,7 +563,7 @@ of the authenticated user would be sent, and the returned data would be parsed i
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-11-13 12:50:51 +00:00
+Last updated 2017-11-13 13:02:59 +00:00
 </div>
 </div>
 </body>

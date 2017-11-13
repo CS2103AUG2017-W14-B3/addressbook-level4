@@ -18,13 +18,64 @@
 <div class="sect1">
 <h2 id="project-hitmeup"><a class="link" href="#project-hitmeup">Project: HitMeUp</a></h2>
 <div class="sectionbody">
-<div class="paragraph">
-<p>HitMeUp is an address book application designed with the sociable user in mind. It aims to provide a one stop solution for every need: To contact, keep up
-and organise.
-With the cloud import feature, a user would be able to get the application
-up and running a matter of minutes. Being able to group your contacts, and view each group at a glance affords
-convenience like never before. Social integration to Instagram and Twitter is baked in, allowing users to view profiles
-in the application itself without having to switch to a browser or check their phone.</p>
+<div class="imageblock">
+<div class="content">
+<img src="../images/Ui.png" alt="Ui" width="800">
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>HitMeUp is an address book application designed with the sociable user in mind.</p>
+</li>
+<li>
+<p>It aims to be a one-stop center for managing and interacting with contacts.</p>
+</li>
+<li>
+<p>A Command Line Interface (CLI) is primarily used for input</p>
+</li>
+<li>
+<p>This project has been forked from the <a href="https://github.com/nus-cs2103-AY1718S1/addressbook-level4">AddressBook-Level4</a> repository</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="features"><a class="link" href="#features">Features</a></h2>
+<div class="sectionbody">
+<div class="exampleblock">
+<div class="content">
+<div class="ulist">
+<ul>
+<li>
+<p>Add a contact using only their name and number, or with any of the following supported fields:
+Email, Address, Birthday, Twitter, Instagram, Display Picture, Tag</p>
+</li>
+<li>
+<p>Import your existing contacts from Google Contacts</p>
+</li>
+<li>
+<p>Export individual contacts to easily share with others</p>
+</li>
+<li>
+<p>Search by a contact&#8217;s name, starting alphabet, birthday month or groups</p>
+</li>
+<li>
+<p>Email contacts quickly without having to copy their email addresses</p>
+</li>
+<li>
+<p>View your groups at a glance with the groups tab</p>
+</li>
+<li>
+<p>Keep up with your contacts through the social command</p>
+</li>
+<li>
+<p>View your contacts' addresses quickly in Google Maps</p>
+</li>
+</ul>
+</div>
+</div>
 </div>
 <div class="paragraph">
 <p><strong>Code contributed</strong>: [<a href="https://github.com/CS2103AUG2017-W14-B3/main/tree/master/collated/main/conantteo.md">Functional code</a>] [<a href="https://github.com/CS2103AUG2017-W14-B3/main/tree/master/collated/test/conantteo.md">Test code</a>]</p>
@@ -52,10 +103,10 @@ in the application itself without having to switch to a browser or check their p
 <div class="ulist">
 <ul>
 <li>
-<p>Exports information of all contacts or the contact at the specified INDEX into a vCard file.</p>
+<p>Exports information of all contacts or the contact at the specified <code>INDEX</code> into a vCard file.</p>
 </li>
 <li>
-<p>The input 'all' is case-sensitive.</p>
+<p>The input <code>all</code> is case-sensitive.</p>
 </li>
 <li>
 <p>The index refers to the index number shown in the most recent listing.</p>
@@ -76,7 +127,7 @@ in the application itself without having to switch to a browser or check their p
 </div>
 </div>
 <div class="paragraph">
-<p><em>Figure 3.12. Data folder directory containing vCard file</em></p>
+<p><em>Figure 5.12. Data folder directory containing vCard file</em></p>
 </div>
 <div class="paragraph">
 <p>Examples:</p>
@@ -121,13 +172,25 @@ aims to provide the convenience for users who wish to easily export their contac
 <p>The export mechanism is facilitated by java <code>File</code> and <code>FileOutputStream</code> classes. It supports writing contact information into a <a href="#vCard">vCard</a> by creating a vCard format file.
 This file will be created and can be imported into other platforms such as Google Contacts.</p>
 </div>
+<div class="paragraph">
+<p>The process when user enters the export command to the creation of the vCard file is summarized using the activity
+diagram shown below.</p>
+</div>
 <div class="imageblock">
 <div class="content">
-<img src="../images/vCardClassDiagram.png" alt="vCardClassDiagram" width="400">
+<img src="../images/ExportActivityDiagram.png" alt="ExportActivityDiagram" width="800">
 </div>
 </div>
 <div class="paragraph">
-<p><em>Figure 5.4 Vcard Class Diagram</em></p>
+<p><em>Figure 5.4a. Export Activity Diagram</em></p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../images/vCardClassDiagram.png" alt="vCardClassDiagram" width="800">
+</div>
+</div>
+<div class="paragraph">
+<p><em>Figure 5.4b. Vcard Class Diagram</em></p>
 </div>
 <div class="paragraph">
 <p>With reference to the class diagram of <code>Vcard</code> above, a <code>Vcard</code> object created is unique for every person that user wants to export. <code>Vcard</code> of each person contains a unique
@@ -286,7 +349,7 @@ The <code>DEFAULT_FILE_DIR</code> is the data folder found in the application di
 </div>
 </div>
 <div class="paragraph">
-<p><em>Figure 3.13. Default mail application in Windows 10</em></p>
+<p><em>Figure 5.13. Default mail application in Windows 10</em></p>
 </div>
 <div class="exampleblock">
 <div class="content">
@@ -353,15 +416,13 @@ contacts.</p>
 <p>The email mechanism is facilitated by java <code>Desktop</code> class which allows java application to launch default mail application registered on the users' native desktop to handle a Uniform Resource Indentifier (<a href="#uri">URI</a>).
 In this case, the URI is created with reference to the mail command scheme and email addresses to mail to.</p>
 </div>
-<div class="sect3">
-<h4 id="email-command-implementation"><a class="link" href="#email-command-implementation">Email command implementation</a></h4>
 <div class="imageblock">
 <div class="content">
 <img src="../images/EmailCommandSequenceDiagram.png" alt="EmailCommandSequenceDiagram" width="800">
 </div>
 </div>
 <div class="paragraph">
-<p><em>Figure 3.2.1 Email Command Sequence Diagram</em></p>
+<p><em>Figure 5.2a. Email Command Sequence Diagram</em></p>
 </div>
 <div class="paragraph">
 <p>From the diagram above, when users enter the command <code>email 1</code> to email a person in the contact list.
@@ -420,19 +481,16 @@ constructing a <code>URI</code>.
 </li>
 </ul>
 </div>
-</div>
-<div class="sect3">
-<h4 id="email-request-event-process"><a class="link" href="#email-request-event-process">Email request event process</a></h4>
 <div class="imageblock">
 <div class="content">
 <img src="../images/EmailRequestEventSequenceDiagram.png" alt="EmailRequestEventSequenceDiagram" width="800">
 </div>
 </div>
 <div class="paragraph">
-<p><em>Figure 5.2.1 Email Request Event Sequence Diagram</em></p>
+<p><em>Figure 5.2b. Email Request Event Sequence Diagram</em></p>
 </div>
 <div class="paragraph">
-<p>With reference to the diagram above, after <code>EmailCommand</code> has executed, it will post a new <code>EmailRequestEvent</code> and allows the UI to handle this event. In the UI, we are using java <code>Desktop</code> class to
+<p>The diagram above illustrates the event driven process of the <code>EmailCommand</code>. After <code>EmailCommand</code> has executed, it will post a new <code>EmailRequestEvent</code> and allows the UI to handle this event. In the UI, we are using java <code>Desktop</code> class to
 launch the default mail application registered on users' native desktop. A <code>URI</code> instance has to be created and passed to the mail method in the <code>Desktop</code> class.
 Refer to the code example below:<br></p>
 </div>
@@ -517,10 +575,41 @@ On some platforms such as Linux, this API is dependent on the availability of th
 </div>
 <hr>
 </div>
-</div>
 <div class="sect2">
-<h3 id="enhancement-proposed-to-be-updated"><a class="link" href="#enhancement-proposed-to-be-updated">Enhancement Proposed: to be updated</a></h3>
-
+<h3 id="enhancement-proposed-auto-completion"><a class="link" href="#enhancement-proposed-auto-completion">Enhancement Proposed: Auto-completion</a></h3>
+<div class="sect3">
+<h4 id="external-behavior-3"><a class="link" href="#external-behavior-3">External behavior</a></h4>
+<hr>
+<div class="paragraph">
+<p>As user enters their command by pressing in partial words, they can view a list of suggestions in a drop down menu.
+Using the up/down arrow keys to select the desired suggestion and press enter will complete the command for them.</p>
+</div>
+<hr>
+</div>
+<div class="sect3">
+<h4 id="justification-3"><a class="link" href="#justification-3">Justification</a></h4>
+<div class="paragraph">
+<p>For commands that are frequently used, an auto-completion will help users to save time and effort in typing the entire
+command. Auto-completion will filter a list of commonly used commands so that users do not have to repeatedly type the
+same command. Hence, this feature will help to make HitMeUp for user-friendly.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="implementation-3"><a class="link" href="#implementation-3">Implementation</a></h4>
+<hr>
+<div class="paragraph">
+<p>Firstly, there will be auto-complete text field that extends from the command box. There will be a maximum of 8
+auto-complete suggestions that are stored. Each time a user enters a command, there will be a count to suggest how often
+the command has been used.</p>
+</div>
+<div class="paragraph">
+<p>Next, as user enters a few letters into the command box, the drop down menu will match the string with an existing
+sorted set of frequently used commands. Once matched, the drop down menu will show these suggestions to the user. If the
+user wish to use the suggestion, he/she can simply hit enter so that the command box text property will be filled with
+the suggestion command.</p>
+</div>
+<hr>
+</div>
 </div>
 <div class="sect2">
 <h3 id="other-contributions"><a class="link" href="#other-contributions">Other contributions</a></h3>
@@ -538,6 +627,9 @@ On some platforms such as Linux, this API is dependent on the availability of th
 <li>
 <p>Resolved issues when HelpWindow is opened but other actions are not working (Pull requests <a href="https://github.com/CS2103AUG2017-W14-B3/main/pull/132">#132</a>)</p>
 </li>
+<li>
+<p>Created TestScript.adoc for HitMeUp user testing in practical exam (Issue: <a href="https://github.com/CS2103AUG2017-W14-B3/main/issues/138">#138</a>)</p>
+</li>
 </ul>
 </div>
 </div>
@@ -546,7 +638,7 @@ On some platforms such as Linux, this API is dependent on the availability of th
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-11-13 12:50:51 +00:00
+Last updated 2017-11-13 13:02:59 +00:00
 </div>
 </div>
 </body>
