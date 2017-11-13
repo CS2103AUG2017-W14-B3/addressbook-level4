@@ -624,10 +624,10 @@ This file will be created and can be imported into other platforms such as Googl
 The process when user enters the export command to the creation of the vCard file is summarized using the activity
 diagram shown below.
 
-image::ExportActivityDiagram.png[width="800"]
+image::ExportActivityDiagram.png[width="500"]
 _Figure 5.4a. Export Activity Diagram_
 
-image::vCardClassDiagram.png[width="800"]
+image::vCardClassDiagram.png[width="500"]
 _Figure 5.4b. Vcard Class Diagram_
 
 With reference to the class diagram of `Vcard` above, a `Vcard` object created is unique for every person that user wants to export. `Vcard` of each person contains a unique

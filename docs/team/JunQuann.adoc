@@ -75,7 +75,7 @@ Possible solution is to store images that are no longer in use in a back up fold
 * Added DisplayPic field for person (Pull request https://github.com/CS2103AUG2017-W14-B3/main/pull/59[#59])
 * Made UI MockUp based on material design using Adobe PhotoShop (Pull request https://github.com/CS2103AUG2017-W14-B3/main/pull/60[#60])
 +
-image::AddressBookUi.png[width="800']
+image::AddressBookUi.png[width="800"]
 _Picture above shows mock up UI for HitMeUp_
 
 * Added PersonDescriptionPanel in User Interface (Pull request https://github.com/CS2103AUG2017-W14-B3/main/pull/80[#80])

@@ -9,7 +9,7 @@ https://coveralls.io/github/CS2103AUG2017-W14-B3/main?branch=master[image:https:
 ifdef::env-github[]
 endif::[]
 
-image::docs/images/Ui.png[width="800"]
+image::images/Ui.png[width="800"]
 
 // tag::introduction[]
 * HitMeUp is an address book application designed with the sociable user in mind.
