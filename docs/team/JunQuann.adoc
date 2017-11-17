@@ -4,7 +4,7 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 :stylesDir: ../stylesheets
 :repoURL: https://github.com/CS2103AUG2017-W14-B3/main
 
-== Project: AddressBook - Level 4
+== Project: HitMeUp
 HitMeUp is an address book application designed with the sociable user in mind. It aims to provide a one stop solution for every need: To contact, keep up
 and organise.
 With the cloud import feature, a user would be able to get the application
