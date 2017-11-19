@@ -265,7 +265,6 @@ public class GoogleUtil {
         }
         if (addresses != null && addresses.size() > 0) {
             address = addresses.get(0).getFormattedValue();
-            System.out.println(address);
         } else {
             address = "";
         }
